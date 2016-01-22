@@ -1,0 +1,23 @@
+.color {
+ 	background: #337ab7;
+}
+
+.login{
+	margin: 12% auto;
+	padding: 35px;
+	width: 400px;
+	background: #fafafc;
+	border: 2px solid #ffffff;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+    -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+    -webkit-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+}
+
+.login .input{
+	margin-top: 40px;
+	position: relative;
+	max-width: 326px;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+          Evaluación
+        </ui:define>
+	<ui:define name="contenido">
+
+		<center>
+			<h1>EVALUACIÓN #{preguntasBean.p_area}</h1>
+		</center>
+		<h:form id="frmE">
+		<b:row>
+			<b:column span="3">
+				<b:panel>
+				<center>
+<!-- 				<h1><p:outputLabel id="time" value="#{preguntasBean.time}"/></h1> -->
+<!-- 				<p:poll interval="1" listener="#{preguntasBean.calculoTiempo()}" update="time" /> -->
+				</center>
+				</b:panel>
+			</b:column>
+			<b:column span="9">
+				<b:panel>
+					<c:forEach items="#{preguntasBean.lpre}" var="pre">
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="3">
+								<p:outputLabel value="#{pre.pre_grupo_tematica}"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="3">
+								<p:outputLabel value="#{pre.pre_topico}"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage
+								value="/resources/img/img_pre/#{pre.pre_img_enunciado}"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage
+									value="/resources/img/img_cue/#{pre.pre_img_pregunta}"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<br />
+					</c:forEach>
+				</b:panel>
+			</b:column>
+		</b:row>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

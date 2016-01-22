@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+            Validación Estudiantes
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>NOTIFICACIÓN DE ESTUDIANTES</h1>
+		</center>
+		<br />
+		<h:form id="frmT">
+			<b:panel look="primary" collapsible="false">
+				<b:row>
+					<b:column span="2">
+						<h:outputLabel value="Instituciones:"></h:outputLabel>
+					</b:column>
+					<b:column span="4">
+						<b:selectOneMenu value="#{alumnosBean.var_ins}">
+							<f:selectItem itemLabel="--TODAS--" itemValue="all" />
+							<f:selectItems value="#{alumnosBean.listItemsInstitucionN}" />
+						</b:selectOneMenu>
+					</b:column>
+
+					<b:column span="1">
+						<h:outputLabel value="Areas:"></h:outputLabel>
+					</b:column>
+					<b:column span="3">
+						<b:selectOneMenu value="#{alumnosBean.var_are}">
+							<f:selectItem itemLabel="--TODAS--" itemValue="all" />
+							<f:selectItems value="#{alumnosBean.listItemsAreasN}" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column span="2">
+						<p:commandButton styleClass="btn btn-info" look="success"
+							value="Generar" action="#{alumnosBean.generarListado}"
+							onclick="PF('statusDialog').show()"
+							oncomplete="PF('statusDialog').hide()" update=":frmT:dti">
+						</p:commandButton>
+					</b:column>
+				</b:row>
+			</b:panel>
+			<b:panel look="primary" collapsible="false">
+				<b:row>
+
+					<b:column span="2">
+						<h:outputLabel value="Fecha Inicio:"></h:outputLabel>
+					</b:column>
+					<b:column span="3">
+						<p:calendar value="#{alumnosBean.fecha_ini}"
+							pattern="MM/dd/yyyy HH:mm" showOn="button" />
+					</b:column>
+
+					<b:column span="2">
+						<h:outputLabel value="Fecha Fin:"></h:outputLabel>
+					</b:column>
+					<b:column span="3">
+						<p:calendar value="#{alumnosBean.fecha_fin}"
+							pattern="MM/dd/yyyy HH:mm" showOn="button" />
+					</b:column>
+
+				</b:row>
+				<br/>
+				<b:row>
+	
+						<b:column span="1">
+							<p:commandButton styleClass="btn btn-info" look="success"
+								value="Calcular" action="#{alumnosBean.calculoTiempo}"
+								onclick="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()" update=":frmT:sms2">
+							</p:commandButton>
+						</b:column>
+
+						<b:column offset="1" span="1">
+							<p:commandButton styleClass="btn btn-info" look="success"
+								value="Notificar" action="#{alumnosBean.notificarAlumnos}"
+								onclick="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()"
+								update=" :frmT ">
+								<p:confirm header="Confirmación"
+									message="Seguro Quiere Notificar a los Estudiantes Seleccionados?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</b:column>
+						
+						<b:column offset="1" span="1">
+							<p:commandButton styleClass="btn btn-info" look="success"
+								value="Notificar Todos" action="#{alumnosBean.notificarAll}"
+								onclick="PF('statusDialog').show()"
+								oncomplete="PF('statusDialog').hide()"
+								update=" :frmT ">
+								<p:confirm header="Confirmación"
+									message="Seguro Quiere Notificar a Todos los Estudiantes?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</b:column>
+						
+				</b:row>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Si" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</b:panel>
+
+			<p:messages id="sms2" closable="true"></p:messages>
+
+			<b:panel title="Datos" look="primary" collapsible="false">
+				<p:dataTable id="dti" var="alu" value="#{alumnosBean.allest}"
+					selection="#{alumnosBean.lest}" rowKey="#{alu.estCedula}"
+					reflow="true" rows="20" emptyMessage="Sin Datos" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+
+					<p:column headerText="INSTITUCIÓN" width="100">
+						<h:outputText value="#{alu.colInstitucion1.insNombre}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="CIENCIA A PARTICIPAR" width="100">
+						<h:outputText value="#{alu.estArea}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="CÉDULA" width="100">
+						<h:outputText value="#{alu.estCedula}"></h:outputText>
+					</p:column>
+
+					<p:column 
+						headerText="NOMBRES COMPLETOS" width="150">
+						<h:outputText value="#{alu.estNombres} #{alu.estApellidos}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="E-MAIL" width="100">
+						<h:outputText value="#{alu.estCorreo}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="ESTADO" width="50">
+						<h:outputText value="#{alu.estEstado}"></h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</b:panel>
+
+		</h:form>
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage value="../resources/img/cargando.gif" />
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+
+</html>

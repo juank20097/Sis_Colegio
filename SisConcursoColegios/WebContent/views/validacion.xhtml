@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+            Validación Institucional
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>VALIDACIÓN DE INSTITUCIONES</h1>
+		</center>
+		<br />
+		<h:form id="frmT">
+			<p:messages closable="true"></p:messages>
+			<b:panel title="Datos" look="primary" collapsible="false">
+				<p:dataTable id="dti" value="#{institucionBean.listInstituciones}"
+					reflow="true" var="ins" rows="8" emptyMessage="Sin Datos"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					
+					<p:column headerText="OPCIONES" width="100">
+						<p:commandButton id="btnE" value="Ver" icon="ui-icon-search"
+							action="#{institucionBean.cargarInstitucion(ins)}">
+						</p:commandButton>
+					</p:column>
+					
+					<p:column filterable="false" filterBy="#{ins.insNombre}" headerText="INSTITUCIÓN" filterMatchMode="contains" width="350">	
+						<h:outputText value="#{ins.insNombre}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="CÓDIGO AMIE" width="100">
+						<h:outputText value="#{ins.insAmie}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="ESTADO" width="100">
+						<h:outputText value="#{ins.insEstado}"></h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+				</b:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
