@@ -8,15 +8,13 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 
 import colegio.controller.generic.Funciones;
 import colegio.controller.generic.Mensaje;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColInstitucion;
 import colegio.model.entidades.ColInstitucionesSenescyt;
-import colegio.model.entidades.GenProvincia;
-import colegio.model.entidades.GenZona;
+
 
 
 
@@ -496,45 +494,9 @@ public class FinstitucionBean {
 		return p;
 	}
 
-	/**
-	 * Metodo para listar todos los Datos de la Entidad
-	 * 
-	 * @return
-	 */
-	public List<GenZona> getListZonas() {
-		List<GenZona> p = new ArrayList<GenZona>();
-		try {
-			p = manager.findAllZonas();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return p;
-	}
+	
 
-	/**
-	 * Metodo para listar todos los Datos de la Entidad
-	 * 
-	 * @return
-	 */
-	public List<GenProvincia> getListProvincias() {
-		List<GenProvincia> p = new ArrayList<GenProvincia>();
-		try {
-			p = manager.findProvinciasXNombre(ins_zona);
-			if (p == null) {
-				p = new ArrayList<GenProvincia>();
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return p;
-	}
-
-	public void cargarProvincias() {
-		this.getListProvincias();
-	}
-
+	
 	/**
 	 * Permite la creacion de un Dato a la Entidad
 	 * 
@@ -632,31 +594,9 @@ public class FinstitucionBean {
 		return "/index?faces-redirect=true";
 	}
 
-	/**
-	 * Metodo de listado de SelecItems
-	 * 
-	 * @return lista
-	 */
-	public List<SelectItem> getlistItemsZonas() {
-		List<SelectItem> lista = new ArrayList<SelectItem>();
-		for (GenZona z : this.getListZonas()) {
-			lista.add(new SelectItem(z.getZonNombre(), z.getZonNombre()));
-		}
-		return lista;
-	}
+	
 
-	/**
-	 * Metodo de listado de SelecItems
-	 * 
-	 * @return lista
-	 */
-	public List<SelectItem> getlistItemsProvincias() {
-		List<SelectItem> lista = new ArrayList<SelectItem>();
-		for (GenProvincia p : this.getListProvincias()) {
-			lista.add(new SelectItem(p.getProNombre(), p.getProNombre()));
-		}
-		return lista;
-	}
+	
 	
 	/**
 	 * Metodo para cargar los datos de la institucion y representante en la vista registro 

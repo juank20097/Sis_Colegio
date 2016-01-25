@@ -271,8 +271,8 @@ public class LogginBean {
 							&& ((new Date().after(est.getEstFechaIni())) && (new Date()
 									.before(est.getEstFechaFin())))) {
 						Funciones.setEstudiante(est);
-						r = "views/" + par.getParVista().trim()
-								+ "?faces-redirect=true";
+						//r = "views/" + par.getParVista().trim()
+							//	+ "?faces-redirect=true";
 						break;
 					} else {
 						est_nombre = est.getEstNombres() + " "

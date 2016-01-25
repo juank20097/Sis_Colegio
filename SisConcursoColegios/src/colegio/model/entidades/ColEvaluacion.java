@@ -34,20 +34,12 @@ public class ColEvaluacion implements Serializable {
 	private String evaPeriodo;
 
 	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEvaluacion1")
-	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils1;
-
-	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEvaluacion2")
-	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils2;
+	@OneToMany(mappedBy="colEvaluacion")
+	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils;
 
 	//bi-directional many-to-one association to ColPregunta
-	@OneToMany(mappedBy="colEvaluacion1")
-	private List<ColPregunta> colPreguntas1;
-
-	//bi-directional many-to-one association to ColPregunta
-	@OneToMany(mappedBy="colEvaluacion2")
-	private List<ColPregunta> colPreguntas2;
+	@OneToMany(mappedBy="colEvaluacion")
+	private List<ColPregunta> colPreguntas;
 
 	public ColEvaluacion() {
 	}
@@ -92,92 +84,48 @@ public class ColEvaluacion implements Serializable {
 		this.evaPeriodo = evaPeriodo;
 	}
 
-	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils1() {
-		return this.colEvaluacionEstudiantils1;
+	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils() {
+		return this.colEvaluacionEstudiantils;
 	}
 
-	public void setColEvaluacionEstudiantils1(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils1) {
-		this.colEvaluacionEstudiantils1 = colEvaluacionEstudiantils1;
+	public void setColEvaluacionEstudiantils(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils) {
+		this.colEvaluacionEstudiantils = colEvaluacionEstudiantils;
 	}
 
-	public ColEvaluacionEstudiantil addColEvaluacionEstudiantils1(ColEvaluacionEstudiantil colEvaluacionEstudiantils1) {
-		getColEvaluacionEstudiantils1().add(colEvaluacionEstudiantils1);
-		colEvaluacionEstudiantils1.setColEvaluacion1(this);
+	public ColEvaluacionEstudiantil addColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
+		getColEvaluacionEstudiantils().add(colEvaluacionEstudiantil);
+		colEvaluacionEstudiantil.setColEvaluacion(this);
 
-		return colEvaluacionEstudiantils1;
+		return colEvaluacionEstudiantil;
 	}
 
-	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantils1(ColEvaluacionEstudiantil colEvaluacionEstudiantils1) {
-		getColEvaluacionEstudiantils1().remove(colEvaluacionEstudiantils1);
-		colEvaluacionEstudiantils1.setColEvaluacion1(null);
+	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
+		getColEvaluacionEstudiantils().remove(colEvaluacionEstudiantil);
+		colEvaluacionEstudiantil.setColEvaluacion(null);
 
-		return colEvaluacionEstudiantils1;
+		return colEvaluacionEstudiantil;
 	}
 
-	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils2() {
-		return this.colEvaluacionEstudiantils2;
+	public List<ColPregunta> getColPreguntas() {
+		return this.colPreguntas;
 	}
 
-	public void setColEvaluacionEstudiantils2(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils2) {
-		this.colEvaluacionEstudiantils2 = colEvaluacionEstudiantils2;
+	public void setColPreguntas(List<ColPregunta> colPreguntas) {
+		this.colPreguntas = colPreguntas;
 	}
 
-	public ColEvaluacionEstudiantil addColEvaluacionEstudiantils2(ColEvaluacionEstudiantil colEvaluacionEstudiantils2) {
-		getColEvaluacionEstudiantils2().add(colEvaluacionEstudiantils2);
-		colEvaluacionEstudiantils2.setColEvaluacion2(this);
+	public ColPregunta addColPregunta(ColPregunta colPregunta) {
+		getColPreguntas().add(colPregunta);
+		colPregunta.setColEvaluacion(this);
 
-		return colEvaluacionEstudiantils2;
+		return colPregunta;
 	}
 
-	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantils2(ColEvaluacionEstudiantil colEvaluacionEstudiantils2) {
-		getColEvaluacionEstudiantils2().remove(colEvaluacionEstudiantils2);
-		colEvaluacionEstudiantils2.setColEvaluacion2(null);
+	public ColPregunta removeColPregunta(ColPregunta colPregunta) {
+		getColPreguntas().remove(colPregunta);
+		colPregunta.setColEvaluacion(null);
 
-		return colEvaluacionEstudiantils2;
-	}
-
-	public List<ColPregunta> getColPreguntas1() {
-		return this.colPreguntas1;
-	}
-
-	public void setColPreguntas1(List<ColPregunta> colPreguntas1) {
-		this.colPreguntas1 = colPreguntas1;
-	}
-
-	public ColPregunta addColPreguntas1(ColPregunta colPreguntas1) {
-		getColPreguntas1().add(colPreguntas1);
-		colPreguntas1.setColEvaluacion1(this);
-
-		return colPreguntas1;
-	}
-
-	public ColPregunta removeColPreguntas1(ColPregunta colPreguntas1) {
-		getColPreguntas1().remove(colPreguntas1);
-		colPreguntas1.setColEvaluacion1(null);
-
-		return colPreguntas1;
-	}
-
-	public List<ColPregunta> getColPreguntas2() {
-		return this.colPreguntas2;
-	}
-
-	public void setColPreguntas2(List<ColPregunta> colPreguntas2) {
-		this.colPreguntas2 = colPreguntas2;
-	}
-
-	public ColPregunta addColPreguntas2(ColPregunta colPreguntas2) {
-		getColPreguntas2().add(colPreguntas2);
-		colPreguntas2.setColEvaluacion2(this);
-
-		return colPreguntas2;
-	}
-
-	public ColPregunta removeColPreguntas2(ColPregunta colPreguntas2) {
-		getColPreguntas2().remove(colPreguntas2);
-		colPreguntas2.setColEvaluacion2(null);
-
-		return colPreguntas2;
+		return colPregunta;
 	}
 
 }

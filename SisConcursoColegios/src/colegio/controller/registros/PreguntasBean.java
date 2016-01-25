@@ -187,7 +187,7 @@ public class PreguntasBean {
 		List<ColPregunta> lp= manager.findAllPreguntas();
 		lpre= new ArrayList<ColPregunta>();
 		for (ColPregunta pre : lp) {
-			if (pre.getColEvaluacion1().getEvaArea().trim().equals(Funciones.getEstudiante().getEstArea().trim())){
+			if (pre.getColEvaluacion().getEvaArea().trim().equals(Funciones.getEstudiante().getEstArea().trim())){
 				lpre.add(pre);
 			}
 		}

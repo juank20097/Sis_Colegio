@@ -55,25 +55,14 @@ public class ColEstudiante implements Serializable {
 	@Column(name="est_telefono")
 	private String estTelefono;
 
-	private Integer idx;
-
-	//bi-directional many-to-one association to ColInstitucion
-	@ManyToOne
-	@JoinColumn(name="col_institucion")
-	private ColInstitucion colInstitucion1;
-
 	//bi-directional many-to-one association to ColInstitucion
 	@ManyToOne
 	@JoinColumn(name="ins_id")
-	private ColInstitucion colInstitucion2;
+	private ColInstitucion colInstitucion;
 
 	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEstudiante1")
-	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils1;
-
-	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEstudiante2")
-	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils2;
+	@OneToMany(mappedBy="colEstudiante")
+	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils;
 
 	public ColEstudiante() {
 	}
@@ -174,72 +163,34 @@ public class ColEstudiante implements Serializable {
 		this.estTelefono = estTelefono;
 	}
 
-	public Integer getIdx() {
-		return this.idx;
+	public ColInstitucion getColInstitucion() {
+		return this.colInstitucion;
 	}
 
-	public void setIdx(Integer idx) {
-		this.idx = idx;
+	public void setColInstitucion(ColInstitucion colInstitucion) {
+		this.colInstitucion = colInstitucion;
 	}
 
-	public ColInstitucion getColInstitucion1() {
-		return this.colInstitucion1;
+	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils() {
+		return this.colEvaluacionEstudiantils;
 	}
 
-	public void setColInstitucion1(ColInstitucion colInstitucion1) {
-		this.colInstitucion1 = colInstitucion1;
+	public void setColEvaluacionEstudiantils(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils) {
+		this.colEvaluacionEstudiantils = colEvaluacionEstudiantils;
 	}
 
-	public ColInstitucion getColInstitucion2() {
-		return this.colInstitucion2;
+	public ColEvaluacionEstudiantil addColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
+		getColEvaluacionEstudiantils().add(colEvaluacionEstudiantil);
+		colEvaluacionEstudiantil.setColEstudiante(this);
+
+		return colEvaluacionEstudiantil;
 	}
 
-	public void setColInstitucion2(ColInstitucion colInstitucion2) {
-		this.colInstitucion2 = colInstitucion2;
-	}
+	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
+		getColEvaluacionEstudiantils().remove(colEvaluacionEstudiantil);
+		colEvaluacionEstudiantil.setColEstudiante(null);
 
-	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils1() {
-		return this.colEvaluacionEstudiantils1;
-	}
-
-	public void setColEvaluacionEstudiantils1(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils1) {
-		this.colEvaluacionEstudiantils1 = colEvaluacionEstudiantils1;
-	}
-
-	public ColEvaluacionEstudiantil addColEvaluacionEstudiantils1(ColEvaluacionEstudiantil colEvaluacionEstudiantils1) {
-		getColEvaluacionEstudiantils1().add(colEvaluacionEstudiantils1);
-		colEvaluacionEstudiantils1.setColEstudiante1(this);
-
-		return colEvaluacionEstudiantils1;
-	}
-
-	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantils1(ColEvaluacionEstudiantil colEvaluacionEstudiantils1) {
-		getColEvaluacionEstudiantils1().remove(colEvaluacionEstudiantils1);
-		colEvaluacionEstudiantils1.setColEstudiante1(null);
-
-		return colEvaluacionEstudiantils1;
-	}
-
-	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils2() {
-		return this.colEvaluacionEstudiantils2;
-	}
-
-	public void setColEvaluacionEstudiantils2(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils2) {
-		this.colEvaluacionEstudiantils2 = colEvaluacionEstudiantils2;
-	}
-
-	public ColEvaluacionEstudiantil addColEvaluacionEstudiantils2(ColEvaluacionEstudiantil colEvaluacionEstudiantils2) {
-		getColEvaluacionEstudiantils2().add(colEvaluacionEstudiantils2);
-		colEvaluacionEstudiantils2.setColEstudiante2(this);
-
-		return colEvaluacionEstudiantils2;
-	}
-
-	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantils2(ColEvaluacionEstudiantil colEvaluacionEstudiantils2) {
-		getColEvaluacionEstudiantils2().remove(colEvaluacionEstudiantils2);
-		colEvaluacionEstudiantils2.setColEstudiante2(null);
-
-		return colEvaluacionEstudiantils2;
+		return colEvaluacionEstudiantil;
 	}
 
 }

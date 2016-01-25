@@ -21,8 +21,6 @@ public class ColPregunta implements Serializable {
 	@Column(name="pre_id")
 	private Integer preId;
 
-	private Integer idx;
-
 	@Column(name="pre_grupo_tematica")
 	private String preGrupoTematica;
 
@@ -36,30 +34,17 @@ public class ColPregunta implements Serializable {
 	private String preTopico;
 
 	//bi-directional many-to-one association to ColOpcionesRespuesta
-	@OneToMany(mappedBy="colPregunta1")
-	private List<ColOpcionesRespuesta> colOpcionesRespuestas1;
-
-	//bi-directional many-to-one association to ColOpcionesRespuesta
-	@OneToMany(mappedBy="colPregunta2")
-	private List<ColOpcionesRespuesta> colOpcionesRespuestas2;
-
-	//bi-directional many-to-one association to ColEvaluacion
-	@ManyToOne
-	@JoinColumn(name="col_evaluacion")
-	private ColEvaluacion colEvaluacion1;
+	@OneToMany(mappedBy="colPregunta")
+	private List<ColOpcionesRespuesta> colOpcionesRespuestas;
 
 	//bi-directional many-to-one association to ColEvaluacion
 	@ManyToOne
 	@JoinColumn(name="eva_id")
-	private ColEvaluacion colEvaluacion2;
+	private ColEvaluacion colEvaluacion;
 
 	//bi-directional many-to-one association to ColRespuesta
-	@OneToMany(mappedBy="colPregunta1")
-	private List<ColRespuesta> colRespuestas1;
-
-	//bi-directional many-to-one association to ColRespuesta
-	@OneToMany(mappedBy="colPregunta2")
-	private List<ColRespuesta> colRespuestas2;
+	@OneToMany(mappedBy="colPregunta")
+	private List<ColRespuesta> colRespuestas;
 
 	public ColPregunta() {
 	}
@@ -70,14 +55,6 @@ public class ColPregunta implements Serializable {
 
 	public void setPreId(Integer preId) {
 		this.preId = preId;
-	}
-
-	public Integer getIdx() {
-		return this.idx;
-	}
-
-	public void setIdx(Integer idx) {
-		this.idx = idx;
 	}
 
 	public String getPreGrupoTematica() {
@@ -112,108 +89,56 @@ public class ColPregunta implements Serializable {
 		this.preTopico = preTopico;
 	}
 
-	public List<ColOpcionesRespuesta> getColOpcionesRespuestas1() {
-		return this.colOpcionesRespuestas1;
+	public List<ColOpcionesRespuesta> getColOpcionesRespuestas() {
+		return this.colOpcionesRespuestas;
 	}
 
-	public void setColOpcionesRespuestas1(List<ColOpcionesRespuesta> colOpcionesRespuestas1) {
-		this.colOpcionesRespuestas1 = colOpcionesRespuestas1;
+	public void setColOpcionesRespuestas(List<ColOpcionesRespuesta> colOpcionesRespuestas) {
+		this.colOpcionesRespuestas = colOpcionesRespuestas;
 	}
 
-	public ColOpcionesRespuesta addColOpcionesRespuestas1(ColOpcionesRespuesta colOpcionesRespuestas1) {
-		getColOpcionesRespuestas1().add(colOpcionesRespuestas1);
-		colOpcionesRespuestas1.setColPregunta1(this);
+	public ColOpcionesRespuesta addColOpcionesRespuesta(ColOpcionesRespuesta colOpcionesRespuesta) {
+		getColOpcionesRespuestas().add(colOpcionesRespuesta);
+		colOpcionesRespuesta.setColPregunta(this);
 
-		return colOpcionesRespuestas1;
+		return colOpcionesRespuesta;
 	}
 
-	public ColOpcionesRespuesta removeColOpcionesRespuestas1(ColOpcionesRespuesta colOpcionesRespuestas1) {
-		getColOpcionesRespuestas1().remove(colOpcionesRespuestas1);
-		colOpcionesRespuestas1.setColPregunta1(null);
+	public ColOpcionesRespuesta removeColOpcionesRespuesta(ColOpcionesRespuesta colOpcionesRespuesta) {
+		getColOpcionesRespuestas().remove(colOpcionesRespuesta);
+		colOpcionesRespuesta.setColPregunta(null);
 
-		return colOpcionesRespuestas1;
+		return colOpcionesRespuesta;
 	}
 
-	public List<ColOpcionesRespuesta> getColOpcionesRespuestas2() {
-		return this.colOpcionesRespuestas2;
+	public ColEvaluacion getColEvaluacion() {
+		return this.colEvaluacion;
 	}
 
-	public void setColOpcionesRespuestas2(List<ColOpcionesRespuesta> colOpcionesRespuestas2) {
-		this.colOpcionesRespuestas2 = colOpcionesRespuestas2;
+	public void setColEvaluacion(ColEvaluacion colEvaluacion) {
+		this.colEvaluacion = colEvaluacion;
 	}
 
-	public ColOpcionesRespuesta addColOpcionesRespuestas2(ColOpcionesRespuesta colOpcionesRespuestas2) {
-		getColOpcionesRespuestas2().add(colOpcionesRespuestas2);
-		colOpcionesRespuestas2.setColPregunta2(this);
-
-		return colOpcionesRespuestas2;
+	public List<ColRespuesta> getColRespuestas() {
+		return this.colRespuestas;
 	}
 
-	public ColOpcionesRespuesta removeColOpcionesRespuestas2(ColOpcionesRespuesta colOpcionesRespuestas2) {
-		getColOpcionesRespuestas2().remove(colOpcionesRespuestas2);
-		colOpcionesRespuestas2.setColPregunta2(null);
-
-		return colOpcionesRespuestas2;
+	public void setColRespuestas(List<ColRespuesta> colRespuestas) {
+		this.colRespuestas = colRespuestas;
 	}
 
-	public ColEvaluacion getColEvaluacion1() {
-		return this.colEvaluacion1;
+	public ColRespuesta addColRespuesta(ColRespuesta colRespuesta) {
+		getColRespuestas().add(colRespuesta);
+		colRespuesta.setColPregunta(this);
+
+		return colRespuesta;
 	}
 
-	public void setColEvaluacion1(ColEvaluacion colEvaluacion1) {
-		this.colEvaluacion1 = colEvaluacion1;
-	}
+	public ColRespuesta removeColRespuesta(ColRespuesta colRespuesta) {
+		getColRespuestas().remove(colRespuesta);
+		colRespuesta.setColPregunta(null);
 
-	public ColEvaluacion getColEvaluacion2() {
-		return this.colEvaluacion2;
-	}
-
-	public void setColEvaluacion2(ColEvaluacion colEvaluacion2) {
-		this.colEvaluacion2 = colEvaluacion2;
-	}
-
-	public List<ColRespuesta> getColRespuestas1() {
-		return this.colRespuestas1;
-	}
-
-	public void setColRespuestas1(List<ColRespuesta> colRespuestas1) {
-		this.colRespuestas1 = colRespuestas1;
-	}
-
-	public ColRespuesta addColRespuestas1(ColRespuesta colRespuestas1) {
-		getColRespuestas1().add(colRespuestas1);
-		colRespuestas1.setColPregunta1(this);
-
-		return colRespuestas1;
-	}
-
-	public ColRespuesta removeColRespuestas1(ColRespuesta colRespuestas1) {
-		getColRespuestas1().remove(colRespuestas1);
-		colRespuestas1.setColPregunta1(null);
-
-		return colRespuestas1;
-	}
-
-	public List<ColRespuesta> getColRespuestas2() {
-		return this.colRespuestas2;
-	}
-
-	public void setColRespuestas2(List<ColRespuesta> colRespuestas2) {
-		this.colRespuestas2 = colRespuestas2;
-	}
-
-	public ColRespuesta addColRespuestas2(ColRespuesta colRespuestas2) {
-		getColRespuestas2().add(colRespuestas2);
-		colRespuestas2.setColPregunta2(this);
-
-		return colRespuestas2;
-	}
-
-	public ColRespuesta removeColRespuestas2(ColRespuesta colRespuestas2) {
-		getColRespuestas2().remove(colRespuestas2);
-		colRespuestas2.setColPregunta2(null);
-
-		return colRespuestas2;
+		return colRespuesta;
 	}
 
 }

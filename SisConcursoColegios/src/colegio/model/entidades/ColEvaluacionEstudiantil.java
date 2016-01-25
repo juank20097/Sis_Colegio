@@ -3,6 +3,7 @@ package colegio.model.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 
 /**
@@ -22,7 +23,7 @@ public class ColEvaluacionEstudiantil implements Serializable {
 	private Integer eesId;
 
 	@Column(name="ees_calificacion")
-	private double eesCalificacion;
+	private BigDecimal eesCalificacion;
 
 	@Column(name="ees_fecha_fin")
 	private Timestamp eesFechaFin;
@@ -30,37 +31,20 @@ public class ColEvaluacionEstudiantil implements Serializable {
 	@Column(name="ees_fecha_ini")
 	private Timestamp eesFechaIni;
 
-	private Integer idx;
-
-	//bi-directional many-to-one association to ColEstudiante
-	@ManyToOne
-	@JoinColumn(name="col_estudiante")
-	private ColEstudiante colEstudiante1;
-
 	//bi-directional many-to-one association to ColEstudiante
 	@ManyToOne
 	@JoinColumn(name="est_id")
-	private ColEstudiante colEstudiante2;
-
-	//bi-directional many-to-one association to ColEvaluacion
-	@ManyToOne
-	@JoinColumn(name="col_evaluacion")
-	private ColEvaluacion colEvaluacion1;
+	private ColEstudiante colEstudiante;
 
 	//bi-directional many-to-one association to ColEvaluacion
 	@ManyToOne
 	@JoinColumn(name="eva_id")
-	private ColEvaluacion colEvaluacion2;
+	private ColEvaluacion colEvaluacion;
 
 	//bi-directional many-to-one association to ColRespuesta
 	@ManyToOne
 	@JoinColumn(name="res_id")
-	private ColRespuesta colRespuesta1;
-
-	//bi-directional many-to-one association to ColRespuesta
-	@ManyToOne
-	@JoinColumn(name="col_respuesta")
-	private ColRespuesta colRespuesta2;
+	private ColRespuesta colRespuesta;
 
 	public ColEvaluacionEstudiantil() {
 	}
@@ -73,11 +57,11 @@ public class ColEvaluacionEstudiantil implements Serializable {
 		this.eesId = eesId;
 	}
 
-	public double getEesCalificacion() {
+	public BigDecimal getEesCalificacion() {
 		return this.eesCalificacion;
 	}
 
-	public void setEesCalificacion(double eesCalificacion) {
+	public void setEesCalificacion(BigDecimal eesCalificacion) {
 		this.eesCalificacion = eesCalificacion;
 	}
 
@@ -97,60 +81,28 @@ public class ColEvaluacionEstudiantil implements Serializable {
 		this.eesFechaIni = eesFechaIni;
 	}
 
-	public Integer getIdx() {
-		return this.idx;
+	public ColEstudiante getColEstudiante() {
+		return this.colEstudiante;
 	}
 
-	public void setIdx(Integer idx) {
-		this.idx = idx;
+	public void setColEstudiante(ColEstudiante colEstudiante) {
+		this.colEstudiante = colEstudiante;
 	}
 
-	public ColEstudiante getColEstudiante1() {
-		return this.colEstudiante1;
+	public ColEvaluacion getColEvaluacion() {
+		return this.colEvaluacion;
 	}
 
-	public void setColEstudiante1(ColEstudiante colEstudiante1) {
-		this.colEstudiante1 = colEstudiante1;
+	public void setColEvaluacion(ColEvaluacion colEvaluacion) {
+		this.colEvaluacion = colEvaluacion;
 	}
 
-	public ColEstudiante getColEstudiante2() {
-		return this.colEstudiante2;
+	public ColRespuesta getColRespuesta() {
+		return this.colRespuesta;
 	}
 
-	public void setColEstudiante2(ColEstudiante colEstudiante2) {
-		this.colEstudiante2 = colEstudiante2;
-	}
-
-	public ColEvaluacion getColEvaluacion1() {
-		return this.colEvaluacion1;
-	}
-
-	public void setColEvaluacion1(ColEvaluacion colEvaluacion1) {
-		this.colEvaluacion1 = colEvaluacion1;
-	}
-
-	public ColEvaluacion getColEvaluacion2() {
-		return this.colEvaluacion2;
-	}
-
-	public void setColEvaluacion2(ColEvaluacion colEvaluacion2) {
-		this.colEvaluacion2 = colEvaluacion2;
-	}
-
-	public ColRespuesta getColRespuesta1() {
-		return this.colRespuesta1;
-	}
-
-	public void setColRespuesta1(ColRespuesta colRespuesta1) {
-		this.colRespuesta1 = colRespuesta1;
-	}
-
-	public ColRespuesta getColRespuesta2() {
-		return this.colRespuesta2;
-	}
-
-	public void setColRespuesta2(ColRespuesta colRespuesta2) {
-		this.colRespuesta2 = colRespuesta2;
+	public void setColRespuesta(ColRespuesta colRespuesta) {
+		this.colRespuesta = colRespuesta;
 	}
 
 }

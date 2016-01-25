@@ -10,8 +10,6 @@
 		<class>colegio.model.entidades.ColParametro</class>
 		<class>colegio.model.entidades.ColPregunta</class>
 		<class>colegio.model.entidades.ColRespuesta</class>
-		<class>colegio.model.entidades.GenProvincia</class>
-		<class>colegio.model.entidades.GenZona</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sis_colegio"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>

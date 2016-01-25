@@ -89,12 +89,8 @@ public class ColInstitucion implements Serializable {
 	private String insZona;
 
 	//bi-directional many-to-one association to ColEstudiante
-	@OneToMany(mappedBy="colInstitucion1")
-	private List<ColEstudiante> colEstudiantes1;
-
-	//bi-directional many-to-one association to ColEstudiante
-	@OneToMany(mappedBy="colInstitucion2")
-	private List<ColEstudiante> colEstudiantes2;
+	@OneToMany(mappedBy="colInstitucion")
+	private List<ColEstudiante> colEstudiantes;
 
 	public ColInstitucion() {
 	}
@@ -283,48 +279,26 @@ public class ColInstitucion implements Serializable {
 		this.insZona = insZona;
 	}
 
-	public List<ColEstudiante> getColEstudiantes1() {
-		return this.colEstudiantes1;
+	public List<ColEstudiante> getColEstudiantes() {
+		return this.colEstudiantes;
 	}
 
-	public void setColEstudiantes1(List<ColEstudiante> colEstudiantes1) {
-		this.colEstudiantes1 = colEstudiantes1;
+	public void setColEstudiantes(List<ColEstudiante> colEstudiantes) {
+		this.colEstudiantes = colEstudiantes;
 	}
 
-	public ColEstudiante addColEstudiantes1(ColEstudiante colEstudiantes1) {
-		getColEstudiantes1().add(colEstudiantes1);
-		colEstudiantes1.setColInstitucion1(this);
+	public ColEstudiante addColEstudiante(ColEstudiante colEstudiante) {
+		getColEstudiantes().add(colEstudiante);
+		colEstudiante.setColInstitucion(this);
 
-		return colEstudiantes1;
+		return colEstudiante;
 	}
 
-	public ColEstudiante removeColEstudiantes1(ColEstudiante colEstudiantes1) {
-		getColEstudiantes1().remove(colEstudiantes1);
-		colEstudiantes1.setColInstitucion1(null);
+	public ColEstudiante removeColEstudiante(ColEstudiante colEstudiante) {
+		getColEstudiantes().remove(colEstudiante);
+		colEstudiante.setColInstitucion(null);
 
-		return colEstudiantes1;
-	}
-
-	public List<ColEstudiante> getColEstudiantes2() {
-		return this.colEstudiantes2;
-	}
-
-	public void setColEstudiantes2(List<ColEstudiante> colEstudiantes2) {
-		this.colEstudiantes2 = colEstudiantes2;
-	}
-
-	public ColEstudiante addColEstudiantes2(ColEstudiante colEstudiantes2) {
-		getColEstudiantes2().add(colEstudiantes2);
-		colEstudiantes2.setColInstitucion2(this);
-
-		return colEstudiantes2;
-	}
-
-	public ColEstudiante removeColEstudiantes2(ColEstudiante colEstudiantes2) {
-		getColEstudiantes2().remove(colEstudiantes2);
-		colEstudiantes2.setColInstitucion2(null);
-
-		return colEstudiantes2;
+		return colEstudiante;
 	}
 
 }

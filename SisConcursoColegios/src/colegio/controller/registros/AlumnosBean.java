@@ -758,7 +758,7 @@ public class AlumnosBean {
 			}
 			if (!var_ins.equals("all") && var_are.equals("all")) {
 				for (ColEstudiante e : est) {
-					if (e.getColInstitucion1().getInsNombre().trim()
+					if (e.getColInstitucion().getInsNombre().trim()
 							.equals(var_ins.trim())) {
 						allest.add(e);
 					}
@@ -774,7 +774,7 @@ public class AlumnosBean {
 			if (!var_ins.equals("all") && !var_are.equals("all")) {
 				for (ColEstudiante e : est) {
 					if (e.getEstArea().trim().equals(var_are.trim())
-							&& e.getColInstitucion1().getInsNombre().trim()
+							&& e.getColInstitucion().getInsNombre().trim()
 									.equals(var_ins.trim())) {
 						allest.add(e);
 					}

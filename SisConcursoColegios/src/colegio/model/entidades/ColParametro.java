@@ -26,9 +26,6 @@ public class ColParametro implements Serializable {
 	@Column(name="par_referencia")
 	private String parReferencia;
 
-	@Column(name="par_vista")
-	private String parVista;
-
 	public ColParametro() {
 	}
 
@@ -54,14 +51,6 @@ public class ColParametro implements Serializable {
 
 	public void setParReferencia(String parReferencia) {
 		this.parReferencia = parReferencia;
-	}
-
-	public String getParVista() {
-		return this.parVista;
-	}
-
-	public void setParVista(String parVista) {
-		this.parVista = parVista;
 	}
 
 }

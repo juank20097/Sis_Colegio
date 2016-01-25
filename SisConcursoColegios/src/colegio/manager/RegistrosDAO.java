@@ -12,9 +12,6 @@ import colegio.model.entidades.ColInstitucionesSenescyt;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColParametro;
 import colegio.model.entidades.ColPregunta;
-import colegio.model.entidades.GenProvincia;
-import colegio.model.entidades.GenZona;
-
 /**
  * Clase MatriculasDAO permite manejar el HibernateDAO en conveniencia a la
  * gestion de matricula y reservas
@@ -155,68 +152,6 @@ public class RegistrosDAO {
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Creación de metodos para el manejo de la tabla GenZona
-	 * 
-	 */
-
-	/**
-	 * Metodo para listar todas los existentes
-	 * 
-	 * @return La lista de todas encontradas
-	 */
-	@SuppressWarnings("unchecked")
-	public List<GenZona> findAllZonas() throws Exception {
-		return manager.findAll(GenZona.class);
-	}// Cierre del metodo
-
-	/**
-	 * Metodo para listar todas los existentes
-	 * 
-	 * @return La lista de todas encontradas
-	 */
-	@SuppressWarnings("unchecked")
-	public List<GenProvincia> findProvinciasXNombre(String nombre)  throws Exception{
-		List<GenProvincia> p1 = new ArrayList<GenProvincia>();
-		GenZona z1 = new GenZona();
-		if (nombre == null) {
-			p1 = null;
-			return p1;
-		} else {
-			List<GenZona> z = manager.findAll(GenZona.class);
-			for (GenZona zona : z) {
-				if (zona.getZonNombre().trim().equals(nombre.trim())) {
-					z1 = zona;
-				}
-			}
-
-			List<GenProvincia> p = manager.findAll(GenProvincia.class);
-			for (GenProvincia pro : p) {
-				if (pro.getGenZona1().getZonId() == z1.getZonId()) {
-					p1.add(pro);
-				}
-			}
-			return p1;
-		}
-	}// Cierre del metodo
-
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Creación de metodos para el manejo de la tabla GenProvincias
-	 * 
-	 */
-
-	/**
-	 * Metodo para listar todas los existentes
-	 * 
-	 * @return La lista de todas encontradas
-	 */
-	@SuppressWarnings("unchecked")
-	public List<GenProvincia> findAllProvincias() throws Exception {
-		return manager.findAll(GenProvincia.class);
-	}// Cierre del metodo
-
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
 	 * Creación de metodos para el manejo de la tabla ColInstitucionesSenescyt
 	 * 
 	 */
@@ -267,8 +202,14 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColEstudiante> findAllEstudiantesXID(Integer id_ins) {
-		return manager.findWhere(ColEstudiante.class, "ColInstitucion="
-				+ id_ins + "", null);
+		List<ColEstudiante> c=new ArrayList<>();
+		List<ColEstudiante> le= manager.findAll(ColEstudiante.class);
+		for (ColEstudiante col : le) {
+			if (col.getColInstitucion().getInsId()==id_ins){
+				c.add(col);
+			}
+		}
+		return c;
 	}// Cierre del metodo
 
 	/**
@@ -317,7 +258,7 @@ public class RegistrosDAO {
 			est.setEstTelefono(telefono);
 			est.setEstEstado("A");
 			ins = this.InstitucionByID(id_ins);
-			est.setColInstitucion1(ins);
+			est.setColInstitucion(ins);
 			est.setEstClave(Funciones.randomString(5));
 			manager.insertar(est);
 		} catch (Exception e) {
