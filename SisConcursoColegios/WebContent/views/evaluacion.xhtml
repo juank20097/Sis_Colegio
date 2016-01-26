@@ -21,8 +21,8 @@
 			<b:column span="3">
 				<b:panel>
 				<center>
-<!-- 				<h1><p:outputLabel id="time" value="#{preguntasBean.time}"/></h1> -->
-<!-- 				<p:poll interval="1" listener="#{preguntasBean.calculoTiempo()}" update="time" /> -->
+				<h1><p:outputLabel id="time" value="#{preguntasBean.time}"/></h1>
+				<p:poll interval="1" widgetVar="poll" listener="#{preguntasBean.calculoTiempo()}" update="time" />
 				</center>
 				</b:panel>
 			</b:column>

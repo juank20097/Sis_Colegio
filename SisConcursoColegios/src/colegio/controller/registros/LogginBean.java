@@ -19,7 +19,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CloseEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -414,6 +413,7 @@ public class LogginBean {
 	public void calculoTiempo() {
 		if (t_par != 0L) {
 			long t_actual = new Date().getTime();
+			if (t_par>=t_actual){
 			long t_total = t_par - t_actual;
 
 			dia = t_total / (24 * 60 * 60 * 1000);
@@ -431,6 +431,10 @@ public class LogginBean {
 			}
 			time = "Dias: " + dia + "\n Horas: " + hora + "\n Minutos: "
 					+ minuto + "\n Segundos: " + segundo;
+		}
+			else{
+				time = "Dias: 0 \n Horas: 0 \n Minutos: 0 \n Segundos: 0";
+			}
 		}
 
 		System.out.println(time);

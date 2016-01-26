@@ -2,6 +2,7 @@ package colegio.controller.registros;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -9,8 +10,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
 
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColPregunta;
@@ -205,6 +209,7 @@ public class PreguntasBean {
 	}
 	
 	public void calculoTiempo(){
+			if (login.getEstudiante().getEstFechaFin().getTime()>=new Date().getTime()){
 			   long	timer =login.getEstudiante().getEstFechaFin().getTime() - new Date().getTime();
 			   
 			    long minutos=0;
@@ -221,6 +226,19 @@ public class PreguntasBean {
 				}
 				
 				time=minutos+":"+segundos;
+				System.out.println(time);
 			}
-
+			else{
+				time="00:00";
+				try {
+					login.logout();
+					FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/SisConcursoColegios/faces/index.xhtml");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	}
+	
 }
