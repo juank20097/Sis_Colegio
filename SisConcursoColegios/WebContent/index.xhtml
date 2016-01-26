@@ -121,7 +121,7 @@
 								</b:row>
 							</b:panel>
 						</b:well>
-						
+
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false">
 							<p:graphicImage value="resources/img/cargando.gif" />
@@ -138,16 +138,21 @@
 		</b:row>
 
 		<p:dialog header="Información" resizable="false" widgetVar="info"
-			modal="true" height="200" width="500">
+			modal="true" height="200" width="500" closable="false">
 			<h:form id="d">
 				<center>
 					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
 					<p>Tu prueba esta programada para dentro de:</p>
-								<h4><p:outputLabel id="time" value="#{logginBean.time}"/></h4>
-					    		<p:poll interval="1" listener="#{logginBean.calculoTiempo()}" autoStart="false" update="time" />
+					<h4>
+						<p:outputLabel id="time" value="#{logginBean.time}" />
+					</h4>
+					<p:poll widgetVar="poll" interval="1" listener="#{logginBean.calculoTiempo()}" autoStart="false" update="time" />
 					<p>(Cuando el reloj este en cero debes salir y volver a
 						ingresar)</p>
+					<b:commandButton look="info"
+										action="#{logginBean.cerrarDialog}" value="  Salir  "></b:commandButton>
 				</center>
+			
 			</h:form>
 		</p:dialog>
 

@@ -610,9 +610,9 @@ public class AlumnosBean {
 						String t = crearsmsAlumno(es.getEstNombres(),
 								es.getEstApellidos(), es.getEstCedula(),
 								es.getEstClave());
-						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
-								es.getEstCorreo(),
-								"Notificación de Olimpiadas de Ciencias", t);
+//						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
+//								es.getEstCorreo(),
+//								"Notificación de Olimpiadas de Ciencias", t);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

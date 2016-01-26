@@ -19,6 +19,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CloseEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -70,7 +71,6 @@ public class LogginBean {
 	private boolean parametroIns;
 
 	public LogginBean() {
-		time = "";
 		institucion = new ColInstitucion();
 		manager = new RegistrosDAO();
 		mngAcc = new ManagerAcceso();
@@ -215,10 +215,10 @@ public class LogginBean {
 	public String ingresoLogin() {
 		String r = "";
 		if (usuario != null && contrasena != null) {
-			 r = this.loginEst();
-			if (r.isEmpty() || r == "") {
-				r = this.loginCoo();
-			}
+			r = this.loginEst();
+			// if (r.isEmpty() || r == "") {
+			// r = this.loginCoo();
+			// }
 			if (r.isEmpty() || r == "") {
 				r = this.login();
 			}
@@ -271,25 +271,33 @@ public class LogginBean {
 			if (est.getEstCedula().trim().equals(usuario.trim())
 					&& est.getEstClave().trim().equals(contrasena.trim())
 					&& est.getEstEstado().equals("N")) {
-			if ((new Date().after(est.getEstFechaIni())) && (new Date()
-									.before(est.getEstFechaFin()))) {
-						setEstudiante(est);
-						r = "views/evaluacion.xhtml?faces-redirect=true";
-						break;
-					} else {
-						est_nombre = est.getEstNombres() + " "
-								+ est.getEstApellidos();
-						t_par = est.getEstFechaIni().getTime();
-						RequestContext context = RequestContext
-								.getCurrentInstance();
-						context.execute("PF('info').show();");
-						context.execute("PF('poll').start();");
-						r = "a";
-					}
+				if ((new Date().after(est.getEstFechaIni()))
+						&& (new Date().before(est.getEstFechaFin()))) {
+					setEstudiante(est);
+					r = "views/evaluacion.xhtml?faces-redirect=true";
+					break;
+				} else {
+					est_nombre = est.getEstNombres() + " "
+							+ est.getEstApellidos();
+					t_par = est.getEstFechaIni().getTime();
+					RequestContext context = RequestContext
+							.getCurrentInstance();
+					context.execute("PF('info').show();");
+					context.execute("PF('poll').start();");
+					r = "a";
 				}
+			}
 		}
 		return r;
 	}
+
+	public String cerrarDialog() {
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('poll').stop();");
+		return "";
+    }
+	
+
 
 	/**
 	 * Permite logearse al sistema
