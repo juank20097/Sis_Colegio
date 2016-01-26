@@ -7,10 +7,7 @@ package colegio.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import colegio.controller.generic.Funciones;
-import colegio.controller.registros.InstitucionBean;
-import colegio.model.*;
-import colegio.model.entidades.ColInstitucion;
+import colegio.model.entidades.ColPregunta;
 
 
 
@@ -44,9 +41,13 @@ public class Test {
 		
 //	RegistrosDAO r = new RegistrosDAO();
 		ManagerDAO m = new ManagerDAO();
-		List<ColInstitucion> g=new ArrayList<>();
-		g=m.findWhere(ColInstitucion.class, "o.insZona=", null);
-		System.out.println(g.size());
+//		List<ColInstitucion> g=new ArrayList<>();
+//		g=m.findWhere(ColInstitucion.class, "o.insZona=", null);
+//		System.out.println(g.size());
+		
+		List<ColPregunta> t=new ArrayList<>();
+		t=m.findAllAleatorioP(ColPregunta.class);
+		System.out.println(t.size());
 //	List<COL_Instituciones_Senescyt> c= new ArrayList<COL_Instituciones_Senescyt>();
 //	c=r.findAllInstitucionesS();
 //	System.out.println(c.size());

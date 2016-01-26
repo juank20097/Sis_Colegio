@@ -1,5 +1,6 @@
 package colegio.manager;
 
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -337,7 +338,8 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findAllPreguntas() {
-		return manager.findAllAleatorio(ColPregunta.class);
+		return manager.findAllAleatorioP(ColPregunta.class);
+//		return manager.findAllAleatorioP(ColPregunta.class);
 	}// Cierre del metodo
 
 	/**

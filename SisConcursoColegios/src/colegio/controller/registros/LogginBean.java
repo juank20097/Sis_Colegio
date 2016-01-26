@@ -23,13 +23,11 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import colegio.acceso.entidades.Menu;
-import colegio.controller.generic.Funciones;
 import colegio.controller.generic.Mensaje;
 import colegio.manager.ManagerAcceso;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEstudiante;
 import colegio.model.entidades.ColInstitucion;
-import colegio.model.entidades.ColParametro;
 
 /**
  * @author jestevez
@@ -62,6 +60,7 @@ public class LogginBean {
 
 	// Atributo para obtener la institucion
 	private ColInstitucion institucion;
+	private ColEstudiante estudiante;
 
 	private StreamedContent file;
 	private StreamedContent file2;
@@ -88,6 +87,14 @@ public class LogginBean {
 
 	public void setFile3(StreamedContent file3) {
 		this.file3 = file3;
+	}
+
+	public ColEstudiante getEstudiante() {
+		return estudiante;
+	}
+
+	public void setEstudiante(ColEstudiante estudiante) {
+		this.estudiante = estudiante;
 	}
 
 	/**
@@ -263,16 +270,11 @@ public class LogginBean {
 		for (ColEstudiante est : e) {
 			if (est.getEstCedula().trim().equals(usuario.trim())
 					&& est.getEstClave().trim().equals(contrasena.trim())
-					&& est.getEstEstado() == "N") {
-				List<ColParametro> p = manager.findAllParametros();
-				for (ColParametro par : p) {
-					if ((par.getParReferencia().trim().equals(est.getEstArea()
-							.trim())) // ){
-							&& ((new Date().after(est.getEstFechaIni())) && (new Date()
-									.before(est.getEstFechaFin())))) {
-						Funciones.setEstudiante(est);
-						//r = "views/" + par.getParVista().trim()
-							//	+ "?faces-redirect=true";
+					&& est.getEstEstado().equals("N")) {
+			if ((new Date().after(est.getEstFechaIni())) && (new Date()
+									.before(est.getEstFechaFin()))) {
+						setEstudiante(est);
+						r = "views/evaluacion.xhtml?faces-redirect=true";
 						break;
 					} else {
 						est_nombre = est.getEstNombres() + " "
@@ -285,7 +287,6 @@ public class LogginBean {
 						r = "a";
 					}
 				}
-			}
 		}
 		return r;
 	}
@@ -324,7 +325,8 @@ public class LogginBean {
 		setMenu(new ArrayList<Menu>());
 		setUsuario(null);
 		setContrasena(null);
-		Funciones.setEstudiante(null);
+		setInstitucion(null);
+		setEstudiante(null);
 		return "/index?faces-redirect=true";
 	}
 

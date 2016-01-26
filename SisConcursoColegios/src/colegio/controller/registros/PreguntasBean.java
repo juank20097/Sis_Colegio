@@ -3,13 +3,15 @@ package colegio.controller.registros;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
-import colegio.controller.generic.Funciones;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColPregunta;
 
@@ -24,6 +26,8 @@ public class PreguntasBean {
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
+	
+	private LogginBean login;
 
 	// Atributos de las Preguntas
 	/** @pdOid 982cbb14-137f-42ea-8f91-8772ab8b75ab */
@@ -48,6 +52,11 @@ public class PreguntasBean {
 
 	public PreguntasBean() {
 		LogginBean.verificarSession();
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		login = (LogginBean) session.getAttribute("logginBean");
+		
 		manager = new RegistrosDAO();
 		this.cargarPreguntas();
 		this.calculoTiempo();
@@ -81,7 +90,7 @@ public class PreguntasBean {
 	 * @param p_area the p_area to set
 	 */
 	public void setP_area(String p_area) {
-		p_area=Funciones.getEstudiante().getEstArea();
+		p_area=login.getEstudiante().getEstArea();
 		this.p_area = p_area;
 	}
 
@@ -187,16 +196,16 @@ public class PreguntasBean {
 		List<ColPregunta> lp= manager.findAllPreguntas();
 		lpre= new ArrayList<ColPregunta>();
 		for (ColPregunta pre : lp) {
-			if (pre.getColEvaluacion().getEvaArea().trim().equals(Funciones.getEstudiante().getEstArea().trim())){
+			if (pre.getColEvaluacion().getEvaArea().trim().equals(login.getEstudiante().getEstArea().trim())){
 				lpre.add(pre);
+				Collections.shuffle(lpre);
 			}
 		}
-		System.out.println(lpre.size());
 		
 	}
 	
 	public void calculoTiempo(){
-			   long	timer =Funciones.getEstudiante().getEstFechaFin().getTime() - new Date().getTime();
+			   long	timer =login.getEstudiante().getEstFechaFin().getTime() - new Date().getTime();
 			   
 			    long minutos=0;
 			    long segundos=0;

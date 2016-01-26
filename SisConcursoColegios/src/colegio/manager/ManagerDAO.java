@@ -139,15 +139,15 @@ public class ManagerDAO {
 	 * @return Listado resultante.
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findAllAleatorio(Class clase) {
-		mostrarLog("findAll", clase.getSimpleName());
+	public List findAllAleatorioP(Class clase) {
+		mostrarLog("findAllAleatorioP", clase.getSimpleName());
 		Query q;
 		List listado;
 		if (!em.getTransaction().isActive()){
 			em.getTransaction().begin();
 		}
-		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o  order by random()");
-		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
+//		q = em.createNativeQuery("select * from col_pregunta order by random()");
+		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o");
 		listado = q.getResultList();
 		em.getTransaction().commit();
 		return listado;

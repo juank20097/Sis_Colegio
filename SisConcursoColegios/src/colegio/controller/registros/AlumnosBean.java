@@ -93,9 +93,12 @@ public class AlumnosBean {
 
 	public AlumnosBean() {
 		LogginBean.verificarSession();
+		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
+		
+		
 		manager = new RegistrosDAO();
 		lest = new ArrayList<ColEstudiante>();
 		allest = new ArrayList<ColEstudiante>();
@@ -638,12 +641,12 @@ public class AlumnosBean {
 				try {
 					manager.editarEstudiante(es.getEstId(), "N", fecha_ini,
 							fecha_fin);
-					String t = crearsmsAlumno(es.getEstNombres(),
-							es.getEstApellidos(), es.getEstCedula(),
-							es.getEstClave());
-					Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
-							es.getEstCorreo(),
-							"Notificación de Olimpiadas de Ciencias", t);
+//					String t = crearsmsAlumno(es.getEstNombres(),
+//							es.getEstApellidos(), es.getEstCedula(),
+//							es.getEstClave());
+					//Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
+						//	es.getEstCorreo(),
+							//"Notificación de Olimpiadas de Ciencias", t);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -747,8 +750,6 @@ public class AlumnosBean {
 	 * @return
 	 */
 	public String generarListado() {
-		System.out.println(var_are);
-		System.out.println(var_ins);
 		allest = new ArrayList<ColEstudiante>();
 		List<ColEstudiante> est;
 		try {

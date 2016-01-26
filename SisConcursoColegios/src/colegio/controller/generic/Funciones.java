@@ -22,31 +22,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
-import colegio.model.entidades.ColEstudiante;
-
 /**
  * @author jestevez
  * 
  */
 public class Funciones {
-
-	private static ColEstudiante estudiante;
-
-	/**
-	 * @return the estudiante
-	 */
-	public static ColEstudiante getEstudiante() {
-		return estudiante;
-	}
-
-	/**
-	 * @param estudiante
-	 *            the estudiante to set
-	 */
-	public static void setEstudiante(ColEstudiante estudiante) {
-		Funciones.estudiante = estudiante;
-	}
 
 	/**
 	 * Atributos para el manejo de estados
