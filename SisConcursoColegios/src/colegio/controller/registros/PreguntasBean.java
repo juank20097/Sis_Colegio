@@ -1,8 +1,7 @@
 package colegio.controller.registros;
 
-
-
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -10,19 +9,21 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.context.RequestContext;
+
+
+
+
 
 import colegio.manager.RegistrosDAO;
+import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColPregunta;
-
 
 /**
  * @author jestevez
- *
+ * 
  */
 @SessionScoped
 @ManagedBean
@@ -30,7 +31,7 @@ public class PreguntasBean {
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
-	
+
 	private LogginBean login;
 
 	// Atributos de las Preguntas
@@ -44,29 +45,41 @@ public class PreguntasBean {
 	private String pre_img_enunciado;
 	/** @pdOid 12ec372c-3a3d-46de-be7a-a7c4f590acf1 */
 	private String pre_img_pregunta;
-	
-	//Atributo para carga de preguntas
+
+	// Atributo para carga de preguntas
 	private List<ColPregunta> lpre = new ArrayList<ColPregunta>();
-	
-	//Atributo para carga de Area
+	private List<ColOpcionesRespuesta> lres = new ArrayList<ColOpcionesRespuesta>();
+
+	// Atributo para carga de Area
 	private String p_area;
-	
-	//Atributo para tomar el tiempo
+
+	// Atributo para tomar el tiempo
 	private String time;
 
 	public PreguntasBean() {
 		LogginBean.verificarSession();
-		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
-		
 		manager = new RegistrosDAO();
 		this.cargarPreguntas();
-		this.calculoTiempo();
+		//this.calculoTiempo();
 	}
 
-	
+	/**
+	 * @return the lres
+	 */
+	public List<ColOpcionesRespuesta> getLres() {
+		return lres;
+	}
+
+	/**
+	 * @param lres the lres to set
+	 */
+	public void setLres(List<ColOpcionesRespuesta> lres) {
+		this.lres = lres;
+	}
+
 	/**
 	 * @return the time
 	 */
@@ -74,14 +87,13 @@ public class PreguntasBean {
 		return time;
 	}
 
-
 	/**
-	 * @param time the time to set
+	 * @param time
+	 *            the time to set
 	 */
 	public void setTime(String time) {
 		this.time = time;
 	}
-
 
 	/**
 	 * @return the p_area
@@ -91,10 +103,11 @@ public class PreguntasBean {
 	}
 
 	/**
-	 * @param p_area the p_area to set
+	 * @param p_area
+	 *            the p_area to set
 	 */
 	public void setP_area(String p_area) {
-		p_area=login.getEstudiante().getEstArea();
+		p_area = login.getEstudiante().getEstArea();
 		this.p_area = p_area;
 	}
 
@@ -195,50 +208,172 @@ public class PreguntasBean {
 		}
 		return p;
 	}
-	
-	public void cargarPreguntas(){
-		List<ColPregunta> lp= manager.findAllPreguntas();
-		lpre= new ArrayList<ColPregunta>();
+
+	public void cargarPreguntas() {
+		System.out.println(login);
+		if (login.getEstudiante()==null){
+			login.logout();
+		}else{
+		List<ColPregunta> lp = manager.findAllPreguntas();
+		lpre = new ArrayList<ColPregunta>();
 		for (ColPregunta pre : lp) {
-			if (pre.getColEvaluacion().getEvaArea().trim().equals(login.getEstudiante().getEstArea().trim())){
+			if (pre.getColEvaluacion().getEvaArea().trim()
+					.equals(login.getEstudiante().getEstArea().trim())) {
 				lpre.add(pre);
-				Collections.shuffle(lpre);
 			}
 		}
+		Collections.shuffle(lpre);
+		}
+	}
+
+	public void calculoTiempo() {
+		if (login.getEstudiante()==null){
+			
+		}else{
+		if (login.getEstudiante().getEstFechaFin().getTime() >= new Date()
+				.getTime()) {
+			long timer = login.getEstudiante().getEstFechaFin().getTime()
+					- new Date().getTime();
+
+			long minutos = 0;
+			long segundos = 0;
+
+			minutos = timer / (60 * 1000);
+			while (minutos >= 60) {
+				minutos = minutos - 60;
+			}
+
+			segundos = timer / 1000;
+			while (segundos >= 60) {
+				segundos = segundos - 60;
+			}
+
+			time = minutos + ":" + segundos;
+			System.out.println(time);
+		} else {
+			time = "00:00";
+			try {
+				login.logout();
+				FacesContext.getCurrentInstance().getExternalContext()
+				.redirect("/SisConcursoColegios/faces/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+	}
+	
+//////////////////////////////////////////--------------Opciones Respuestas---------------///////////////////////////////////////////
+	
+	// Atributos de las Preguntas
+		private Integer oprId;
+		private String oprOpcion;
+		private String oprRespuesta;
+		private BigDecimal oprValor;
+		private Integer colPregunta;
 		
-	}
-	
-	public void calculoTiempo(){
-			if (login.getEstudiante().getEstFechaFin().getTime()>=new Date().getTime()){
-			   long	timer =login.getEstudiante().getEstFechaFin().getTime() - new Date().getTime();
-			   
-			    long minutos=0;
-			    long segundos=0;
-			    
-			   minutos = timer / (60 * 1000);
-				while (minutos >= 60) {
-					minutos = minutos - 60;
+		/**
+		 * @return the oprId
+		 */
+		public Integer getOprId() {
+			return oprId;
+		}
+
+		/**
+		 * @param oprId
+		 *            the oprId to set
+		 */
+		public void setOprId(Integer oprId) {
+			this.oprId = oprId;
+		}
+
+		/**
+		 * @return the oprOpcion
+		 */
+		public String getOprOpcion() {
+			return oprOpcion;
+		}
+
+		/**
+		 * @param oprOpcion
+		 *            the oprOpcion to set
+		 */
+		public void setOprOpcion(String oprOpcion) {
+			this.oprOpcion = oprOpcion;
+		}
+
+		/**
+		 * @return the oprRespuesta
+		 */
+		public String getOprRespuesta() {
+			return oprRespuesta;
+		}
+
+		/**
+		 * @param oprRespuesta
+		 *            the oprRespuesta to set
+		 */
+		public void setOprRespuesta(String oprRespuesta) {
+			this.oprRespuesta = oprRespuesta;
+		}
+
+		/**
+		 * @return the oprValor
+		 */
+		public BigDecimal getOprValor() {
+			return oprValor;
+		}
+
+		/**
+		 * @param oprValor
+		 *            the oprValor to set
+		 */
+		public void setOprValor(BigDecimal oprValor) {
+			this.oprValor = oprValor;
+		}
+
+		/**
+		 * @return the colPregunta
+		 */
+		public Integer getColPregunta() {
+			return colPregunta;
+		}
+
+		/**
+		 * @param colPregunta
+		 *            the colPregunta to set
+		 */
+		public void setColPregunta(Integer colPregunta) {
+			this.colPregunta = colPregunta;
+		}
+		
+		/**
+		 * Metodo para listar todos los Datos de la Entidad
+		 * 
+		 * @return
+		 */
+		public List<ColOpcionesRespuesta> getListOpciones() {
+			List<ColOpcionesRespuesta> p = new ArrayList<ColOpcionesRespuesta>();
+			try {
+				p = manager.findAllOpciones();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return p;
+		}
+
+		public List<ColOpcionesRespuesta> resp(ColPregunta p) {
+			lres = new ArrayList<ColOpcionesRespuesta>();
+			List<ColOpcionesRespuesta> lp = manager.findAllOpciones();
+				for (ColOpcionesRespuesta pre : lp) {
+					if (pre.getColPregunta().getPreId()==p.getPreId()){
+						lres.add(pre);
+					}
 				}
 				
-				segundos = timer / 1000;
-				while (segundos >= 60) {
-					segundos = segundos - 60;
-				}
-				
-				time=minutos+":"+segundos;
-				System.out.println(time);
-			}
-			else{
-				time="00:00";
-				try {
-					login.logout();
-					FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/SisConcursoColegios/faces/index.xhtml");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	}
-	
+				return lres;
+		}
+
 }

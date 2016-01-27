@@ -17,52 +17,60 @@
 			<h1>EVALUACIÓN #{preguntasBean.p_area}</h1>
 		</center>
 		<h:form id="frmE">
-		<b:row>
-			<b:column span="3">
-				<b:panel>
-				<center>
-				<h1><p:outputLabel id="time" value="#{preguntasBean.time}"/></h1>
-				<p:poll interval="1" widgetVar="poll" listener="#{preguntasBean.calculoTiempo()}" update="time" />
-				</center>
-				</b:panel>
-			</b:column>
-			<b:column span="9">
-				<b:panel>
-					<c:forEach items="#{preguntasBean.lpre}" var="pre">
-						<b:row>
-							<b:column span="2">
-								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
-							</b:column>
-							<b:column span="7">
-								<p:outputLabel value="#{pre.preGrupoTematica}"></p:outputLabel>
-							</b:column>
-						</b:row>
-						<b:row>
-							<b:column span="2">
-								<p:outputLabel value="Tópico:"></p:outputLabel>
-							</b:column>
-							<b:column span="7">
-								<p:outputLabel value="#{pre.preTopico}"></p:outputLabel>
-							</b:column>
-						</b:row>
+			<b:row>
+				<b:column span="9">
+					<b:panel>
+						<c:forEach items="#{preguntasBean.lpre}" var="pre">
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="#{pre.preGrupoTematica}"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="#{pre.preTopico}"></p:outputLabel>
+								</b:column>
+							</b:row>
 
-						<b:row>
-							<p:graphicImage
-								value="/resources/img/img_pre/#{pre.preImgEnunciado}"></p:graphicImage>
-						</b:row>
-
-						<b:row>
-							<center>
+							<b:row>
 								<p:graphicImage
-									value="/resources/img/img_cue/#{pre.preImgPregunta}"></p:graphicImage>
-							</center>
-						</b:row>
+									value="/resources/img/img_pre/#{pre.preImgEnunciado}"></p:graphicImage>
+							</b:row>
 
-						<br />
-					</c:forEach>
-				</b:panel>
-			</b:column>
-		</b:row>
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/#{pre.preImgPregunta}"></p:graphicImage>
+								</center>
+							</b:row>
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid" value="">
+								<c:forEach items="#{preguntasBean.resp(pre)}" var="res">
+									<f:selectItem itemLabel="#{res.oprOpcion}"
+										itemValue="#{res.oprValor}" />
+								</c:forEach>
+							</p:selectOneRadio>
+							<br />
+						</c:forEach>
+					</b:panel>
+				</b:column>
+				<b:column span="3">
+					<b:panel>
+						<center>
+							<h1>
+								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+							</h1>
+							<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
+						</center>
+					</b:panel>
+				</b:column>
+			</b:row>
 		</h:form>
 	</ui:define>
 </ui:composition>

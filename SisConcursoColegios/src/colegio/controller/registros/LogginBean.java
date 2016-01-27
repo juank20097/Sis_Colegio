@@ -273,9 +273,18 @@ public class LogginBean {
 				if ((new Date().after(est.getEstFechaIni()))
 						&& (new Date().before(est.getEstFechaFin()))) {
 					setEstudiante(est);
-					r = "views/evaluacion.xhtml?faces-redirect=true";
+					r = "views/evaluacion.xhtml";
+					Mensaje.crearMensajeINFO("si");
 					break;
-				} else {
+				}
+				if ((new Date().after(est.getEstFechaIni()))
+						&& (new Date().after(est.getEstFechaFin()))){
+					RequestContext context = RequestContext
+							.getCurrentInstance();
+					context.execute("PF('close').show();");
+					r = "a";
+				}
+				else {
 					est_nombre = est.getEstNombres() + " "
 							+ est.getEstApellidos();
 					t_par = est.getEstFechaIni().getTime();

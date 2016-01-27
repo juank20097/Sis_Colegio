@@ -155,6 +155,19 @@
 			
 			</h:form>
 		</p:dialog>
+		
+		<p:dialog header="Información" resizable="false" widgetVar="close"
+			modal="true" height="200" width="500" closable="false">
+			<h:form id="de">
+				<center>
+					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
+					<p>Tu prueba ya fue finalizada. tu puntuación es la siguiente</p>
+					<p>10/10</p>
+					<b:commandButton look="info"
+										action="#{logginBean.cerrarDialog}" value="  Salir  "></b:commandButton>
+				</center>
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

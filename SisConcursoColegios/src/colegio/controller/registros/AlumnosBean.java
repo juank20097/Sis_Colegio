@@ -607,9 +607,9 @@ public class AlumnosBean {
 					try {
 						manager.editarEstudiante(es.getEstId(), "N",
 								fecha_ini, fecha_fin);
-						String t = crearsmsAlumno(es.getEstNombres(),
-								es.getEstApellidos(), es.getEstCedula(),
-								es.getEstClave());
+//						String t = crearsmsAlumno(es.getEstNombres(),
+//								es.getEstApellidos(), es.getEstCedula(),
+//								es.getEstClave());
 //						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
 //								es.getEstCorreo(),
 //								"Notificación de Olimpiadas de Ciencias", t);

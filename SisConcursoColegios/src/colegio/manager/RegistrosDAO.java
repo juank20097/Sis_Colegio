@@ -365,7 +365,7 @@ public class RegistrosDAO {
 	 * @return La lista de todas encontradas
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ColOpcionesRespuesta> findAllOpciones()  throws Exception{
+	public List<ColOpcionesRespuesta> findAllOpciones() {
 		return manager.findAll(ColOpcionesRespuesta.class);
 	}// Cierre del metodo
 
