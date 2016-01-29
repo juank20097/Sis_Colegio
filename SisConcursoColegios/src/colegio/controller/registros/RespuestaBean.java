@@ -3,15 +3,16 @@ package colegio.controller.registros;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import colegio.controller.generic.Mensaje;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColOpcionesRespuesta;
+import colegio.model.entidades.ColRespuesta;
 
 /**
  * @author jestevez
@@ -55,9 +56,6 @@ public class RespuestaBean {
 	 */
 	public void setIdguardar(Integer idguardar) {
 		this.idguardar = idguardar;
-		if (getIdguardar()!=null || getIdguardar()!=0 ){
-			this.insertarRespuesta();
-		}
 	}
 
 	/**
@@ -144,8 +142,19 @@ public class RespuestaBean {
 		try {
 			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
 			or = manager.OpcionesByID(idguardar);
-			manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId(), login.getEstudiante().getEstId());
-			Mensaje.crearMensajeINFO("Respuesta almacenada satisfactoriamente");
+			List<ColRespuesta> lr =  manager.findAllRespuestas();
+			Integer t=0;
+			for (ColRespuesta res :lr) {
+				if (res.getColPregunta().getPreId()==or.getColPregunta().getPreId() && res.getEstId()==login.getEstudiante().getEstId()){
+					manager.editarRespuesta(res.getResId(),new Timestamp(new Date().getTime()),or.getOprId());
+					break;
+				}else{
+					t++;
+				}
+			}
+			if (t==lr.size()){
+				manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId(), login.getEstudiante().getEstId());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
