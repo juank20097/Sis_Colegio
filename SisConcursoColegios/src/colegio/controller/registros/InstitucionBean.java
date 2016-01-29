@@ -532,6 +532,28 @@ public class InstitucionBean {
 		Mensaje.crearMensajeINFO("Estado Modificado Correctamente");
 		return "validacion?faces-redirect=true";
 	}
+	
+	/**
+	 * Metodo para notificar a todas las Intituciones
+	 */
+	public void notificarAll() {
+		for (ColInstitucion c : manager.findAllInstituciones()) {
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+		}
+		for (ColInstitucion c : manager.findAllInstituciones()) {
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+			this.crearSMS(c.getInsId());
+		}
+	}
 
 	/**
 	 * Metodo de traslado
@@ -590,7 +612,7 @@ public class InstitucionBean {
 			Mail mail = new Mail();
 			mail.setId("olimpiada");
 			mail.setAsunto("Información de Registros");
-			mail.setPara(i.getInsCorreo());
+			mail.setPara(i.getInsCorreo()+","+i.getInsCooCorreo()+","+i.getInsRepCorreo());
 			String SMS_general = "<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head>"
@@ -604,13 +626,16 @@ public class InstitucionBean {
 					+ "</br>"
 					+ "<p>Le informamos que su instituci&oacute;n registro a los siguientes estudiantes:</p>"
 					+ "</br>" 
-					+ "<table border=&quot;1&quot;>"
+					+ "<table border=1>"
+					+ "<tr>"
+					+ "<td>Cédula</td><td>Nombres Completos</td><td>Área a Participar</td>"
 					+ this.tabla(est) 
 					+ "</table>" 
 					+ "</body>" 
 					+ "</html>";
 			mail.setBody(SMS_general);
 			ma.MailWS(mail);
+			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -627,7 +652,7 @@ public class InstitucionBean {
 		for (ColEstudiante col : est) {
 			sb.append("<tr><td>" + col.getEstCedula() + "</td><td>"
 					+ col.getEstApellidos() + " " + col.getEstNombres()
-					+ "</td></tr>");
+					+ "</td><td>"+col.getEstArea()+"</td></tr>");
 		}
 		return sb.toString();
 	}

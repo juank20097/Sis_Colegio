@@ -432,7 +432,7 @@ public class RegistrosDAO {
 			res.setColPregunta(pregunta);
 			res.setEstId(est);
 			manager.insertar(res);
-			System.out.println("Bien _guardado_Respuesta");
+			System.out.println("Bien_guardado_Respuesta");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

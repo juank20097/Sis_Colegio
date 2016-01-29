@@ -176,8 +176,6 @@ public class Funciones {
 	public static boolean sendMail(String origen, String destinatario,
 			String asunto, String mensaje) throws Exception {
 		try {
-			String user ="jesteves";
-			String pass = "Emelecjce123";
 			
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "mail.yachay.gob.ec");
@@ -186,9 +184,6 @@ public class Funciones {
 			props.put("mail.smtp.ssl.enable", "false");
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.port", "587");
-			
-			props.put("mail.smtp.user",user);
-			props.put("mail.smtp.pass", pass);
 
 			Authenticator authenticator = new Authenticator();
 			props.setProperty("mail.smtp.submitter", authenticator
@@ -220,7 +215,7 @@ public class Funciones {
 
 			Transport transport;
 			transport = session.getTransport("smtp");
-			transport.connect(user, pass);
+			transport.connect();
 			msg.saveChanges();
 			transport.sendMessage(msg, msg.getAllRecipients());
 			transport.close();
@@ -242,8 +237,8 @@ public class Funciones {
 		private PasswordAuthentication authentication;
 
 		public Authenticator() {
-			String username = "jestevez";
-			String password = "Emelecjce123";
+			String username = "olimpiadasdeciencia";
+			String password = "Ecuador2015";
 			authentication = new PasswordAuthentication(username, password);
 		}
 
