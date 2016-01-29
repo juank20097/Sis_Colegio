@@ -51,6 +51,7 @@
 							</b:row>
 							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
 								value="#{respuestaBean.idguardar}">
+								<p:ajax listener="#{respuestaBean.insertarRespuesta()}" />
 								<c:forEach items="#{preguntasBean.lres}" var="res">
 								<c:if test="#{res.colPregunta.preId == pre.preId}">
 									<f:selectItem itemDisabled="false" itemLabel="#{res.oprOpcion}"
