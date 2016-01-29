@@ -2,7 +2,6 @@ package colegio.controller.registros;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import colegio.controller.generic.Mensaje;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColPregunta;
@@ -353,120 +351,5 @@ public class PreguntasBean {
 		}
 		return lres;
 	}
-	
-	// ////////////////////////////////////////--------------Respuestas---------------///////////////////////////////////////////
-	
-	// Atributos de las Respuestas
-		private Integer resId;
-		private Timestamp resFecha;
-		private Integer colOpcionesRespuesta;
-		private Integer colPregunta2;
-		
-		//variable de almacenamiento de datos
-		private Integer idguardar=0;
-		
-		/**
-		 * @return the idguardar
-		 */
-		public Integer getIdguardar() {
-			return idguardar;
-		}
 
-		/**
-		 * @param idguardar the idguardar to set
-		 */
-		public void setIdguardar(Integer idguardar) {
-			this.idguardar = idguardar;
-		}
-
-		/**
-		 * @return the login
-		 */
-		public LogginBean getLogin() {
-			return login;
-		}
-
-		/**
-		 * @param login
-		 *            the login to set
-		 */
-		public void setLogin(LogginBean login) {
-			this.login = login;
-		}
-
-		/**
-		 * @return the resId
-		 */
-		public Integer getResId() {
-			return resId;
-		}
-
-		/**
-		 * @param resId
-		 *            the resId to set
-		 */
-		public void setResId(Integer resId) {
-			this.resId = resId;
-		}
-
-		/**
-		 * @return the resFecha
-		 */
-		public Timestamp getResFecha() {
-			return resFecha;
-		}
-
-		/**
-		 * @param resFecha
-		 *            the resFecha to set
-		 */
-		public void setResFecha(Timestamp resFecha) {
-			this.resFecha = resFecha;
-		}
-
-		/**
-		 * @return the colOpcionesRespuesta
-		 */
-		public Integer getColOpcionesRespuesta() {
-			return colOpcionesRespuesta;
-		}
-
-		/**
-		 * @param colOpcionesRespuesta
-		 *            the colOpcionesRespuesta to set
-		 */
-		public void setColOpcionesRespuesta(Integer colOpcionesRespuesta) {
-			this.colOpcionesRespuesta = colOpcionesRespuesta;
-		}
-
-		/**
-		 * @return the colPregunta
-		 */
-		public Integer getColPregunta2() {
-			return colPregunta2;
-		}
-
-		/**
-		 * @param colPregunta
-		 *            the colPregunta to set
-		 */
-		public void setColPregunta2(Integer colPregunta2) {
-			this.colPregunta2 = colPregunta2;
-		}
-		
-		/**
-		 * @return
-		 */
-		public void insertarRespuesta(){
-			try {
-				ColOpcionesRespuesta or = new ColOpcionesRespuesta();
-				System.out.println("idguardar igual a:"+getIdguardar());
-				or = manager.OpcionesByID(idguardar);
-				manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId());
-				Mensaje.crearMensajeINFO("Respuesta almacenada satisfactoriamente");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 }
