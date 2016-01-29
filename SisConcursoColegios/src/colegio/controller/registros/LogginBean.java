@@ -274,7 +274,6 @@ public class LogginBean {
 						&& (new Date().before(est.getEstFechaFin()))) {
 					setEstudiante(est);
 					r = "views/evaluacion.xhtml";
-					Mensaje.crearMensajeINFO("si");
 					break;
 				}
 				if ((new Date().after(est.getEstFechaIni()))

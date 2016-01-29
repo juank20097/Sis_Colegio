@@ -14,7 +14,7 @@
 	<ui:define name="contenido">
 
 		<center>
-			<h1>EVALUACIÓN #{preguntasBean.p_area}</h1>
+			<h1>EVALUACIÓN</h1>
 		</center>
 		<h:form id="frmE">
 			<b:row>
@@ -49,12 +49,22 @@
 										value="/resources/img/img_cue/#{pre.preImgPregunta}"></p:graphicImage>
 								</center>
 							</b:row>
-							<p:selectOneRadio style="width:50%;" columns="1" layout="grid" value="">
-								<c:forEach items="#{preguntasBean.resp(pre)}" var="res">
-									<f:selectItem itemLabel="#{res.oprOpcion}"
-										itemValue="#{res.oprValor}" />
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{respuestaBean.idguardar}">
+								<c:forEach items="#{preguntasBean.lres}" var="res">
+								<c:if test="#{res.colPregunta.preId == pre.preId}">
+									<f:selectItem itemDisabled="false" itemLabel="#{res.oprOpcion}"
+										itemValue="#{res.oprId}"/>
+								</c:if>
 								</c:forEach>
 							</p:selectOneRadio>
+							<br />
+							<b:row>
+								<b:column offset="1">
+									
+								</b:column>
+							</b:row>
+							<br />
 							<br />
 						</c:forEach>
 					</b:panel>
@@ -65,8 +75,8 @@
 							<h1>
 								<p:outputLabel id="time" value="#{preguntasBean.time}" />
 							</h1>
-							<p:poll interval="1" widgetVar="poll"
-								listener="#{preguntasBean.calculoTiempo()}" update="time" />
+<!-- 							<p:poll interval="1" widgetVar="poll" -->
+<!-- 								listener="#{preguntasBean.calculoTiempo()}" update="time" /> -->
 						</center>
 					</b:panel>
 				</b:column>

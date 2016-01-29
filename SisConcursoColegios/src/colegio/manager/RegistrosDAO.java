@@ -1,6 +1,5 @@
 package colegio.manager;
 
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,13 +12,15 @@ import colegio.model.entidades.ColInstitucionesSenescyt;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColParametro;
 import colegio.model.entidades.ColPregunta;
+import colegio.model.entidades.ColRespuesta;
+
 /**
  * Clase MatriculasDAO permite manejar el HibernateDAO en conveniencia a la
  * gestion de matricula y reservas
  * 
  * @author Juan Carlos Estévez Hidalgo
  * @version 1.0
- *
+ * 
  */
 
 public class RegistrosDAO {
@@ -36,7 +37,7 @@ public class RegistrosDAO {
 	 */
 	public RegistrosDAO() {
 		manager = new ManagerDAO();
-		
+
 	}// Cierre del Constructor
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +53,9 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColInstitucion> findAllInstituciones() {
-		try{
-		return manager.findAll(ColInstitucion.class);}
-		catch (Exception e){
+		try {
+			return manager.findAll(ColInstitucion.class);
+		} catch (Exception e) {
 			System.out.println("error fndAllInstituciones");
 			e.printStackTrace();
 			return null;
@@ -69,8 +70,7 @@ public class RegistrosDAO {
 	 * @return El objeto Movimiento encontrado mediante el ID
 	 */
 	public ColInstitucion InstitucionByID(Integer id_ins) throws Exception {
-		return (ColInstitucion) manager
-				.findById(ColInstitucion.class, id_ins);
+		return (ColInstitucion) manager.findById(ColInstitucion.class, id_ins);
 	}// Cierre del metodo
 
 	/**
@@ -163,7 +163,8 @@ public class RegistrosDAO {
 	 * @return La lista de todas encontradas
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ColInstitucionesSenescyt> findAllInstitucionesS() throws Exception {
+	public List<ColInstitucionesSenescyt> findAllInstitucionesS()
+			throws Exception {
 		return manager.findAll(ColInstitucionesSenescyt.class);
 	}// Cierre del metodo
 
@@ -203,10 +204,10 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColEstudiante> findAllEstudiantesXID(Integer id_ins) {
-		List<ColEstudiante> c=new ArrayList<>();
-		List<ColEstudiante> le= manager.findAll(ColEstudiante.class);
+		List<ColEstudiante> c = new ArrayList<>();
+		List<ColEstudiante> le = manager.findAll(ColEstudiante.class);
 		for (ColEstudiante col : le) {
-			if (col.getColInstitucion().getInsId()==id_ins){
+			if (col.getColInstitucion().getInsId() == id_ins) {
 				c.add(col);
 			}
 		}
@@ -339,7 +340,7 @@ public class RegistrosDAO {
 	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findAllPreguntas() {
 		return manager.findAllAleatorioP(ColPregunta.class);
-//		return manager.findAllAleatorioP(ColPregunta.class);
+		// return manager.findAllAleatorioP(ColPregunta.class);
 	}// Cierre del metodo
 
 	/**
@@ -380,4 +381,62 @@ public class RegistrosDAO {
 		return (ColOpcionesRespuesta) manager.findById(
 				ColOpcionesRespuesta.class, id_pre);
 	}// Cierre del metodo
+
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Creación de metodos para el manejo de la tabla ColRespuestas
+	 * 
+	 */
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColRespuesta> findAllRespuestas() {
+		return manager.findAll(ColRespuesta.class);
+	}// Cierre del metodo
+
+	/**
+	 * Metodo para obtener un Dato mediante un ID
+	 * 
+	 * @param id_per
+	 *            Tipo integer de busqueda
+	 * @return El objeto encontrado mediante el ID
+	 */
+	public ColRespuesta RespuestasByID(Integer id_res) throws Exception {
+		return (ColRespuesta) manager.findById(
+				ColRespuesta.class, id_res);
+	}// Cierre del metodo
+	
+	/**
+	 * Metodo para ingresar un Dato a la base de datos
+	 * 
+	 * @param nombres
+	 * @param apellidos
+	 * @param cedula
+	 * @param area
+	 * @param telefono
+	 * @param correo
+	 */
+	public void insertarRespuesta(Timestamp fecha, Integer ores, Integer pre) throws Exception {
+		try {
+			ColOpcionesRespuesta opciones_res = new ColOpcionesRespuesta();
+			ColPregunta pregunta = new ColPregunta();
+			ColRespuesta res = new ColRespuesta();
+			res.setResFecha(fecha);
+			opciones_res = this.OpcionesByID(ores);
+			res.setColOpcionesRespuesta(opciones_res);
+			pregunta = this.PreguntaByID(pre);
+			res.setColPregunta(pregunta);
+			manager.insertar(res);
+			System.out.println("Bien _guardado_Respuesta");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_guardado_Respuesta");
+		}
+
+	}
 }

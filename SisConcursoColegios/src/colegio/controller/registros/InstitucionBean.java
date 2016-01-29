@@ -9,14 +9,16 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import colegio.controller.generic.Funciones;
+import colegio.controller.generic.Mail;
 import colegio.controller.generic.Mensaje;
+import colegio.manager.ManagerAcceso;
 import colegio.manager.RegistrosDAO;
+import colegio.model.entidades.ColEstudiante;
 import colegio.model.entidades.ColInstitucion;
-
 
 /**
  * @author jestevez
- *
+ * 
  */
 @SessionScoped
 @ManagedBean
@@ -24,6 +26,7 @@ public class InstitucionBean {
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
+	private ManagerAcceso ma;
 
 	// Atributos de la clase Movimientos_Cabecera
 	/** @pdOid f80b9469-ab73-42ca-b6db-4839f4c4285c */
@@ -82,6 +85,7 @@ public class InstitucionBean {
 	public InstitucionBean() {
 		LogginBean.verificarSession();
 		manager = new RegistrosDAO();
+		ma = new ManagerAcceso();
 		ins_zona = null;
 	}
 
@@ -522,7 +526,8 @@ public class InstitucionBean {
 	 * @return
 	 */
 	public String editarInstitucion() {
-		this.crearSMS(ins_id);
+//		this.crearSMS(ins_id);
+		this.htmlEnviar(ins_id);
 		manager.editarInstitucion(ins_id, ins_estado);
 		Mensaje.crearMensajeINFO("Estado Modificado Correctamente");
 		return "validacion?faces-redirect=true";
@@ -578,6 +583,76 @@ public class InstitucionBean {
 	 * 
 	 * @param ins_id
 	 */
+	public void htmlEnviar(Integer ins_id) {
+		try {
+			ColInstitucion i = manager.InstitucionByID(ins_id);
+			List<ColEstudiante> est = this.filtrarEstudiante(i);
+			Mail mail = new Mail();
+			mail.setId("olimpiada");
+			mail.setAsunto("Información de Registros");
+			mail.setPara(i.getInsCorreo());
+			String SMS_general = "<!DOCTYPE html>"
+					+ "<html>"
+					+ "<head>"
+					+ "<meta charset=&quot;UTF-8&quot;>"
+					+ "<title>Olimpiadas de Ciencias</title>"
+					+ "</head>"
+					+ "<body>"
+					+ "<h1>"
+					+ i.getInsNombre()
+					+ "</h1>"
+					+ "</br>"
+					+ "<p>Le informamos que su instituci&oacute;n registro a los siguientes estudiantes:</p>"
+					+ "</br>" 
+					+ "<table border=&quot;1&quot;>"
+					+ this.tabla(est) 
+					+ "</table>" 
+					+ "</body>" 
+					+ "</html>";
+			mail.setBody(SMS_general);
+			ma.MailWS(mail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Metodo para construir la tabla de estudiantes de una institución
+	 * 
+	 * @param est
+	 * @return
+	 */
+	public String tabla(List<ColEstudiante> est) {
+		StringBuilder sb = new StringBuilder();
+		for (ColEstudiante col : est) {
+			sb.append("<tr><td>" + col.getEstCedula() + "</td><td>"
+					+ col.getEstApellidos() + " " + col.getEstNombres()
+					+ "</td></tr>");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Metodo para filtrar a estudiantes segun una institución
+	 * 
+	 * @param ins
+	 * @return
+	 */
+	public List<ColEstudiante> filtrarEstudiante(ColInstitucion ins) {
+		List<ColEstudiante> lest = new ArrayList<ColEstudiante>();
+		for (ColEstudiante col : manager.findAllEstudiantes()) {
+			if (col.getColInstitucion().getInsId() == ins.getInsId()) {
+				lest.add(col);
+			}
+		}
+		return lest;
+	}
+
+	/**
+	 * Metodo para llenar el mensaje de los correos y llamar al metodo de envio
+	 * 
+	 * @param ins_id
+	 */
 	public void crearSMS(Integer ins_id) {
 		SMS_general = "";
 		SMS_coordinador = "";
@@ -603,19 +678,22 @@ public class InstitucionBean {
 						+ "\n Felicitaciones, su Institución Educativa "
 						+ i.getInsNombre()
 						+ " ha sido valida exitosamente, en este momento podrá inscribir a sus estudiantes en la Olimpiada de Ciencias – INNOPOLIS – 2016, en el siguiente link: http://olimpiadasdeciencias.yachay.gob.ec/ , donde deberá ingresar los siguientes datos."
-						+ "\n" 
-						+ "\n Usuario: "+i.getInsCooCedula()+" "
-						+ "\n Contraseña: "+i.getInsCooClave()+" "
+						+ "\n"
+						+ "\n Usuario: "
+						+ i.getInsCooCedula()
+						+ " "
+						+ "\n Contraseña: "
+						+ i.getInsCooClave()
+						+ " "
 						+ "\n"
 						+ "\n Recuerde:"
 						+ "\n •		Los estudiantes seleccionados para el concurso deberán estar cursando tercero de bachillerato y sólo podrán participar en UNA de las cuatro disciplinas: física, matemática, química y biología. "
 						+ "\n •		El 15 de febrero se realizará la evaluación online, en el siguiente link : http://olimpiadasdeciencias.yachay.gob.ec/ "
 						+ "\n •		El sistema automáticamente enviará a cada uno de los estudiantes, un código, que deberá ingresarlo el día de la evaluación."
-						+ "\n"
-						+ "\n Saludos Coordiales"
+						+ "\n" + "\n Saludos Coordiales"
 						+ "\n Empresa Pública Yachay EP";
-				this.sendSMS(i.getInsRepCorreo().trim(), i
-						.getInsCooCorreo().trim(), i.getInsCorreo().trim());
+				this.sendSMS(i.getInsRepCorreo().trim(), i.getInsCooCorreo()
+						.trim(), i.getInsCorreo().trim());
 			}
 			if (i.getInsEstado().trim()
 					.equals(Funciones.valorEstadoInactivo.trim())) {
@@ -627,8 +705,8 @@ public class InstitucionBean {
 						+ " ,le informamos que la institución "
 						+ i.getInsNombre()
 						+ " NO fue aprobada para el Concurso de Ciencias.";
-				this.sendSMS(i.getInsRepCorreo().trim(), i
-						.getInsCooCorreo().trim(), i.getInsCorreo().trim());
+				this.sendSMS(i.getInsRepCorreo().trim(), i.getInsCooCorreo()
+						.trim(), i.getInsCorreo().trim());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

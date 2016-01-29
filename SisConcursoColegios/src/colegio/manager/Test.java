@@ -3,11 +3,8 @@
  */
 package colegio.manager;
 
+import colegio.controller.generic.Funciones;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import colegio.model.entidades.ColPregunta;
 
 
 
@@ -26,28 +23,28 @@ public class Test {
 	/**
 	 * @param args
 	 */
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		
 		
-//		try {
-//			Funciones.sendMail("jestevez@yachay.gob.ec",
-//					"juank20097@yopmail.com",
-//					"Notificación de Olimpiadas de Ciencias", "hola");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			Funciones.sendMail("jestevez@yachay.gob.ec",
+					"juank20097@yopmail.com",
+					"Notificación de Olimpiadas de Ciencias", "hola");
+			System.out.println("Envio de forma correcta");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //	RegistrosDAO r = new RegistrosDAO();
-		ManagerDAO m = new ManagerDAO();
+//		ManagerDAO m = new ManagerDAO();
 //		List<ColInstitucion> g=new ArrayList<>();
 //		g=m.findWhere(ColInstitucion.class, "o.insZona=", null);
 //		System.out.println(g.size());
-		
-		List<ColPregunta> t=new ArrayList<>();
-		t=m.findAllAleatorioP(ColPregunta.class);
-		System.out.println(t.size());
+//		
+//		List<ColPregunta> t=new ArrayList<>();
+//		t=m.findAllAleatorioP(ColPregunta.class);
+//		System.out.println(t.size());
 //	List<COL_Instituciones_Senescyt> c= new ArrayList<COL_Instituciones_Senescyt>();
 //	c=r.findAllInstitucionesS();
 //	System.out.println(c.size());

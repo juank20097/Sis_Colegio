@@ -2,6 +2,7 @@ package colegio.controller.registros;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -12,11 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-
-
-
-
-
+import colegio.controller.generic.Mensaje;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColPregunta;
@@ -63,7 +60,6 @@ public class PreguntasBean {
 		login = (LogginBean) session.getAttribute("logginBean");
 		manager = new RegistrosDAO();
 		this.cargarPreguntas();
-		//this.calculoTiempo();
 	}
 
 	/**
@@ -74,7 +70,8 @@ public class PreguntasBean {
 	}
 
 	/**
-	 * @param lres the lres to set
+	 * @param lres
+	 *            the lres to set
 	 */
 	public void setLres(List<ColOpcionesRespuesta> lres) {
 		this.lres = lres;
@@ -210,26 +207,24 @@ public class PreguntasBean {
 	}
 
 	public void cargarPreguntas() {
-		System.out.println(login);
-		if (login.getEstudiante()==null){
-			login.logout();
-		}else{
-		List<ColPregunta> lp = manager.findAllPreguntas();
-		lpre = new ArrayList<ColPregunta>();
-		for (ColPregunta pre : lp) {
-			if (pre.getColEvaluacion().getEvaArea().trim()
-					.equals(login.getEstudiante().getEstArea().trim())) {
-				lpre.add(pre);
+			lpre = new ArrayList<ColPregunta>();
+			lres = new ArrayList<ColOpcionesRespuesta>();
+			for (ColPregunta pre : manager.findAllPreguntas()) {
+				if (pre.getColEvaluacion().getEvaArea().trim()
+						.equals(login.getEstudiante().getEstArea().trim())) {
+					lpre.add(pre);
+					for (ColOpcionesRespuesta op : manager.findAllOpciones()) {
+						if (op.getColPregunta().getPreId() == pre.getPreId()) {
+							lres.add(op);
+						}
+				}
 			}
-		}
-		Collections.shuffle(lpre);
-		}
+			}
+			Collections.shuffle(lpre);
+			Collections.shuffle(lres);
 	}
 
 	public void calculoTiempo() {
-		if (login.getEstudiante()==null){
-			
-		}else{
 		if (login.getEstudiante().getEstFechaFin().getTime() >= new Date()
 				.getTime()) {
 			long timer = login.getEstudiante().getEstFechaFin().getTime()
@@ -255,125 +250,223 @@ public class PreguntasBean {
 			try {
 				login.logout();
 				FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("/SisConcursoColegios/faces/index.xhtml");
+						.redirect("/SisConcursoColegios/faces/index.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+
+	}
+
+	// ////////////////////////////////////////--------------Opciones
+	// Respuestas---------------///////////////////////////////////////////
+
+	// Atributos de las Preguntas
+	private Integer oprId;
+	private String oprOpcion;
+	private String oprRespuesta;
+	private BigDecimal oprValor;
+	private Integer colPregunta;
+
+	/**
+	 * @return the oprId
+	 */
+	public Integer getOprId() {
+		return oprId;
+	}
+
+	/**
+	 * @param oprId
+	 *            the oprId to set
+	 */
+	public void setOprId(Integer oprId) {
+		this.oprId = oprId;
+	}
+
+	/**
+	 * @return the oprOpcion
+	 */
+	public String getOprOpcion() {
+		return oprOpcion;
+	}
+
+	/**
+	 * @param oprOpcion
+	 *            the oprOpcion to set
+	 */
+	public void setOprOpcion(String oprOpcion) {
+		this.oprOpcion = oprOpcion;
+	}
+
+	/**
+	 * @return the oprRespuesta
+	 */
+	public String getOprRespuesta() {
+		return oprRespuesta;
+	}
+
+	/**
+	 * @param oprRespuesta
+	 *            the oprRespuesta to set
+	 */
+	public void setOprRespuesta(String oprRespuesta) {
+		this.oprRespuesta = oprRespuesta;
+	}
+
+	/**
+	 * @return the oprValor
+	 */
+	public BigDecimal getOprValor() {
+		return oprValor;
+	}
+
+	/**
+	 * @param oprValor
+	 *            the oprValor to set
+	 */
+	public void setOprValor(BigDecimal oprValor) {
+		this.oprValor = oprValor;
+	}
+
+	/**
+	 * @return the colPregunta
+	 */
+	public Integer getColPregunta() {
+		return colPregunta;
+	}
+
+	/**
+	 * @param colPregunta
+	 *            the colPregunta to set
+	 */
+	public void setColPregunta(Integer colPregunta) {
+		this.colPregunta = colPregunta;
+	}
+
+	public List<ColOpcionesRespuesta> resp(ColPregunta p) {
+		lres = new ArrayList<ColOpcionesRespuesta>();
+		for (ColOpcionesRespuesta pre : manager.findAllOpciones()) {
+			if (pre.getColPregunta().getPreId() == p.getPreId()) {
+				lres.add(pre);
+			}
 		}
+		return lres;
 	}
 	
-//////////////////////////////////////////--------------Opciones Respuestas---------------///////////////////////////////////////////
+	// ////////////////////////////////////////--------------Respuestas---------------///////////////////////////////////////////
 	
-	// Atributos de las Preguntas
-		private Integer oprId;
-		private String oprOpcion;
-		private String oprRespuesta;
-		private BigDecimal oprValor;
-		private Integer colPregunta;
+	// Atributos de las Respuestas
+		private Integer resId;
+		private Timestamp resFecha;
+		private Integer colOpcionesRespuesta;
+		private Integer colPregunta2;
+		
+		//variable de almacenamiento de datos
+		private Integer idguardar=0;
 		
 		/**
-		 * @return the oprId
+		 * @return the idguardar
 		 */
-		public Integer getOprId() {
-			return oprId;
+		public Integer getIdguardar() {
+			return idguardar;
 		}
 
 		/**
-		 * @param oprId
-		 *            the oprId to set
+		 * @param idguardar the idguardar to set
 		 */
-		public void setOprId(Integer oprId) {
-			this.oprId = oprId;
+		public void setIdguardar(Integer idguardar) {
+			this.idguardar = idguardar;
 		}
 
 		/**
-		 * @return the oprOpcion
+		 * @return the login
 		 */
-		public String getOprOpcion() {
-			return oprOpcion;
+		public LogginBean getLogin() {
+			return login;
 		}
 
 		/**
-		 * @param oprOpcion
-		 *            the oprOpcion to set
+		 * @param login
+		 *            the login to set
 		 */
-		public void setOprOpcion(String oprOpcion) {
-			this.oprOpcion = oprOpcion;
+		public void setLogin(LogginBean login) {
+			this.login = login;
 		}
 
 		/**
-		 * @return the oprRespuesta
+		 * @return the resId
 		 */
-		public String getOprRespuesta() {
-			return oprRespuesta;
+		public Integer getResId() {
+			return resId;
 		}
 
 		/**
-		 * @param oprRespuesta
-		 *            the oprRespuesta to set
+		 * @param resId
+		 *            the resId to set
 		 */
-		public void setOprRespuesta(String oprRespuesta) {
-			this.oprRespuesta = oprRespuesta;
+		public void setResId(Integer resId) {
+			this.resId = resId;
 		}
 
 		/**
-		 * @return the oprValor
+		 * @return the resFecha
 		 */
-		public BigDecimal getOprValor() {
-			return oprValor;
+		public Timestamp getResFecha() {
+			return resFecha;
 		}
 
 		/**
-		 * @param oprValor
-		 *            the oprValor to set
+		 * @param resFecha
+		 *            the resFecha to set
 		 */
-		public void setOprValor(BigDecimal oprValor) {
-			this.oprValor = oprValor;
+		public void setResFecha(Timestamp resFecha) {
+			this.resFecha = resFecha;
+		}
+
+		/**
+		 * @return the colOpcionesRespuesta
+		 */
+		public Integer getColOpcionesRespuesta() {
+			return colOpcionesRespuesta;
+		}
+
+		/**
+		 * @param colOpcionesRespuesta
+		 *            the colOpcionesRespuesta to set
+		 */
+		public void setColOpcionesRespuesta(Integer colOpcionesRespuesta) {
+			this.colOpcionesRespuesta = colOpcionesRespuesta;
 		}
 
 		/**
 		 * @return the colPregunta
 		 */
-		public Integer getColPregunta() {
-			return colPregunta;
+		public Integer getColPregunta2() {
+			return colPregunta2;
 		}
 
 		/**
 		 * @param colPregunta
 		 *            the colPregunta to set
 		 */
-		public void setColPregunta(Integer colPregunta) {
-			this.colPregunta = colPregunta;
+		public void setColPregunta2(Integer colPregunta2) {
+			this.colPregunta2 = colPregunta2;
 		}
 		
 		/**
-		 * Metodo para listar todos los Datos de la Entidad
-		 * 
 		 * @return
 		 */
-		public List<ColOpcionesRespuesta> getListOpciones() {
-			List<ColOpcionesRespuesta> p = new ArrayList<ColOpcionesRespuesta>();
+		public void insertarRespuesta(){
 			try {
-				p = manager.findAllOpciones();
+				ColOpcionesRespuesta or = new ColOpcionesRespuesta();
+				System.out.println("idguardar igual a:"+getIdguardar());
+				or = manager.OpcionesByID(idguardar);
+				manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId());
+				Mensaje.crearMensajeINFO("Respuesta almacenada satisfactoriamente");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return p;
 		}
-
-		public List<ColOpcionesRespuesta> resp(ColPregunta p) {
-			lres = new ArrayList<ColOpcionesRespuesta>();
-			List<ColOpcionesRespuesta> lp = manager.findAllOpciones();
-				for (ColOpcionesRespuesta pre : lp) {
-					if (pre.getColPregunta().getPreId()==p.getPreId()){
-						lres.add(pre);
-					}
-				}
-				
-				return lres;
-		}
-
 }
