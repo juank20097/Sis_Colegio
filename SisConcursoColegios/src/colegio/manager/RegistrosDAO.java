@@ -440,4 +440,31 @@ public class RegistrosDAO {
 		}
 
 	}
+	
+	/**
+	 * Metodo para ingresar un Dato a la base de datos
+	 * 
+	 * @param nombres
+	 * @param apellidos
+	 * @param cedula
+	 * @param area
+	 * @param telefono
+	 * @param correo
+	 */
+	public void editarRespuesta(Integer id_res,Timestamp fecha, Integer ores) throws Exception {
+		try {
+			ColRespuesta res = RespuestasByID(id_res);
+			ColOpcionesRespuesta opciones_res = new ColOpcionesRespuesta();
+			res.setResFecha(fecha);
+			opciones_res = this.OpcionesByID(ores);
+			res.setColOpcionesRespuesta(opciones_res);
+			manager.actualizar(res);
+			System.out.println("Bien_actualizado_Respuesta");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_guardado_Respuesta");
+		}
+
+	}
 }
