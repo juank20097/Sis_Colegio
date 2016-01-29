@@ -136,14 +136,15 @@ public class RespuestaBean {
 	}
 	
 	/**
+	 * Metodo para guardar la respuesta de una pregunta
+	 * 
 	 * @return
 	 */
 	public void insertarRespuesta(){
 		try {
 			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
-			System.out.println("idguardar igual a:"+getIdguardar());
 			or = manager.OpcionesByID(idguardar);
-			manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId());
+			manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId(), login.getEstudiante().getEstId());
 			Mensaje.crearMensajeINFO("Respuesta almacenada satisfactoriamente");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -151,8 +152,4 @@ public class RespuestaBean {
 		}
 	}
 	
-	public void mostrar(){
-		System.out.println(idguardar);
-	}
-
 }

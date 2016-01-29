@@ -24,6 +24,9 @@ public class ColRespuesta implements Serializable {
 
 	@Column(name="res_fecha")
 	private Timestamp resFecha;
+	
+	@Column(name="est_id")
+	private Integer estId;
 
 	//bi-directional many-to-one association to ColEvaluacionEstudiantil
 	@OneToMany(mappedBy="colRespuesta")
@@ -40,6 +43,14 @@ public class ColRespuesta implements Serializable {
 	private ColPregunta colPregunta;
 
 	public ColRespuesta() {
+	}
+
+	public Integer getEstId() {
+		return estId;
+	}
+
+	public void setEstId(Integer estId) {
+		this.estId = estId;
 	}
 
 	public Integer getResId() {

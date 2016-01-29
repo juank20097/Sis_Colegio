@@ -420,7 +420,7 @@ public class RegistrosDAO {
 	 * @param telefono
 	 * @param correo
 	 */
-	public void insertarRespuesta(Timestamp fecha, Integer ores, Integer pre) throws Exception {
+	public void insertarRespuesta(Timestamp fecha, Integer ores, Integer pre, Integer est) throws Exception {
 		try {
 			ColOpcionesRespuesta opciones_res = new ColOpcionesRespuesta();
 			ColPregunta pregunta = new ColPregunta();
@@ -430,6 +430,7 @@ public class RegistrosDAO {
 			res.setColOpcionesRespuesta(opciones_res);
 			pregunta = this.PreguntaByID(pre);
 			res.setColPregunta(pregunta);
+			res.setEstId(est);
 			manager.insertar(res);
 			System.out.println("Bien _guardado_Respuesta");
 		} catch (Exception e) {
