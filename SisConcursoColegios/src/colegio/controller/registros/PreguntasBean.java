@@ -356,9 +356,31 @@ public class PreguntasBean {
 		for (ColEvaluacionEstudiantil eva : ee) {
 			if (eva.getColEstudiante().getEstId()==login.getEstudiante().getEstId()){
 				manager.editarEvaEstudiantil(eva.getEesId(), new Timestamp(new Date().getTime()), calificacion);
+				this.totalTiempo(eva);
 				break;
 			}
 		}
+		
+		
+	}
+	
+	public void totalTiempo(ColEvaluacionEstudiantil eva_est){
+		long time = eva_est.getEesFechaFin().getTime()-eva_est.getEesFechaIni().getTime();
+		
+		long minutos = 0;
+		long segundos = 0;
+
+		minutos = time / (60 * 1000);
+		while (minutos >= 60) {
+			minutos = minutos - 60;
+		}
+
+		segundos = time / 1000;
+		while (segundos >= 60) {
+			segundos = segundos - 60;
+		}
+
+		tiempo_eva = minutos + ":" + segundos;
 		
 	}
 	

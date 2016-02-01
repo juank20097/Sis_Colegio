@@ -6,6 +6,7 @@ package colegio.controller.registros;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,7 @@ public class LogginBean {
 
 	//atributo de calificacion
 	private Integer calificacion=0;
+	private String tiempo_eva;
 	
 	public LogginBean() {
 		institucion = new ColInstitucion();
@@ -82,6 +84,14 @@ public class LogginBean {
 		this.DownloadFile3();
 		t_par = 0L;
 		// this.validarParametroIns();
+	}
+
+	public String getTiempo_eva() {
+		return tiempo_eva;
+	}
+
+	public void setTiempo_eva(String tiempo_eva) {
+		this.tiempo_eva = tiempo_eva;
 	}
 
 	public Integer getCalificacion() {
@@ -252,6 +262,7 @@ public class LogginBean {
 					if (ev.getColEstudiante().getEstId() == e.getEstId()
 							&& ev.getEesCalificacion() != null) {
 						calificacion = ev.getEesCalificacion();
+						tiempo_eva= this.tiempo(ev.getEesFechaIni(), ev.getEesFechaFin());
 						RequestContext context = RequestContext
 								.getCurrentInstance();
 						context.execute("PF('close').show();");
@@ -261,6 +272,25 @@ public class LogginBean {
 			}
 		}
 		return r;
+	}
+	
+	public String tiempo(Timestamp inicio, Timestamp fin){
+		long time = fin.getTime()-inicio.getTime();
+		
+		long minutos = 0;
+		long segundos = 0;
+
+		minutos = time / (60 * 1000);
+		while (minutos >= 60) {
+			minutos = minutos - 60;
+		}
+
+		segundos = time / 1000;
+		while (segundos >= 60) {
+			segundos = segundos - 60;
+		}
+
+		 return  minutos + ":" + segundos;
 	}
 
 	/**
