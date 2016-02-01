@@ -3,7 +3,6 @@ package colegio.model.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.math.BigDecimal;
 
 
 /**
@@ -23,7 +22,7 @@ public class ColEvaluacionEstudiantil implements Serializable {
 	private Integer eesId;
 
 	@Column(name="ees_calificacion")
-	private BigDecimal eesCalificacion;
+	private Integer eesCalificacion;
 
 	@Column(name="ees_fecha_fin")
 	private Timestamp eesFechaFin;
@@ -41,11 +40,6 @@ public class ColEvaluacionEstudiantil implements Serializable {
 	@JoinColumn(name="eva_id")
 	private ColEvaluacion colEvaluacion;
 
-	//bi-directional many-to-one association to ColRespuesta
-	@ManyToOne
-	@JoinColumn(name="res_id")
-	private ColRespuesta colRespuesta;
-
 	public ColEvaluacionEstudiantil() {
 	}
 
@@ -57,11 +51,11 @@ public class ColEvaluacionEstudiantil implements Serializable {
 		this.eesId = eesId;
 	}
 
-	public BigDecimal getEesCalificacion() {
+	public Integer getEesCalificacion() {
 		return this.eesCalificacion;
 	}
 
-	public void setEesCalificacion(BigDecimal eesCalificacion) {
+	public void setEesCalificacion(Integer eesCalificacion) {
 		this.eesCalificacion = eesCalificacion;
 	}
 
@@ -95,14 +89,6 @@ public class ColEvaluacionEstudiantil implements Serializable {
 
 	public void setColEvaluacion(ColEvaluacion colEvaluacion) {
 		this.colEvaluacion = colEvaluacion;
-	}
-
-	public ColRespuesta getColRespuesta() {
-		return this.colRespuesta;
-	}
-
-	public void setColRespuesta(ColRespuesta colRespuesta) {
-		this.colRespuesta = colRespuesta;
 	}
 
 }

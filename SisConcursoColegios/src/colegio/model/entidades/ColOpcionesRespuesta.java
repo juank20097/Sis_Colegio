@@ -2,7 +2,6 @@ package colegio.model.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -29,7 +28,7 @@ public class ColOpcionesRespuesta implements Serializable {
 	private String oprRespuesta;
 
 	@Column(name="opr_valor")
-	private BigDecimal oprValor;
+	private Integer oprValor;
 
 	//bi-directional many-to-one association to ColPregunta
 	@ManyToOne
@@ -67,11 +66,11 @@ public class ColOpcionesRespuesta implements Serializable {
 		this.oprRespuesta = oprRespuesta;
 	}
 
-	public BigDecimal getOprValor() {
+	public Integer getOprValor() {
 		return this.oprValor;
 	}
 
-	public void setOprValor(BigDecimal oprValor) {
+	public void setOprValor(Integer oprValor) {
 		this.oprValor = oprValor;
 	}
 

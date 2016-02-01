@@ -8,6 +8,7 @@ import colegio.controller.generic.Funciones;
 
 
 
+
 /**
  * @author jestevez
  *
@@ -25,16 +26,15 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		
-		
-		try {
-			Funciones.sendMail("jestevez@yachay.gob.ec",
-					"juank20097@yopmail.com",
-					"Notificación de Olimpiadas de Ciencias", "hola");
-			System.out.println("Envio de forma correcta");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Funciones.sendMail("jestevez@yachay.gob.ec",
+//					"juank20097@yopmail.com",
+//					"Notificación de Olimpiadas de Ciencias", "hola");
+//			System.out.println("Envio de forma correcta");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //	RegistrosDAO r = new RegistrosDAO();
 //		ManagerDAO m = new ManagerDAO();
@@ -66,7 +66,7 @@ public class Test {
 //	l=r.findAllEstudiantesActivos('A');
 //	l=r.findAllEstudiantesXID(14);
 //	System.out.println(l.size());
-//	System.out.println(Funciones.conseguirMAC());
+	System.out.println(Funciones.conseguirMAC());
 		
 //	COL_Parametros p=r.ParametroByNombre("institucion");
 //	System.out.println(p.isPar_valor());

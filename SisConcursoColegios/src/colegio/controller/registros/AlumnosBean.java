@@ -84,8 +84,8 @@ public class AlumnosBean {
 	private String var_are;
 
 	// Atributos para registro de fechas
-	private Date fecha_ini;
-	private Date fecha_fin;
+	private Date fecha_ini = new Date();
+	private Date fecha_fin = new Date();
 
 	private long dia;
 	private long hora;
@@ -619,8 +619,8 @@ public class AlumnosBean {
 					}
 				}
 				Mensaje.crearMensajeINFO("Noitificaciones Realizados Correctamente");
-				fecha_ini = null;
-				fecha_fin = null;
+				fecha_ini = new Date();
+				fecha_fin = new Date();
 				allest = new ArrayList<ColEstudiante>();
 			}
 		}
@@ -653,8 +653,8 @@ public class AlumnosBean {
 				}
 			}
 			Mensaje.crearMensajeINFO("Noitificaciones Realizados Correctamente");
-			fecha_ini = null;
-			fecha_fin = null;
+			fecha_ini = new Date();
+			fecha_fin = new Date();
 			allest = new ArrayList<ColEstudiante>();
 		}
 		return "";

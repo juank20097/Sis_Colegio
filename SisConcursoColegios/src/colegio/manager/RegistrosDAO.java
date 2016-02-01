@@ -7,6 +7,8 @@ import java.util.List;
 
 import colegio.controller.generic.Funciones;
 import colegio.model.entidades.ColEstudiante;
+import colegio.model.entidades.ColEvaluacion;
+import colegio.model.entidades.ColEvaluacionEstudiantil;
 import colegio.model.entidades.ColInstitucion;
 import colegio.model.entidades.ColInstitucionesSenescyt;
 import colegio.model.entidades.ColOpcionesRespuesta;
@@ -289,6 +291,23 @@ public class RegistrosDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Metodo para editar una entidad
+	 * 
+	 * @param ins_id
+	 * @param ins_estado
+	 */
+	public void insertarMac(Integer est_id, String mac) {
+		try {
+			ColEstudiante est = this.EstudianteByID(est_id);
+			est.setEstMac(mac);
+			manager.actualizar(est);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void eliminarEstudiante(Integer id_est) {
 		try {
@@ -467,4 +486,116 @@ public class RegistrosDAO {
 		}
 
 	}
+	
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Creación de metodos para el manejo de la tabla ColEvaluacionEstudiantil
+	 * 
+	 */
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColEvaluacionEstudiantil> findAllEvaEstudiantil() {
+		return manager.findAll(ColEvaluacionEstudiantil.class);
+	}// Cierre del metodo
+
+	/**
+	 * Metodo para obtener un Dato mediante un ID
+	 * 
+	 * @param id_per
+	 *            Tipo integer de busqueda
+	 * @return El objeto encontrado mediante el ID
+	 */
+	public ColEvaluacionEstudiantil EvaEstudiantilByID(Integer id_ees) throws Exception {
+		return (ColEvaluacionEstudiantil) manager.findById(
+				ColEvaluacionEstudiantil.class, id_ees);
+	}// Cierre del metodo
+	
+	/**
+	 * Metodo para ingresar un Dato a la base de datos
+	 * 
+	 * @param nombres
+	 * @param apellidos
+	 * @param cedula
+	 * @param area
+	 * @param telefono
+	 * @param correo
+	 */
+	public void insertarEvaEstudiantil(Integer estudiante, Integer evaluacion, Timestamp fecha_ini, Timestamp fecha_fin, Integer calificacion) {
+		try {
+			ColEvaluacionEstudiantil eva_estudiantil = new ColEvaluacionEstudiantil();
+			ColEstudiante est = new ColEstudiante();
+			ColEvaluacion eva = new ColEvaluacion();
+			
+			est = this.EstudianteByID(estudiante);
+			eva = this.EvaluacionByID(evaluacion);
+			
+			eva_estudiantil.setColEstudiante(est);
+			eva_estudiantil.setColEvaluacion(eva);
+			eva_estudiantil.setEesFechaIni(fecha_ini);
+			eva_estudiantil.setEesFechaFin(fecha_fin);
+			eva_estudiantil.setEesCalificacion(calificacion);
+			manager.insertar(eva_estudiantil);
+			System.out.println("Bien_guardado_Evaluacion_Estudiantil");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_guardado_Evaluacion_Estudiantil");
+		}
+
+	}
+	
+	/**
+	 * Metodo para editar un Dato a la base de datos
+	 * 
+	 * @param eest_id
+	 * @param fecha_fin
+	 * @param calificacion
+	 */
+	public void editarEvaEstudiantil(Integer eest_id, Timestamp fecha_fin, Integer calificacion) {
+		try {
+			ColEvaluacionEstudiantil eva_estudiantil = this.EvaEstudiantilByID(eest_id);
+			eva_estudiantil.setEesFechaFin(fecha_fin);
+			eva_estudiantil.setEesCalificacion(calificacion);
+			manager.actualizar(eva_estudiantil);
+			System.out.println("Bien_actualizado_Evaluacion_Estudiantil");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_actualizado_Evaluacion_Estudiantil");
+		}
+
+	}
+	
+	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/**
+		 * Creación de metodos para el manejo de la tabla ColEvaluacion
+		 * 
+		 */
+		
+		/**
+		 * Metodo para listar todas los existentes
+		 * 
+		 * @return La lista de todas encontradas
+		 */
+		@SuppressWarnings("unchecked")
+		public List<ColEvaluacion> findAllEvaluacion() {
+			return manager.findAll(ColEvaluacion.class);
+		}// Cierre del metodo
+
+		/**
+		 * Metodo para obtener un Dato mediante un ID
+		 * 
+		 * @param id_per
+		 *            Tipo integer de busqueda
+		 * @return El objeto encontrado mediante el ID
+		 */
+		public ColEvaluacion EvaluacionByID(Integer id_ees) throws Exception {
+			return (ColEvaluacion) manager.findById(
+					ColEvaluacion.class, id_ees);
+		}// Cierre del metodo
 }

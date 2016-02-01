@@ -3,7 +3,6 @@ package colegio.model.entidades;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -27,10 +26,6 @@ public class ColRespuesta implements Serializable {
 	
 	@Column(name="est_id")
 	private Integer estId;
-
-	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colRespuesta")
-	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils;
 
 	//bi-directional many-to-one association to ColOpcionesRespuesta
 	@ManyToOne
@@ -67,28 +62,6 @@ public class ColRespuesta implements Serializable {
 
 	public void setResFecha(Timestamp resFecha) {
 		this.resFecha = resFecha;
-	}
-
-	public List<ColEvaluacionEstudiantil> getColEvaluacionEstudiantils() {
-		return this.colEvaluacionEstudiantils;
-	}
-
-	public void setColEvaluacionEstudiantils(List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils) {
-		this.colEvaluacionEstudiantils = colEvaluacionEstudiantils;
-	}
-
-	public ColEvaluacionEstudiantil addColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
-		getColEvaluacionEstudiantils().add(colEvaluacionEstudiantil);
-		colEvaluacionEstudiantil.setColRespuesta(this);
-
-		return colEvaluacionEstudiantil;
-	}
-
-	public ColEvaluacionEstudiantil removeColEvaluacionEstudiantil(ColEvaluacionEstudiantil colEvaluacionEstudiantil) {
-		getColEvaluacionEstudiantils().remove(colEvaluacionEstudiantil);
-		colEvaluacionEstudiantil.setColRespuesta(null);
-
-		return colEvaluacionEstudiantil;
 	}
 
 	public ColOpcionesRespuesta getColOpcionesRespuesta() {

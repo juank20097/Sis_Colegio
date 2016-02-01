@@ -62,7 +62,8 @@
 							<br />
 							<b:row>
 								<b:column offset="1">
-									<b:commandButton disabled="true" look="info"
+									<b:commandButton disabled="false" look="info"
+										actionListener="#{preguntasBean.bloqueo(pre)}"
 										value="Guardar Respuesta">
 									</b:commandButton>
 								</b:column>
@@ -70,6 +71,15 @@
 							<br />
 							<br />
 						</c:forEach>
+						<b:row>
+						<b:column>
+					<center>
+						<b:commandButton look="success" size="lg" style="width:70%;"
+							value="Finalizar Evaluación"
+							action="#{preguntasBean.verResultado}"></b:commandButton>
+					</center>
+				</b:column>
+						</b:row>
 					</b:panel>
 				</b:column>
 				<b:column span="3">
@@ -78,12 +88,24 @@
 							<h1>
 								<p:outputLabel id="time" value="#{preguntasBean.time}" />
 							</h1>
-														<p:poll interval="1" widgetVar="poll"
-															listener="#{preguntasBean.calculoTiempo()}" update="time" />
+							<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
 						</center>
 					</b:panel>
 				</b:column>
 			</b:row>
+				
+
+			<p:dialog header="Información" resizable="false" widgetVar="close"
+				modal="true" height="200" width="500" closable="false">
+				<center>
+					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
+					<p>Tu prueba ya ha finalizado. tu puntuación es la siguiente</p>
+					<p:outputLabel value="#{preguntasBean.calificacion} / 10"></p:outputLabel><br/>
+					<b:commandButton look="info" action="#{preguntasBean.salir()}"
+						value="Salir"></b:commandButton>
+				</center>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

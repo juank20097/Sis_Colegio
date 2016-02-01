@@ -1,7 +1,7 @@
 package colegio.controller.registros;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -12,9 +12,15 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
+
+import colegio.controller.generic.Funciones;
 import colegio.manager.RegistrosDAO;
+import colegio.model.entidades.ColEvaluacion;
+import colegio.model.entidades.ColEvaluacionEstudiantil;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColPregunta;
+import colegio.model.entidades.ColRespuesta;
 
 /**
  * @author jestevez
@@ -51,6 +57,10 @@ public class PreguntasBean {
 	// Atributo para tomar el tiempo
 	private String time;
 
+	// Atributos para mostrar resultados
+	private String tiempo_eva;
+	private Integer calificacion=0;
+
 	public PreguntasBean() {
 		LogginBean.verificarSession();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -58,6 +68,22 @@ public class PreguntasBean {
 		login = (LogginBean) session.getAttribute("logginBean");
 		manager = new RegistrosDAO();
 		this.cargarPreguntas();
+	}
+
+	public String getTiempo_eva() {
+		return tiempo_eva;
+	}
+
+	public void setTiempo_eva(String tiempo_eva) {
+		this.tiempo_eva = tiempo_eva;
+	}
+
+	public Integer getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Integer calificacion) {
+		this.calificacion = calificacion;
 	}
 
 	/**
@@ -204,152 +230,143 @@ public class PreguntasBean {
 		return p;
 	}
 
+	/**
+	 * Metodo para cargar las preguntas y opciones de respuesta de cada
+	 * Evaluación
+	 */
 	public void cargarPreguntas() {
-			lpre = new ArrayList<ColPregunta>();
-			lres = new ArrayList<ColOpcionesRespuesta>();
-			for (ColPregunta pre : manager.findAllPreguntas()) {
-				if (pre.getColEvaluacion().getEvaArea().trim()
-						.equals(login.getEstudiante().getEstArea().trim())) {
-					lpre.add(pre);
-					for (ColOpcionesRespuesta op : manager.findAllOpciones()) {
-						if (op.getColPregunta().getPreId() == pre.getPreId()) {
-							lres.add(op);
-						}
+		lpre = new ArrayList<ColPregunta>();
+		lres = new ArrayList<ColOpcionesRespuesta>();
+		for (ColPregunta pre : manager.findAllPreguntas()) {
+			if (pre.getColEvaluacion().getEvaArea().trim()
+					.equals(login.getEstudiante().getEstArea().trim())) {
+				lpre.add(pre);
+				for (ColOpcionesRespuesta op : manager.findAllOpciones()) {
+					if (op.getColPregunta().getPreId() == pre.getPreId()) {
+						lres.add(op);
+					}
 				}
 			}
-			}
-			Collections.shuffle(lpre);
-			Collections.shuffle(lres);
+		}
+		manager.insertarMac(login.getEstudiante().getEstId(),
+				Funciones.conseguirMAC());
+		this.insertarEva();
+		Collections.shuffle(lpre);
+		Collections.shuffle(lres);
 	}
 
+	/**
+	 * Metodo para insertar evaluaciones_estudiantil no repetidas
+	 */
+	public void insertarEva() {
+		Integer eval = 0;
+		Integer cont=0;
+		List<ColEvaluacion> eva = manager.findAllEvaluacion();
+		for (ColEvaluacion c : eva) {
+			if (c.getEvaArea().equals(login.getEstudiante().getEstArea())) {
+				eval = c.getEvaId();
+			}
+		}
+		List<ColEvaluacionEstudiantil> eev=manager.findAllEvaEstudiantil();
+		for (ColEvaluacionEstudiantil e : eev) {
+			if (e.getColEstudiante().getEstId()!=login.getEstudiante().getEstId()){
+				cont++;	
+			}
+		}
+		if (cont==eev.size()){
+			manager.insertarEvaEstudiantil(login.getEstudiante().getEstId(), eval,
+					new Timestamp(new Date().getTime()), null, null);
+		}
+	}
+
+	/**
+	 * Metodo de generacio de tiempo de la evaluación y control del mismo
+	 */
 	public void calculoTiempo() {
 		if (login.getEstudiante().getEstFechaFin().getTime() >= new Date()
 				.getTime()) {
-			long timer = login.getEstudiante().getEstFechaFin().getTime()
-					- new Date().getTime();
-
-			long minutos = 0;
-			long segundos = 0;
-
-			minutos = timer / (60 * 1000);
-			while (minutos >= 60) {
-				minutos = minutos - 60;
-			}
-
-			segundos = timer / 1000;
-			while (segundos >= 60) {
-				segundos = segundos - 60;
-			}
-
-			time = minutos + ":" + segundos;
-			System.out.println(time);
+			this.tiempo();
 		} else {
 			time = "00:00";
-			try {
-				login.logout();
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/SisConcursoColegios/faces/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.calculoEvaEstudiantil();
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('close').show();");
+		}
+	}
+
+	/**
+	 * Metodo de mostrar y calcular el tiempo
+	 */
+	public void tiempo() {
+		long timer = login.getEstudiante().getEstFechaFin().getTime()
+				- new Date().getTime();
+
+		long minutos = 0;
+		long segundos = 0;
+
+		minutos = timer / (60 * 1000);
+		while (minutos >= 60) {
+			minutos = minutos - 60;
 		}
 
-	}
+		segundos = timer / 1000;
+		while (segundos >= 60) {
+			segundos = segundos - 60;
+		}
 
-	// ////////////////////////////////////////--------------Opciones
-	// Respuestas---------------///////////////////////////////////////////
-
-	// Atributos de las Preguntas
-	private Integer oprId;
-	private String oprOpcion;
-	private String oprRespuesta;
-	private BigDecimal oprValor;
-	private Integer colPregunta;
-
-	/**
-	 * @return the oprId
-	 */
-	public Integer getOprId() {
-		return oprId;
+		time = minutos + ":" + segundos;
+		System.out.println(time);
 	}
 
 	/**
-	 * @param oprId
-	 *            the oprId to set
+	 * Metodo para salir de una evaluacion con muestra de resultado
 	 */
-	public void setOprId(Integer oprId) {
-		this.oprId = oprId;
+	public void salir() {
+		try {
+			login.logout();
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/SisConcursoColegios/faces/index.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * @return the oprOpcion
+	 * Metodo para cambiar el estado de bloqueado
+	 * 
+	 * @param pregunta
 	 */
-	public String getOprOpcion() {
-		return oprOpcion;
-	}
+	public void bloqueo(ColPregunta pregunta) {
+		for (ColOpcionesRespuesta or : lres) {
+			if (or.getColPregunta().getPreId() == pregunta.getPreId()) {
 
-	/**
-	 * @param oprOpcion
-	 *            the oprOpcion to set
-	 */
-	public void setOprOpcion(String oprOpcion) {
-		this.oprOpcion = oprOpcion;
-	}
-
-	/**
-	 * @return the oprRespuesta
-	 */
-	public String getOprRespuesta() {
-		return oprRespuesta;
-	}
-
-	/**
-	 * @param oprRespuesta
-	 *            the oprRespuesta to set
-	 */
-	public void setOprRespuesta(String oprRespuesta) {
-		this.oprRespuesta = oprRespuesta;
-	}
-
-	/**
-	 * @return the oprValor
-	 */
-	public BigDecimal getOprValor() {
-		return oprValor;
-	}
-
-	/**
-	 * @param oprValor
-	 *            the oprValor to set
-	 */
-	public void setOprValor(BigDecimal oprValor) {
-		this.oprValor = oprValor;
-	}
-
-	/**
-	 * @return the colPregunta
-	 */
-	public Integer getColPregunta() {
-		return colPregunta;
-	}
-
-	/**
-	 * @param colPregunta
-	 *            the colPregunta to set
-	 */
-	public void setColPregunta(Integer colPregunta) {
-		this.colPregunta = colPregunta;
-	}
-
-	public List<ColOpcionesRespuesta> resp(ColPregunta p) {
-		lres = new ArrayList<ColOpcionesRespuesta>();
-		for (ColOpcionesRespuesta pre : manager.findAllOpciones()) {
-			if (pre.getColPregunta().getPreId() == p.getPreId()) {
-				lres.add(pre);
 			}
 		}
-		return lres;
+	}
+
+	public void calculoEvaEstudiantil() {
+		List<ColRespuesta> res = manager.findAllRespuestas();
+		for (ColRespuesta r : res) {
+			if (r.getEstId() == login.getEstudiante().getEstId()) {
+				calificacion += r.getColOpcionesRespuesta().getOprValor();
+			}
+		}
+		List<ColEvaluacionEstudiantil> ee=manager.findAllEvaEstudiantil();
+		for (ColEvaluacionEstudiantil eva : ee) {
+			if (eva.getColEstudiante().getEstId()==login.getEstudiante().getEstId()){
+				manager.editarEvaEstudiantil(eva.getEesId(), new Timestamp(new Date().getTime()), calificacion);
+				break;
+			}
+		}
+		
+	}
+	
+	public void verResultado(){
+		this.calculoEvaEstudiantil();
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('close').show();");
+		context.execute("PF('poll').stop();");
 	}
 
 }

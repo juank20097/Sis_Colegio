@@ -538,21 +538,30 @@ public class InstitucionBean {
 	 */
 	public void notificarAll() {
 		for (ColInstitucion c : manager.findAllInstituciones()) {
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
+			this.htmlEnviar(c.getInsId());
 		}
-		for (ColInstitucion c : manager.findAllInstituciones()) {
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-			this.crearSMS(c.getInsId());
-		}
+		
 	}
 
 	/**
@@ -612,7 +621,7 @@ public class InstitucionBean {
 			Mail mail = new Mail();
 			mail.setId("olimpiada");
 			mail.setAsunto("Información de Registros");
-			mail.setPara(i.getInsCorreo()+","+i.getInsCooCorreo()+","+i.getInsRepCorreo());
+			mail.setPara(i.getInsCorreo());
 			String SMS_general = "<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head>"
@@ -635,7 +644,7 @@ public class InstitucionBean {
 					+ "</html>";
 			mail.setBody(SMS_general);
 			ma.MailWS(mail);
-			Thread.sleep(10000);
+//			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

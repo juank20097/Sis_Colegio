@@ -304,22 +304,20 @@ public class Funciones {
 	 * @return
 	 */
 	public static String conseguirMAC() {
-		String sb = new String();
-		NetworkInterface a;
-		try {
-			a = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
-			byte[] mac = a.getHardwareAddress();
+		StringBuilder sb = new StringBuilder();
+		  NetworkInterface a; 
+		  try {
+		   a = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
+		   byte[] mac = a.getHardwareAddress();
 
-			for (int i = 0; i < mac.length; i++) {
-				sb = (String.format("%02X%s", mac[i],
-						(i < mac.length - 1) ? "-" : ""));
-			}
-
-			// lmac.setText("SE ha registrado la MAC exitosamente.");
+		   for (int i = 0; i < mac.length; i++) {
+		    sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));  
+		   } 
+		   
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return sb;
+		return sb.toString();
 	}
 
 }
