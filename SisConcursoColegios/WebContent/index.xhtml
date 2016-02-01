@@ -161,7 +161,8 @@
 			<h:form id="de">
 				<center>
 					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
-					<p>Tu prueba ya fue finalizada. tu puntuación es la siguiente</p>
+					<p>Tu prueba ya ha finalizada. tu puntuación es la siguiente</p>
+					<p:outputLabel value="#{logginBean.calificacion} / 10"></p:outputLabel><br/>
 					<b:commandButton look="info"
 						action="#{logginBean.cerrarDialog}" value="  Salir  "></b:commandButton>
 				</center>

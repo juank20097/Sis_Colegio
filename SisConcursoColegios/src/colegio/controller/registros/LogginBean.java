@@ -27,6 +27,7 @@ import colegio.controller.generic.Mensaje;
 import colegio.manager.ManagerAcceso;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEstudiante;
+import colegio.model.entidades.ColEvaluacionEstudiantil;
 import colegio.model.entidades.ColInstitucion;
 
 /**
@@ -69,6 +70,9 @@ public class LogginBean {
 	// atributo de control de parametros
 	private boolean parametroIns;
 
+	//atributo de calificacion
+	private Integer calificacion=0;
+	
 	public LogginBean() {
 		institucion = new ColInstitucion();
 		manager = new RegistrosDAO();
@@ -78,6 +82,14 @@ public class LogginBean {
 		this.DownloadFile3();
 		t_par = 0L;
 		// this.validarParametroIns();
+	}
+
+	public Integer getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Integer calificacion) {
+		this.calificacion = calificacion;
 	}
 
 	public StreamedContent getFile3() {
@@ -214,10 +226,10 @@ public class LogginBean {
 	public String ingresoLogin() {
 		String r = "";
 		if (usuario != null && contrasena != null) {
-			r = this.loginEst();
-			// if (r.isEmpty() || r == "") {
-			// r = this.loginCoo();
-			// }
+			r = this.resultado();
+			if (r.isEmpty() || r == "") {
+				r = this.loginEst();
+			}
 			if (r.isEmpty() || r == "") {
 				r = this.login();
 			}
@@ -227,6 +239,26 @@ public class LogginBean {
 		}
 		if (r == "a") {
 			r = "";
+		}
+		return r;
+	}
+
+	public String resultado() {
+		String r = "";
+		for (ColEstudiante e : manager.findAllEstudiantes()) {
+			if (e.getEstCedula().trim().equals(usuario.trim())) {
+				for (ColEvaluacionEstudiantil ev : manager
+						.findAllEvaEstudiantil()) {
+					if (ev.getColEstudiante().getEstId() == e.getEstId()
+							&& ev.getEesCalificacion() != null) {
+						calificacion = ev.getEesCalificacion();
+						RequestContext context = RequestContext
+								.getCurrentInstance();
+						context.execute("PF('close').show();");
+						r = "a";
+					}
+				}
+			}
 		}
 		return r;
 	}
@@ -264,7 +296,6 @@ public class LogginBean {
 	public String loginEst() {
 		String r = "";
 		List<ColEstudiante> e;
-
 		e = manager.findAllEstudiantes();
 		for (ColEstudiante est : e) {
 			if (est.getEstCedula().trim().equals(usuario.trim())
@@ -277,13 +308,12 @@ public class LogginBean {
 					break;
 				}
 				if ((new Date().after(est.getEstFechaIni()))
-						&& (new Date().after(est.getEstFechaFin()))){
+						&& (new Date().after(est.getEstFechaFin()))) {
 					RequestContext context = RequestContext
 							.getCurrentInstance();
 					context.execute("PF('close').show();");
 					r = "a";
-				}
-				else {
+				} else {
 					est_nombre = est.getEstNombres() + " "
 							+ est.getEstApellidos();
 					t_par = est.getEstFechaIni().getTime();
@@ -302,9 +332,7 @@ public class LogginBean {
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('poll').stop();");
 		return "";
-    }
-	
-
+	}
 
 	/**
 	 * Permite logearse al sistema
@@ -421,26 +449,25 @@ public class LogginBean {
 	public void calculoTiempo() {
 		if (t_par != 0L) {
 			long t_actual = new Date().getTime();
-			if (t_par>=t_actual){
-			long t_total = t_par - t_actual;
+			if (t_par >= t_actual) {
+				long t_total = t_par - t_actual;
 
-			dia = t_total / (24 * 60 * 60 * 1000);
-			hora = t_total / (60 * 60 * 1000);
-			while (hora >= 24) {
-				hora = hora - 24;
-			}
-			minuto = t_total / (60 * 1000);
-			while (minuto >= 60) {
-				minuto = minuto - 60;
-			}
-			segundo = t_total / 1000;
-			while (segundo >= 60) {
-				segundo = segundo - 60;
-			}
-			time = "Dias: " + dia + "\n Horas: " + hora + "\n Minutos: "
-					+ minuto + "\n Segundos: " + segundo;
-		}
-			else{
+				dia = t_total / (24 * 60 * 60 * 1000);
+				hora = t_total / (60 * 60 * 1000);
+				while (hora >= 24) {
+					hora = hora - 24;
+				}
+				minuto = t_total / (60 * 1000);
+				while (minuto >= 60) {
+					minuto = minuto - 60;
+				}
+				segundo = t_total / 1000;
+				while (segundo >= 60) {
+					segundo = segundo - 60;
+				}
+				time = "Dias: " + dia + "\n Horas: " + hora + "\n Minutos: "
+						+ minuto + "\n Segundos: " + segundo;
+			} else {
 				time = "Dias: 0 \n Horas: 0 \n Minutos: 0 \n Segundos: 0";
 			}
 		}
