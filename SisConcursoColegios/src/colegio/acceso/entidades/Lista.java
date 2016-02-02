@@ -1,4 +1,4 @@
-package colegio.manager;
+package colegio.acceso.entidades;
 
 import colegio.model.entidades.ColOpcionesRespuesta;
 

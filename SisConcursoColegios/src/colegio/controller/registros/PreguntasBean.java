@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
+import colegio.acceso.entidades.Lista;
 import colegio.controller.generic.Funciones;
-import colegio.manager.Lista;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEvaluacion;
 import colegio.model.entidades.ColEvaluacionEstudiantil;
