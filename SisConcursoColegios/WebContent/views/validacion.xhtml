@@ -16,28 +16,8 @@
 		</center>
 		<br />
 		<h:form id="frmT">
+		
 			<p:messages closable="true"></p:messages>
-			<b:row>
-			<b:column>
-			<p:commandButton styleClass="btn btn-info" look="success"
-								value="Notificar Todos" action="#{institucionBean.notificarAll()}"
-								onclick="PF('statusDialog').show()"
-								oncomplete="PF('statusDialog').hide()"
-								update=" :frmT ">
-								<p:confirm header="Confirmación"
-									message="Seguro Quiere Notificar a todas las Instituciones?"
-									icon="ui-icon-alert" />
-			</p:commandButton>
-			</b:column>
-			</b:row>
-			
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Si" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
-			
 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage value="../resources/img/cargando.gif" />

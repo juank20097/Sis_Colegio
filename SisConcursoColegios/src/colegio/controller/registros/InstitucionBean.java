@@ -496,7 +496,8 @@ public class InstitucionBean {
 	}
 
 	/**
-	 * Metodo para carga una intitucion para ser visible ante alguna modificación
+	 * Metodo para carga una intitucion para ser visible ante alguna
+	 * modificación
 	 * 
 	 * @param ins
 	 * @return
@@ -532,13 +533,13 @@ public class InstitucionBean {
 	 * @return
 	 */
 	public String editarInstitucion() {
-//		this.crearSMS(ins_id);
+		// this.crearSMS(ins_id);
 		this.htmlEnviar(ins_id);
 		manager.editarInstitucion(ins_id, ins_estado);
 		Mensaje.crearMensajeINFO("Estado Modificado Correctamente");
 		return "validacion?faces-redirect=true";
 	}
-	
+
 	/**
 	 * Metodo para notificar a todas las Intituciones
 	 */
@@ -599,7 +600,7 @@ public class InstitucionBean {
 	public void htmlEnviar(Integer ins_id) {
 		try {
 			ColInstitucion i = manager.InstitucionByID(ins_id);
-			String para= this.validarCorreo(i);
+			String para = this.validarCorreo(i);
 			List<ColEstudiante> est = this.filtrarEstudiante(i);
 			Mail mail = new Mail();
 			mail.setId("olimpiada");
@@ -613,46 +614,43 @@ public class InstitucionBean {
 					+ "</head>"
 					+ "<body>"
 					+ "<h1>"
-					+ i.getInsNombre()
+					+ this.cambiarFormato(i.getInsNombre())
 					+ "</h1>"
 					+ "</br>"
 					+ "<p>Le informamos que su instituci&oacute;n registro a los siguientes estudiantes:</p>"
-					+ "</br>" 
+					+ "</br>"
 					+ "<table border=1>"
 					+ "<tr>"
-					+ "<td>Cédula</td><td>Nombres Completos</td><td>Área a Participar</td>"
-					+ this.tabla(est) 
-					+ "</table>" 
-					+ "</body>" 
-					+ "</html>";
+					+ "<td>C&eacute;dula</td><td>Nombres Completos</td><td>&Aacute;rea a Participar</td>"
+					+ this.tabla(est) + "</table>" + "</body>" + "</html>";
 			mail.setBody(SMS_general);
 			ma.MailWS(mail);
-//			Thread.sleep(10000);
+			// Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Metodo para cargar solo correos diferentes de null
 	 * 
 	 * @param ins
 	 * @return
 	 */
-	public String validarCorreo(ColInstitucion ins){
-		String r="";
-		if (ins.getInsCorreo()!=null){
-			r=r+ins.getInsCorreo()+",";
+	public String validarCorreo(ColInstitucion ins) {
+		String r = "";
+		if (ins.getInsCorreo() != null) {
+			r = r + ins.getInsCorreo() + ",";
 		}
-		if (ins.getInsCooCorreo()!=null){
-			r=r+ins.getInsCooCorreo()+",";
+		if (ins.getInsCooCorreo() != null) {
+			r = r + ins.getInsCooCorreo() + ",";
 		}
-		if (ins.getInsRepCorreo()!=null){
-			r=r+ins.getInsRepCorreo()+",";
+		if (ins.getInsRepCorreo() != null) {
+			r = r + ins.getInsRepCorreo() + ",";
 		}
 		return r;
-		}
-	
+	}
+
 	/**
 	 * Metodo para construir la tabla de estudiantes de una institución
 	 * 
@@ -661,12 +659,36 @@ public class InstitucionBean {
 	 */
 	public String tabla(List<ColEstudiante> est) {
 		StringBuilder sb = new StringBuilder();
+
 		for (ColEstudiante col : est) {
+			String c = "";
+			if (col.getEstArea().equals("Matemáticas")) {
+				c = "Matem&aacute;ticas";
+			}
+			if (col.getEstArea().equals("Física")) {
+				c = "F&iacute;sica";
+			}
+			if (col.getEstArea().equals("Química")) {
+				c = "Qu&iacute;mica";
+			}
+			if (col.getEstArea().equals("Biología")) {
+				c = "Biolog&iacute;a";
+			}
+
 			sb.append("<tr><td>" + col.getEstCedula() + "</td><td>"
-					+ col.getEstApellidos() + " " + col.getEstNombres()
-					+ "</td><td>"+col.getEstArea()+"</td></tr>");
+					+ this.cambiarFormato(col.getEstApellidos()) + " "
+					+ this.cambiarFormato(col.getEstNombres()) + "</td><td>"
+					+ c + "</td></tr>");
 		}
 		return sb.toString();
+	}
+
+	public String cambiarFormato(String cadena) {
+		String res = cadena.replace('á', 'a').replace('é', 'e')
+				.replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
+				.replace('Á', 'A').replace('É', 'E').replace('Í', 'I')
+				.replace('Ó', 'O').replace('Ú', 'U');
+		return res;
 	}
 
 	/**
