@@ -53,16 +53,16 @@
 								value="#{respuestaBean.idguardar}">
 								<p:ajax listener="#{respuestaBean.insertarRespuesta()}" />
 								<c:forEach items="#{preguntasBean.lres}" var="res">
-									<c:if test="#{res.colPregunta.preId == pre.preId}">
-										<f:selectItem itemDisabled="false"
-											itemLabel="#{res.oprOpcion}" itemValue="#{res.oprId}" />
+									<c:if test="#{res.opcionesRespuesta.colPregunta.preId == pre.preId}">
+										<f:selectItem itemDisabled="#{res.enable}"
+											itemLabel="#{res.opcionesRespuesta.oprOpcion}" itemValue="#{res.opcionesRespuesta.oprId}" />
 									</c:if>
 								</c:forEach>
 							</p:selectOneRadio>
 							<br />
 							<b:row>
 								<b:column offset="1">
-									<b:commandButton disabled="false" look="info"
+									<b:commandButton disabled="#{res.enable}" look="info"
 										actionListener="#{preguntasBean.bloqueo(pre)}"
 										value="Guardar Respuesta">
 									</b:commandButton>
@@ -74,7 +74,7 @@
 						<b:row>
 						<b:column>
 					<center>
-						<b:commandButton look="success" size="lg" style="width:70%;"
+						<b:commandButton look="success" size="lg" style="width:30%;"
 							value="Finalizar Evaluación"
 							action="#{preguntasBean.verResultado}"></b:commandButton>
 					</center>

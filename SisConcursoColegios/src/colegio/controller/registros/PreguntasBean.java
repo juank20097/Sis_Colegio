@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import colegio.controller.generic.Funciones;
+import colegio.manager.Lista;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEvaluacion;
 import colegio.model.entidades.ColEvaluacionEstudiantil;
@@ -49,7 +50,7 @@ public class PreguntasBean {
 
 	// Atributo para carga de preguntas
 	private List<ColPregunta> lpre = new ArrayList<ColPregunta>();
-	private List<ColOpcionesRespuesta> lres = new ArrayList<ColOpcionesRespuesta>();
+	private List<Lista> lres = new ArrayList<Lista>();
 
 	// Atributo para carga de Area
 	private String p_area;
@@ -59,7 +60,7 @@ public class PreguntasBean {
 
 	// Atributos para mostrar resultados
 	private String tiempo_eva;
-	private Integer calificacion=0;
+	private Integer calificacion = 0;
 
 	public PreguntasBean() {
 		LogginBean.verificarSession();
@@ -89,7 +90,7 @@ public class PreguntasBean {
 	/**
 	 * @return the lres
 	 */
-	public List<ColOpcionesRespuesta> getLres() {
+	public List<Lista> getLres() {
 		return lres;
 	}
 
@@ -97,7 +98,7 @@ public class PreguntasBean {
 	 * @param lres
 	 *            the lres to set
 	 */
-	public void setLres(List<ColOpcionesRespuesta> lres) {
+	public void setLres(List<Lista> lres) {
 		this.lres = lres;
 	}
 
@@ -236,14 +237,17 @@ public class PreguntasBean {
 	 */
 	public void cargarPreguntas() {
 		lpre = new ArrayList<ColPregunta>();
-		lres = new ArrayList<ColOpcionesRespuesta>();
+		lres = new ArrayList<Lista>();
 		for (ColPregunta pre : manager.findAllPreguntas()) {
 			if (pre.getColEvaluacion().getEvaArea().trim()
 					.equals(login.getEstudiante().getEstArea().trim())) {
 				lpre.add(pre);
 				for (ColOpcionesRespuesta op : manager.findAllOpciones()) {
 					if (op.getColPregunta().getPreId() == pre.getPreId()) {
-						lres.add(op);
+						Lista l = new Lista();
+						l.setOpcionesRespuesta(op);
+						l.setEnable(false);
+						lres.add(l);
 					}
 				}
 			}
@@ -260,22 +264,23 @@ public class PreguntasBean {
 	 */
 	public void insertarEva() {
 		Integer eval = 0;
-		Integer cont=0;
+		Integer cont = 0;
 		List<ColEvaluacion> eva = manager.findAllEvaluacion();
 		for (ColEvaluacion c : eva) {
 			if (c.getEvaArea().equals(login.getEstudiante().getEstArea())) {
 				eval = c.getEvaId();
 			}
 		}
-		List<ColEvaluacionEstudiantil> eev=manager.findAllEvaEstudiantil();
+		List<ColEvaluacionEstudiantil> eev = manager.findAllEvaEstudiantil();
 		for (ColEvaluacionEstudiantil e : eev) {
-			if (e.getColEstudiante().getEstId()!=login.getEstudiante().getEstId()){
-				cont++;	
+			if (e.getColEstudiante().getEstId() != login.getEstudiante()
+					.getEstId()) {
+				cont++;
 			}
 		}
-		if (cont==eev.size()){
-			manager.insertarEvaEstudiantil(login.getEstudiante().getEstId(), eval,
-					new Timestamp(new Date().getTime()), null, null);
+		if (cont == eev.size()) {
+			manager.insertarEvaEstudiantil(login.getEstudiante().getEstId(),
+					eval, new Timestamp(new Date().getTime()), null, null);
 		}
 	}
 
@@ -338,9 +343,10 @@ public class PreguntasBean {
 	 * @param pregunta
 	 */
 	public void bloqueo(ColPregunta pregunta) {
-		for (ColOpcionesRespuesta or : lres) {
-			if (or.getColPregunta().getPreId() == pregunta.getPreId()) {
-
+		for (Lista or : lres) {
+			if (or.getOpcionesRespuesta().getColPregunta().getPreId() == pregunta
+					.getPreId()) {
+				or.setEnable(true);
 			}
 		}
 	}
@@ -352,21 +358,23 @@ public class PreguntasBean {
 				calificacion += r.getColOpcionesRespuesta().getOprValor();
 			}
 		}
-		List<ColEvaluacionEstudiantil> ee=manager.findAllEvaEstudiantil();
+		List<ColEvaluacionEstudiantil> ee = manager.findAllEvaEstudiantil();
 		for (ColEvaluacionEstudiantil eva : ee) {
-			if (eva.getColEstudiante().getEstId()==login.getEstudiante().getEstId()){
-				manager.editarEvaEstudiantil(eva.getEesId(), new Timestamp(new Date().getTime()), calificacion);
+			if (eva.getColEstudiante().getEstId() == login.getEstudiante()
+					.getEstId()) {
+				manager.editarEvaEstudiantil(eva.getEesId(), new Timestamp(
+						new Date().getTime()), calificacion);
 				this.totalTiempo(eva);
 				break;
 			}
 		}
-		
-		
+
 	}
-	
-	public void totalTiempo(ColEvaluacionEstudiantil eva_est){
-		long time = eva_est.getEesFechaFin().getTime()-eva_est.getEesFechaIni().getTime();
-		
+
+	public void totalTiempo(ColEvaluacionEstudiantil eva_est) {
+		long time = eva_est.getEesFechaFin().getTime()
+				- eva_est.getEesFechaIni().getTime();
+
 		long minutos = 0;
 		long segundos = 0;
 
@@ -381,10 +389,10 @@ public class PreguntasBean {
 		}
 
 		tiempo_eva = minutos + ":" + segundos;
-		
+
 	}
-	
-	public void verResultado(){
+
+	public void verResultado() {
 		this.calculoEvaEstudiantil();
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('close').show();");
