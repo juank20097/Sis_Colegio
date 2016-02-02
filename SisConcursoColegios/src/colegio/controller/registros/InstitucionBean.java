@@ -543,31 +543,7 @@ public class InstitucionBean {
 	 * Metodo para notificar a todas las Intituciones
 	 */
 	public void notificarAll() {
-		for (ColInstitucion c : manager.findAllInstituciones()) {
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-			this.htmlEnviar(c.getInsId());
-		}
-		
+		this.htmlEnviar(ins_id);
 	}
 
 	/**
@@ -623,11 +599,12 @@ public class InstitucionBean {
 	public void htmlEnviar(Integer ins_id) {
 		try {
 			ColInstitucion i = manager.InstitucionByID(ins_id);
+			String para= this.validarCorreo(i);
 			List<ColEstudiante> est = this.filtrarEstudiante(i);
 			Mail mail = new Mail();
 			mail.setId("olimpiada");
 			mail.setAsunto("Información de Registros");
-			mail.setPara(i.getInsCorreo());
+			mail.setPara(para);
 			String SMS_general = "<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head>"
@@ -655,7 +632,27 @@ public class InstitucionBean {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Metodo para cargar solo correos diferentes de null
+	 * 
+	 * @param ins
+	 * @return
+	 */
+	public String validarCorreo(ColInstitucion ins){
+		String r="";
+		if (ins.getInsCorreo()!=null){
+			r=r+ins.getInsCorreo()+",";
+		}
+		if (ins.getInsCooCorreo()!=null){
+			r=r+ins.getInsCooCorreo()+",";
+		}
+		if (ins.getInsRepCorreo()!=null){
+			r=r+ins.getInsRepCorreo()+",";
+		}
+		return r;
+		}
+	
 	/**
 	 * Metodo para construir la tabla de estudiantes de una institución
 	 * 

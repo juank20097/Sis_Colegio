@@ -320,7 +320,6 @@ public class PreguntasBean {
 		}
 
 		time = minutos + ":" + segundos;
-		System.out.println(time);
 	}
 
 	/**
