@@ -493,9 +493,6 @@ public class FinstitucionBean {
 		}
 		return p;
 	}
-
-	
-
 	
 	/**
 	 * Permite la creacion de un Dato a la Entidad

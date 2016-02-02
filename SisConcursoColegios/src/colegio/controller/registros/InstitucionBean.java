@@ -495,6 +495,12 @@ public class InstitucionBean {
 		return p;
 	}
 
+	/**
+	 * Metodo para carga una intitucion para ser visible ante alguna modificación
+	 * 
+	 * @param ins
+	 * @return
+	 */
 	public String cargarInstitucion(ColInstitucion ins) {
 		ins_id = ins.getInsId();
 		ins_zona = ins.getInsZona();

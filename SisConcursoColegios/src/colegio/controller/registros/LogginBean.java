@@ -71,10 +71,10 @@ public class LogginBean {
 	// atributo de control de parametros
 	private boolean parametroIns;
 
-	//atributo de calificacion
-	private Integer calificacion=0;
+	// atributo de calificacion
+	private Integer calificacion = 0;
 	private String tiempo_eva;
-	
+
 	public LogginBean() {
 		institucion = new ColInstitucion();
 		manager = new RegistrosDAO();
@@ -233,6 +233,11 @@ public class LogginBean {
 		this.time = time;
 	}
 
+	/**
+	 * Metodo para ejecutar todos los procesos de logueado
+	 * 
+	 * @return
+	 */
 	public String ingresoLogin() {
 		String r = "";
 		if (usuario != null && contrasena != null) {
@@ -253,6 +258,11 @@ public class LogginBean {
 		return r;
 	}
 
+	/**
+	 * Metodo para obtener la informacion de una evaluación estudiantil
+	 * 
+	 * @return
+	 */
 	public String resultado() {
 		String r = "";
 		for (ColEstudiante e : manager.findAllEstudiantes()) {
@@ -262,7 +272,8 @@ public class LogginBean {
 					if (ev.getColEstudiante().getEstId() == e.getEstId()
 							&& ev.getEesCalificacion() != null) {
 						calificacion = ev.getEesCalificacion();
-						tiempo_eva= this.tiempo(ev.getEesFechaIni(), ev.getEesFechaFin());
+						tiempo_eva = this.tiempo(ev.getEesFechaIni(),
+								ev.getEesFechaFin());
 						RequestContext context = RequestContext
 								.getCurrentInstance();
 						context.execute("PF('close').show();");
@@ -273,10 +284,17 @@ public class LogginBean {
 		}
 		return r;
 	}
-	
-	public String tiempo(Timestamp inicio, Timestamp fin){
-		long time = fin.getTime()-inicio.getTime();
-		
+
+	/**
+	 * Metodo de calculo de tiempo para el dialog
+	 * 
+	 * @param inicio
+	 * @param fin
+	 * @return
+	 */
+	public String tiempo(Timestamp inicio, Timestamp fin) {
+		long time = fin.getTime() - inicio.getTime();
+
 		long minutos = 0;
 		long segundos = 0;
 
@@ -290,7 +308,7 @@ public class LogginBean {
 			segundos = segundos - 60;
 		}
 
-		 return  minutos + ":" + segundos;
+		return minutos + ":" + segundos;
 	}
 
 	/**
@@ -358,6 +376,11 @@ public class LogginBean {
 		return r;
 	}
 
+	/**
+	 * Metodo que cierra el dialog y finaliza el poll
+	 * 
+	 * @return
+	 */
 	public String cerrarDialog() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('poll').stop();");
@@ -451,6 +474,9 @@ public class LogginBean {
 
 	}
 
+	/**
+	 * Metodo para descargar formato de envio de estudiantes e intituciones
+	 */
 	public void DownloadFile3() {
 		try {
 			InputStream stream3 = ((ServletContext) FacesContext
@@ -466,6 +492,11 @@ public class LogginBean {
 
 	}
 
+	/**
+	 * Metodo de envio a otra pagina web
+	 * 
+	 * @throws Exception
+	 */
 	public void redirect() throws Exception {
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
@@ -501,8 +532,6 @@ public class LogginBean {
 				time = "Dias: 0 \n Horas: 0 \n Minutos: 0 \n Segundos: 0";
 			}
 		}
-
-		System.out.println(time);
 	}
 
 }

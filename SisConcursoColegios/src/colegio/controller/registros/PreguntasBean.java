@@ -351,6 +351,9 @@ public class PreguntasBean {
 		}
 	}
 
+	/**
+	 * Metodo de calculo de calificacion y tiempo de cada evaluación
+	 */
 	public void calculoEvaEstudiantil() {
 		List<ColRespuesta> res = manager.findAllRespuestas();
 		for (ColRespuesta r : res) {
@@ -371,6 +374,11 @@ public class PreguntasBean {
 
 	}
 
+	/**
+	 * Metodo de cálculo de tiempo
+	 * 
+	 * @param eva_est
+	 */
 	public void totalTiempo(ColEvaluacionEstudiantil eva_est) {
 		long time = eva_est.getEesFechaFin().getTime()
 				- eva_est.getEesFechaIni().getTime();
@@ -392,6 +400,9 @@ public class PreguntasBean {
 
 	}
 
+	/**
+	 * Metodo lanzado para ver resultados de estudiantes y cierre de dialog y stop de poll
+	 */
 	public void verResultado() {
 		this.calculoEvaEstudiantil();
 		RequestContext context = RequestContext.getCurrentInstance();

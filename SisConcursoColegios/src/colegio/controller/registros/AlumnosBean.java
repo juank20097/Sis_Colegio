@@ -570,6 +570,12 @@ public class AlumnosBean {
 		return "";
 	}
 
+	/**
+	 * Metodo para eliminar un estudiante
+	 * 
+	 * @param est
+	 * @return
+	 */
 	public String eliminarEstudiante(ColEstudiante est) {
 		manager.eliminarEstudiante(est.getEstId());
 		Mensaje.crearMensajeINFO("Estudiante eliminado correctamente");
@@ -660,6 +666,15 @@ public class AlumnosBean {
 		return "";
 	}
 
+	/**
+	 * Metodo para crea el sms a enviar a un alumno por email
+	 * 
+	 * @param nombre
+	 * @param apellido
+	 * @param cedula
+	 * @param clave
+	 * @return
+	 */
 	public String crearsmsAlumno(String nombre, String apellido, String cedula,
 			String clave) {
 		String sms = "";

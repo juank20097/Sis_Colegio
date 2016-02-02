@@ -35,6 +35,15 @@ public class ManagerAcceso {
 		return menus;
 	}
 	
+	/**
+	 * Metodo de consulta de WebService para permisos de usuario loggin 
+	 * 
+	 * @param usr
+	 * @param pass
+	 * @param aplicacion
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Menu> loginWS(String usr, String pass, String aplicacion) throws Exception
 	{
@@ -50,6 +59,12 @@ public class ManagerAcceso {
 		
 	}
 	
+	/**
+	 * Metodo de consulta WebService para enviar correos electronicos
+	 * 
+	 * @param m
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
 	public void MailWS(Mail m) throws Exception
 	{
