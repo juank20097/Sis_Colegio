@@ -63,7 +63,7 @@ public class PreguntasBean {
 	private Integer calificacion = 0;
 
 	public PreguntasBean() {
-		LogginBean.verificarSession();
+		//LogginBean.verificarSession();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");

@@ -613,21 +613,24 @@ public class InstitucionBean {
 					+ "<title>Olimpiadas de Ciencias</title>"
 					+ "</head>"
 					+ "<body>"
-					+ "<h4>"
-					+ "<p>Le informamos que su instituci&oacute;n "+this.cambiarFormato(i.getInsNombre())+", se registr&oacute; con &eacute;xito a las Olimpiadas de Ciencias.</p>"
-					+ " <p>Usted puede revisar o modificar el registro de los estudiantes con las siguientes credenciales:</p>"
-					+ "<br/>"
-					+ "<p>Link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>olimpiadasdeciencias.yachay.gob.ec</a></p>"
-					+ "<p>Usuario: "+i.getInsCooCedula()+"</p>"
-					+ "<p>Pass: "+i.getInsCooClave()+"</p>"
-					+ "<br/>"
+					+ "<p>Estimado Coordinador,</p>"
+					+ "<p>Le informamos que su instituci&oacute;n &quot;"+this.cambiarFormato(i.getInsNombre())+"&quot; se registr&oacute; con &eacute;xito a las Olimpiadas de Ciencias.<br/>"
+					+ "Usted puede revisar o modificar el registro de los estudiantes con las siguientes credenciales:</p>"
+					+ "<p>Link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>olimpiadasdeciencias.yachay.gob.ec</a><br/>"
+					+ "Usuario: "+i.getInsCooCedula()+"<br/>"
+					+ "Pass: "+i.getInsCooClave()+"</p>"
+					+ "<p>Recuerda que el 15 de febrero  ser&aacute;n las evaluaciones en l&iacute;nea,  nuestro equipo enviar&aacute; un correo electr&oacute;nico dos d&iacute;as antes de la evaluaci&oacute;n  a cada uno de  los estudiantes inscritos en la Olimpiada de Ciencias,  con las credenciales de ingreso (Usuario y Contrase&ntilde;a) los cuales deber&aacute;n ingresar en el link : <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>olimpiadasdeciencias.yachay.gob.ec</a>  para proceder a dar la prueba.  Les deseamos muchos &eacute;xitos.<p/>"
 					+ "<p>A continuaci&oacute;n se detalla la lista de estudiantes registrados:</p>"
-					+ "</h4>"
-					+ "</br>"
 					+ "<table border=2>"
 					+ "<tr>"
 					+ "<td>C&eacute;dula</td><td>Nombres Completos</td><td>&Aacute;rea a Participar</td>"
-					+ this.tabla(est) + "</table>" + "</body>" + "</html>";
+					+ this.tabla(est) 
+					+ "</table>"
+					+ "<br/>"
+					+ "<p>Saludos Cordiales<br/>"
+					+ "Empresa P&uacute;blica Yachay EP.</p>"
+					+ "</body>" 
+					+ "</html>";
 			mail.setBody(SMS_general);
 			ma.MailWS(mail);
 			// Thread.sleep(10000);

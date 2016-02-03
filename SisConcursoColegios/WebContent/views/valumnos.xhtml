@@ -88,19 +88,6 @@
 									icon="ui-icon-alert" />
 							</p:commandButton>
 						</b:column>
-						
-						<b:column offset="1" span="1">
-							<p:commandButton styleClass="btn btn-info" look="success"
-								value="Notificar Todos" action="#{alumnosBean.notificarAll}"
-								onclick="PF('statusDialog').show()"
-								oncomplete="PF('statusDialog').hide()"
-								update=" :frmT ">
-								<p:confirm header="Confirmación"
-									message="Seguro Quiere Notificar a Todos los Estudiantes?"
-									icon="ui-icon-alert" />
-							</p:commandButton>
-						</b:column>
-						
 				</b:row>
 				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 					<p:commandButton value="Si" type="button"

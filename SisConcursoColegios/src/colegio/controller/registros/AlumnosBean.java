@@ -31,6 +31,8 @@ public class AlumnosBean {
 	private RegistrosDAO manager;
 
 	private LogginBean login;
+	
+	
 
 	// Atributos de las Instituciones
 	/** @pdOid f80b9469-ab73-42ca-b6db-4839f4c4285c */
@@ -662,9 +664,18 @@ public class AlumnosBean {
 					String t = crearsmsAlumno(es.getEstNombres(),
 							es.getEstApellidos(), es.getEstCedula(),
 						es.getEstClave());
+					
+//					Mail mail = new Mail();
+//					mail.setId("olimpiada");
+//					mail.setAsunto("Notificación de Olimpiadas de Ciencias");
+//					mail.setPara(es.getEstCorreo());
+//					mail.setBody(t);
+//					ma.MailWS(mail);
+
 					Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
 							es.getEstCorreo(),
 							"Notificación de Olimpiadas de Ciencias", t);
+					System.out.println("Mensaje Enviado");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -694,7 +705,6 @@ public class AlumnosBean {
 		DateFormat ff = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		String a1 = fi.format(fecha_ini);
 		String b1 = ff.format(fecha_fin);
-
 		sms = "Sr./Sra. "
 				+ nombre
 				+ " "
