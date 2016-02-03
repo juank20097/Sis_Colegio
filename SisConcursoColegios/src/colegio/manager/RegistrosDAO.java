@@ -206,13 +206,18 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColEstudiante> findAllEstudiantesXID(Integer id_ins) {
-		List<ColEstudiante> c = new ArrayList<>();
-		List<ColEstudiante> le = manager.findAll(ColEstudiante.class);
-		for (ColEstudiante col : le) {
-			if (col.getColInstitucion().getInsId() == id_ins) {
-				c.add(col);
-			}
-		}
+		List<ColEstudiante> c = new ArrayList<ColEstudiante>();
+		
+		
+		c= manager.findAllWhereId(ColEstudiante.class, "colInstitucion.insId", id_ins);
+		
+//		List<ColEstudiante> le = manager.findAll();
+//		for (ColEstudiante col : le) {
+//			if (col.getColInstitucion().getInsId() == id_ins) {
+//				c.add(col);
+//			}
+//		}
+		
 		return c;
 	}// Cierre del metodo
 

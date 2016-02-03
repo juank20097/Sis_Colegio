@@ -69,24 +69,24 @@
 				</b:row>
 
 				<b:row>
-					<b:column span="1">
-						<h:outputLabel value="Teléfono:"></h:outputLabel>
-					</b:column>
-					<b:column span="3">
-						<b:inputText disabled="true" required="false"
-							requiredMessage="el Dato Télefono es Requerido"
-							value="#{alumnosBean.ins_telefono}">
-						</b:inputText>
-					</b:column>
+<!-- 					<b:column span="1"> -->
+<!-- 						<h:outputLabel value="Teléfono:"></h:outputLabel> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText disabled="true" required="false" -->
+<!-- 							requiredMessage="el Dato Télefono es Requerido" -->
+<!-- 							value="#{alumnosBean.ins_telefono}"> -->
+<!-- 						</b:inputText> -->
+<!-- 					</b:column> -->
 
-					<b:column span="2">
-						<h:outputLabel value="Correo Institucional:"></h:outputLabel>
-					</b:column>
-					<b:column span="3">
-						<b:inputText disabled="true" required="false"
-							requiredMessage="el Dato Correo Institucional es Requerido"
-							value="#{alumnosBean.ins_correo}"></b:inputText>
-					</b:column>
+<!-- 					<b:column span="2"> -->
+<!-- 						<h:outputLabel value="Correo Institucional:"></h:outputLabel> -->
+<!-- 					</b:column> -->
+<!-- 					<b:column span="3"> -->
+<!-- 						<b:inputText disabled="true" required="false" -->
+<!-- 							requiredMessage="el Dato Correo Institucional es Requerido" -->
+<!-- 							value="#{alumnosBean.ins_correo}"></b:inputText> -->
+<!-- 					</b:column> -->
 
 					<b:column span="1">
 						<h:outputLabel value="Código AMIE:"></h:outputLabel>
@@ -194,14 +194,14 @@
 						<hr />
 
 						<b:row>
-							<p:dataTable id="dti" value="#{alumnosBean.listEstudiantesXIns}"
+							<p:dataTable id="dti" value="#{alumnosBean.l_est}"
 								reflow="true" var="est" rows="8" emptyMessage="Sin Datos"
 								paginator="true"
 								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
 								<p:column headerText="OPCIONES" width="100">
 									<p:commandButton id="btnE" icon="ui-icon-closethick"
-										action="#{alumnosBean.eliminarEstudiante(est)}" update="frmT">
+										action="#{alumnosBean.eliminarEstudiante(est)}" immediate="true" update="frmT">
 										<p:confirm header="Confirmación"
 											message="Seguro Quiere Eliminar al Estudiante?"
 											icon="ui-icon-alert" />

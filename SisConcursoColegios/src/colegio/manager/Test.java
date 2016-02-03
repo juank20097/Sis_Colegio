@@ -3,7 +3,6 @@
  */
 package colegio.manager;
 
-import colegio.controller.generic.Funciones;
 
 
 
@@ -66,11 +65,18 @@ public class Test {
 //	l=r.findAllEstudiantesActivos('A');
 //	l=r.findAllEstudiantesXID(14);
 //	System.out.println(l.size());
-	System.out.println(Funciones.conseguirMAC());
+//	System.out.println(Funciones.conseguirMAC());
 		
 //	COL_Parametros p=r.ParametroByNombre("institucion");
 //	System.out.println(p.isPar_valor());
 //	System.out.println(p.isPar_entidad());
+		
+		ManagerDAO m = new ManagerDAO();
+		try {
+			m.JPQLQuery("SELECT o FROM ColInstitucion o where o.insId=102");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

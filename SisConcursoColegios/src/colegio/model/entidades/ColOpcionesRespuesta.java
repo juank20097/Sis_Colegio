@@ -24,9 +24,6 @@ public class ColOpcionesRespuesta implements Serializable {
 	@Column(name="opr_opcion")
 	private String oprOpcion;
 
-	@Column(name="opr_respuesta")
-	private String oprRespuesta;
-
 	@Column(name="opr_valor")
 	private Integer oprValor;
 
@@ -56,14 +53,6 @@ public class ColOpcionesRespuesta implements Serializable {
 
 	public void setOprOpcion(String oprOpcion) {
 		this.oprOpcion = oprOpcion;
-	}
-
-	public String getOprRespuesta() {
-		return this.oprRespuesta;
-	}
-
-	public void setOprRespuesta(String oprRespuesta) {
-		this.oprRespuesta = oprRespuesta;
 	}
 
 	public Integer getOprValor() {

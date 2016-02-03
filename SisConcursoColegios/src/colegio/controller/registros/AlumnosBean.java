@@ -90,6 +90,9 @@ public class AlumnosBean {
 	private long dia;
 	private long hora;
 	private long minuto;
+	
+	//atributo de almacenamiento de estudiantes en base a un id
+	List<ColEstudiante> l_est;
 
 	public AlumnosBean() {
 		LogginBean.verificarSession();
@@ -98,13 +101,23 @@ public class AlumnosBean {
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
 		
-		
 		manager = new RegistrosDAO();
 		lest = new ArrayList<ColEstudiante>();
+		l_est= new ArrayList<ColEstudiante>();
 		allest = new ArrayList<ColEstudiante>();
 		dia = 0;
 		hora = 0;
 		minuto = 0;
+		
+		this.getListEstudiantesXIns();
+	}
+
+	public List<ColEstudiante> getL_est() {
+		return l_est;
+	}
+
+	public void setL_est(List<ColEstudiante> l_est) {
+		this.l_est = l_est;
 	}
 
 	/**
@@ -247,7 +260,6 @@ public class AlumnosBean {
 	 */
 	public Integer getIns_id() {
 		ins_id = login.getInstitucion().getInsId();
-		System.out.println(ins_id);
 		return ins_id;
 	}
 
@@ -508,15 +520,13 @@ public class AlumnosBean {
 	 * 
 	 * @return
 	 */
-	public List<ColEstudiante> getListEstudiantesXIns() {
-		List<ColEstudiante> p = new ArrayList<ColEstudiante>();
+	public void getListEstudiantesXIns() {
 		try {
-			p = manager.findAllEstudiantesXID(getIns_id());
+			l_est = manager.findAllEstudiantesXID(getIns_id());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return p;
 	}
 
 	/**
@@ -527,6 +537,7 @@ public class AlumnosBean {
 	public String crearEstudiante() {
 		try {
 			Integer t = 0;
+			//método validar cedula
 			List<ColEstudiante> le = manager.findAllEstudiantes();
 			for (ColEstudiante est : le) {
 				if (est.getEstCedula().trim().equals(est_cedula.trim())) {
@@ -534,7 +545,6 @@ public class AlumnosBean {
 					break;
 				} else {
 					t++;
-
 				}
 			}
 			if (t != le.size()) {
@@ -543,7 +553,7 @@ public class AlumnosBean {
 				if (Funciones.validadorDeCedula(est_cedula) != true) {
 					Mensaje.crearMensajeERROR("Cédula del Estudiante Incorrecta");
 				} else {
-					System.out.println(est_area);
+					//
 					if (est_area == null || est_area.equals("-1")) {
 						Mensaje.crearMensajeERROR("Seleccione un Área a Participar");
 					} else {
@@ -559,6 +569,7 @@ public class AlumnosBean {
 						est_estado = 'A';
 						est_nombres = "";
 						est_telefono = "";
+						this.getListEstudiantesXIns();
 						Mensaje.crearMensajeINFO("Estudiante añadido correctamente");
 					}
 				}
@@ -579,6 +590,7 @@ public class AlumnosBean {
 	public String eliminarEstudiante(ColEstudiante est) {
 		manager.eliminarEstudiante(est.getEstId());
 		Mensaje.crearMensajeINFO("Estudiante eliminado correctamente");
+		this.getListEstudiantesXIns();
 		return "";
 	}
 

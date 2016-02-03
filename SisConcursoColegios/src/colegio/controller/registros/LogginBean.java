@@ -246,6 +246,9 @@ public class LogginBean {
 				r = this.loginEst();
 			}
 			if (r.isEmpty() || r == "") {
+				r = this.loginCoo();
+			}
+			if (r.isEmpty() || r == "") {
 				r = this.login();
 			}
 		} else {

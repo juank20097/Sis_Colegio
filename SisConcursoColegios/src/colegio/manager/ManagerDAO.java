@@ -139,6 +139,42 @@ public class ManagerDAO {
 	 * @return Listado resultante.
 	 */
 	@SuppressWarnings("rawtypes")
+	public List findAllWhereId(Class clase, String p_nombre_campo, Integer p_id) {
+		mostrarLog("findAll", clase.getSimpleName());
+		Query q;
+		List listado;
+		if (!em.getTransaction().isActive()){
+			em.getTransaction().begin();
+		}
+		
+		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o where o." + p_nombre_campo + "=" + p_id.toString() );
+		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
+		listado = q.getResultList();
+		em.getTransaction().commit();
+		return listado;
+	}
+	
+	
+	@SuppressWarnings("rawtypes")
+	public List JPQLQuery(String query){
+		System.out.println(query);
+		if (!em.getTransaction().isActive())
+			em.getTransaction().begin();
+		List listado;
+		Query q = em.createQuery(query);
+		listado = q.getResultList();
+		em.getTransaction().commit();
+		return listado;
+	}
+	
+	/**
+	 * finder Generico que devuelve todos las entidades de una tabla.
+	 * 
+	 * @param clase
+	 *            La clase que se desea consultar.
+	 * @return Listado resultante.
+	 */
+	@SuppressWarnings("rawtypes")
 	public List findAllAleatorioP(Class clase) {
 		mostrarLog("findAllAleatorioP", clase.getSimpleName());
 		Query q;
