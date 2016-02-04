@@ -1,5 +1,6 @@
 package colegio.controller.registros;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +13,9 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import colegio.controller.generic.Funciones;
+import colegio.controller.generic.Mail;
 import colegio.controller.generic.Mensaje;
+import colegio.manager.ManagerAcceso;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEstudiante;
 import colegio.model.entidades.ColInstitucion;
@@ -31,6 +34,8 @@ public class AlumnosBean {
 	private RegistrosDAO manager;
 
 	private LogginBean login;
+	
+	private ManagerAcceso ma;
 	
 	
 
@@ -86,8 +91,8 @@ public class AlumnosBean {
 	private String var_are;
 
 	// Atributos para registro de fechas
-	private Date fecha_ini = new Date();
-	private Date fecha_fin = new Date();
+	private Date fecha_ini;
+	private Date fecha_fin;
 
 	private long dia;
 	private long hora;
@@ -104,6 +109,7 @@ public class AlumnosBean {
 		login = (LogginBean) session.getAttribute("logginBean");
 		
 		manager = new RegistrosDAO();
+		ma = new ManagerAcceso();
 		lest = new ArrayList<ColEstudiante>();
 		l_est= new ArrayList<ColEstudiante>();
 		allest = new ArrayList<ColEstudiante>();
@@ -111,6 +117,7 @@ public class AlumnosBean {
 		hora = 0;
 		minuto = 0;
 		
+		this.ponerFechas();
 		this.getListEstudiantesXIns();
 	}
 
@@ -630,17 +637,24 @@ public class AlumnosBean {
 						String t = crearsmsAlumno(es.getEstNombres(),
 								es.getEstApellidos(), es.getEstCedula(),
 								es.getEstClave());
-						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
-								es.getEstCorreo(),
-								"Notificación de Olimpiadas de Ciencias", t);
+						
+						Mail mail = new Mail();
+						mail.setId("olimpiada");
+						mail.setAsunto("Notificación de Olimpiadas");
+						mail.setPara(es.getEstCorreo());
+						mail.setBody(t);
+						ma.MailWS(mail);
+						
+//						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
+//								es.getEstCorreo(),
+//								"Notificación de Olimpiadas de Ciencias", t);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				Mensaje.crearMensajeINFO("Noitificaciones Realizados Correctamente");
-				fecha_ini = new Date();
-				fecha_fin = new Date();
+				Mensaje.crearMensajeINFO("Notificaciones Realizados Correctamente");
+				this.ponerFechas();
 				allest = new ArrayList<ColEstudiante>();
 			}
 		}
@@ -682,8 +696,7 @@ public class AlumnosBean {
 				}
 			}
 			Mensaje.crearMensajeINFO("Noitificaciones Realizados Correctamente");
-			fecha_ini = new Date();
-			fecha_fin = new Date();
+			this.ponerFechas();
 			allest = new ArrayList<ColEstudiante>();
 		}
 		return "";
@@ -709,13 +722,13 @@ public class AlumnosBean {
 				+ nombre
 				+ " "
 				+ apellido
-				+ "\n"
-				+ "\n Felicitaciones querido estudiante has sido seleccionado para la primera fase del concurso Olimpiada de Ciencias – INNOPOLIS – 2016.  La prueba será vía online, en el siguiente link: http://olimpiadasdeciencias.yachay.gob.ec/ , donde deberá ingresar los siguientes datos."
-				+ "\n" + "\n Usuario: " + cedula + "" + "\n Contraseña: "
-				+ clave + "" + "\n"
-				+ "\n Recuerde que usted dará la prueba desde " + a1
-				+ ".hasta " + b1 + "  " + "\n" + "\n Exitos...!!!" + "\n"
-				+ "\n" + "Saludos Coordiales" + "\n Empresa Pública Yachay EP";
+				+ "<br/>"
+				+ "<br/> Felicitaciones querido estudiante has sido seleccionado para la primera fase del concurso Olimpiada de Ciencias – INNOPOLIS – 2016.  La prueba será vía online, en el siguiente link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>http://olimpiadasdeciencias.yachay.gob.ec</a> , donde deberá ingresar los siguientes datos."
+				+ "<br/>" + "<br/> Usuario: " + cedula + "" + "<br/> Contraseña: "
+				+ clave + "" + "<br/>"
+				+ "<br/> Recuerde que usted dará la prueba desde " + a1
+				+ ".hasta " + b1 + "  " + "<br/>" + "<br/> Exitos...!!!" + "<br/>"
+				+ "<br/>" + "Saludos Coordiales" + "<br/> Empresa Pública Yachay EP";
 		return sms;
 	}
 
@@ -824,5 +837,16 @@ public class AlumnosBean {
 		}
 
 		return "";
+	}
+	
+	public void ponerFechas(){
+		String fecha="2016-02-15";
+		DateFormat datef = new SimpleDateFormat("yyyy-MM-dd");
+		try{
+		fecha_ini=datef.parse(fecha);
+		fecha_fin=datef.parse(fecha);
+		} catch (ParseException e){
+			e.printStackTrace();
+		}
 	}
 }
