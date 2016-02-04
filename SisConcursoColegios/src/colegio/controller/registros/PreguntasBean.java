@@ -61,6 +61,7 @@ public class PreguntasBean {
 	// Atributos para mostrar resultados
 	private String tiempo_eva;
 	private Integer calificacion = 0;
+	private Timestamp tiempoactual;
 
 	public PreguntasBean() {
 		//LogginBean.verificarSession();
@@ -293,8 +294,9 @@ public class PreguntasBean {
 			this.tiempo();
 		} else {
 			time = "00:00";
-			this.calculoEvaEstudiantil();
 			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('poll').stop();");
+			this.calculoEvaEstudiantil();
 			context.execute("PF('close').show();");
 		}
 	}
@@ -354,6 +356,7 @@ public class PreguntasBean {
 	 * Metodo de calculo de calificacion y tiempo de cada evaluación
 	 */
 	public void calculoEvaEstudiantil() {
+		calificacion=0;
 		List<ColRespuesta> res = manager.findAllRespuestas();
 		for (ColRespuesta r : res) {
 			if (r.getEstId() == login.getEstudiante().getEstId()) {
@@ -364,9 +367,9 @@ public class PreguntasBean {
 		for (ColEvaluacionEstudiantil eva : ee) {
 			if (eva.getColEstudiante().getEstId() == login.getEstudiante()
 					.getEstId()) {
-				manager.editarEvaEstudiantil(eva.getEesId(), new Timestamp(
-						new Date().getTime()), calificacion);
+				tiempoactual= new Timestamp(new Date().getTime());
 				this.totalTiempo(eva);
+				manager.editarEvaEstudiantil(eva.getEesId(), tiempoactual, calificacion, tiempo_eva);
 				break;
 			}
 		}
@@ -379,7 +382,8 @@ public class PreguntasBean {
 	 * @param eva_est
 	 */
 	public void totalTiempo(ColEvaluacionEstudiantil eva_est) {
-		long time = eva_est.getEesFechaFin().getTime()
+		tiempo_eva ="";
+		long time = tiempoactual.getTime()
 				- eva_est.getEesFechaIni().getTime();
 
 		long minutos = 0;
@@ -403,10 +407,12 @@ public class PreguntasBean {
 	 * Metodo lanzado para ver resultados de estudiantes y cierre de dialog y stop de poll
 	 */
 	public void verResultado() {
-		this.calculoEvaEstudiantil();
 		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('close').show();");
 		context.execute("PF('poll').stop();");
+		context.execute("PF('close').show();");
+		this.calculoEvaEstudiantil();
+		
+		
 	}
 
 }

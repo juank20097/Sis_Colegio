@@ -100,12 +100,12 @@
 				modal="true" height="250" width="500" closable="false">
 				<center>
 					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
-					<p>Tu prueba ya ha finalizado. tu puntuación es la siguiente</p>
+					<p>Tu prueba ya ha finalizada. tu puntuación es la siguiente</p>
 					<p:outputLabel value="#{preguntasBean.calificacion} / 10"></p:outputLabel><br/>
 					<p>Tu tiempo de evaluación es:</p>
 					<p:outputLabel value="#{preguntasBean.tiempo_eva}"></p:outputLabel><br/>
-					<b:commandButton look="info" action="#{preguntasBean.salir()}"
-						value="Salir"></b:commandButton>
+					<b:commandButton look="info"
+						action="#{logginBean.cerrarDialog}" value="  Salir  "></b:commandButton>
 				</center>
 			</p:dialog>
 		</h:form>

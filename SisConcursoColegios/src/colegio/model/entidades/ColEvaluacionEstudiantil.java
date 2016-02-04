@@ -24,6 +24,9 @@ public class ColEvaluacionEstudiantil implements Serializable {
 	@Column(name="ees_calificacion")
 	private Integer eesCalificacion;
 
+	@Column(name="ees_tiempo")
+	private String eesTiempo;
+	
 	@Column(name="ees_fecha_fin")
 	private Timestamp eesFechaFin;
 
@@ -49,6 +52,14 @@ public class ColEvaluacionEstudiantil implements Serializable {
 
 	public void setEesId(Integer eesId) {
 		this.eesId = eesId;
+	}
+
+	public String getEesTiempo() {
+		return eesTiempo;
+	}
+
+	public void setEesTiempo(String eesTiempo) {
+		this.eesTiempo = eesTiempo;
 	}
 
 	public Integer getEesCalificacion() {

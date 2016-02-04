@@ -558,11 +558,12 @@ public class RegistrosDAO {
 	 * @param fecha_fin
 	 * @param calificacion
 	 */
-	public void editarEvaEstudiantil(Integer eest_id, Timestamp fecha_fin, Integer calificacion) {
+	public void editarEvaEstudiantil(Integer eest_id, Timestamp fecha_fin, Integer calificacion, String tiempo) {
 		try {
 			ColEvaluacionEstudiantil eva_estudiantil = this.EvaEstudiantilByID(eest_id);
 			eva_estudiantil.setEesFechaFin(fecha_fin);
 			eva_estudiantil.setEesCalificacion(calificacion);
+			eva_estudiantil.setEesTiempo(tiempo);
 			manager.actualizar(eva_estudiantil);
 			System.out.println("Bien_actualizado_Evaluacion_Estudiantil");
 		} catch (Exception e) {
