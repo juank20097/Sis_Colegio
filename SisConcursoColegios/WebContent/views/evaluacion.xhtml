@@ -62,7 +62,7 @@
 							<br />
 							<b:row>
 								<b:column offset="1">
-									<b:commandButton disabled="#{res.enable}" look="info"
+									<b:commandButton ajax="true" update="frmE" look="info"
 										actionListener="#{preguntasBean.bloqueo(pre)}"
 										value="Guardar Respuesta">
 									</b:commandButton>
@@ -74,8 +74,8 @@
 						<b:row>
 						<b:column>
 					<center>
-						<b:commandButton ajax="true" look="success" size="lg" style="width:30%;"
-							value="Finalizar Evaluación"
+						<b:commandButton look="success" size="lg" style="width:30%;"
+							value="Finalizar Evaluación" 
 							action="#{preguntasBean.verResultado}"></b:commandButton>
 					</center>
 				</b:column>
@@ -97,15 +97,12 @@
 				
 
 			<p:dialog header="Información" resizable="false" widgetVar="close"
-				modal="true" height="250" width="500" closable="false">
+				modal="true" height="200" width="500" closable="false">
 				<center>
 					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
-					<p>Tu prueba ya ha finalizada. tu puntuación es la siguiente</p>
-					<p:outputLabel value="#{preguntasBean.calificacion} / 10"></p:outputLabel><br/>
-					<p>Tu tiempo de evaluación es:</p>
-					<p:outputLabel value="#{preguntasBean.tiempo_eva}"></p:outputLabel><br/>
+					<p>Tu prueba ya ha finalizada. Para poder ver tu resultado debes volver a ingresar con tus credenciales (Usuario y Contraseña)</p>
 					<b:commandButton look="info"
-						action="#{logginBean.cerrarDialog}" value="  Salir  "></b:commandButton>
+						action="#{preguntasBean.salir()}" value="Salir"></b:commandButton>
 				</center>
 			</p:dialog>
 		</h:form>

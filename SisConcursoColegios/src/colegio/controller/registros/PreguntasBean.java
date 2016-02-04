@@ -409,10 +409,8 @@ public class PreguntasBean {
 	public void verResultado() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('poll').stop();");
-		context.execute("PF('close').show();");
 		this.calculoEvaEstudiantil();
-		
-		
+		context.execute("PF('close').show();");
 	}
 
 }

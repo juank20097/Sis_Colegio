@@ -273,7 +273,11 @@ public class LogginBean {
 						.findAllEvaEstudiantil()) {
 					if (ev.getColEstudiante().getEstId() == e.getEstId()
 							&& ev.getEesCalificacion() != null) {
+						if (ev.getEesCalificacion()<=0){
+						calificacion = 0;
+						}else{
 						calificacion = ev.getEesCalificacion();
+						}
 						tiempo_eva = ev.getEesTiempo();
 						RequestContext context = RequestContext
 								.getCurrentInstance();
