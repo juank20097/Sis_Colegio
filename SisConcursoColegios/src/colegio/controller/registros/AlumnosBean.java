@@ -839,6 +839,9 @@ public class AlumnosBean {
 		return "";
 	}
 	
+	/**
+	 * Metodo para poner una fecha especifica en un java.util.Date
+	 */
 	public void ponerFechas(){
 		String fecha="2016-02-15";
 		DateFormat datef = new SimpleDateFormat("yyyy-MM-dd");
