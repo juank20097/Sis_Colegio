@@ -12,7 +12,6 @@ import colegio.model.entidades.ColEvaluacionEstudiantil;
 import colegio.model.entidades.ColInstitucion;
 import colegio.model.entidades.ColInstitucionesSenescyt;
 import colegio.model.entidades.ColOpcionesRespuesta;
-import colegio.model.entidades.ColParametro;
 import colegio.model.entidades.ColPregunta;
 import colegio.model.entidades.ColRespuesta;
 
@@ -319,33 +318,6 @@ public class RegistrosDAO {
 			e.printStackTrace();
 		}
 	}
-
-	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Creación de metodos para el manejo de la tabla ColParametro
-	 * 
-	 */
-
-	/**
-	 * Metodo para listar todas los existentes
-	 * 
-	 * @return La lista de todas encontradas
-	 */
-	@SuppressWarnings("unchecked")
-	public List<ColParametro> findAllParametros() {
-		return manager.findAll(ColParametro.class);
-	}// Cierre del metodo
-
-	/**
-	 * Metodo para obtener un Dato mediante un ID
-	 * 
-	 * @param id_per
-	 *            Tipo integer de busqueda
-	 * @return El objeto Movimiento encontrado mediante el ID
-	 */
-	public ColParametro ParametroByID(Integer par_id) throws Exception {
-		return (ColParametro) manager.findById(ColParametro.class, par_id);
-	}// Cierre del metodo
 
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
