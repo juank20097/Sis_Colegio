@@ -583,6 +583,43 @@ public class RegistrosDAO {
 				"o.colPregunta.preId="+pregunta.getPreId()+" AND o.estId="+idEstudiante, null).get(0)).getColOpcionesRespuesta().getOprId();
 	}
 	
+	/**
+	 * Edita una respuesta ya guardada
+	 * @param pregunta
+	 * @param estId
+	 * @param idRespuesta
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void editarRespuestaEstudiante(ColPregunta pregunta,
+			Integer estId, int idRespuesta) throws Exception{
+		List<ColRespuesta> lista = manager.findWhere(ColRespuesta.class, "o.estId="+estId+
+				" AND o.colPregunta.preId="+pregunta.getPreId(), null);
+		if(lista.size()!=1)
+			throw new Exception("Error al consultar la respuesta");
+		ColRespuesta respuesta = lista.get(0);
+		respuesta.setResFecha(new Timestamp(new Date().getTime()));
+		respuesta.setColOpcionesRespuesta((ColOpcionesRespuesta) manager.findById(ColOpcionesRespuesta.class, idRespuesta));
+		manager.actualizar(respuesta);		
+	}
+	
+	/**
+	 * Devuelve el valor de edicion para una pregunta
+	 * @param pregunta
+	 * @param estId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean respuestaEditable(ColPregunta pregunta,
+			Integer estId){
+		List<ColRespuesta> lista = manager.findWhere(ColRespuesta.class, "o.estId="+estId+
+				" AND o.colPregunta.preId="+pregunta.getPreId()+" AND o.resEditable=1", null);
+		if(lista.size()>0)
+			return true;
+		else
+			return false;
+	}
+	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Creación de metodos para el manejo de la tabla ColEvaluacionEstudiantil

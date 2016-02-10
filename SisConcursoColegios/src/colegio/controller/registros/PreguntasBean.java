@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import colegio.acceso.entidades.Lista;
+import colegio.controller.generic.Mensaje;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEvaluacion;
 import colegio.model.entidades.ColEvaluacionEstudiantil;
@@ -54,7 +55,7 @@ public class PreguntasBean {
 	//Edición
 	private List<ColPregunta> preguntasResueltas;
 	private List<ColPregunta> preguntasNoResueltas;
-	
+	private ColPregunta preguntaCargada;
 	private int preguntaValor;
 	private List<SelectItem> opcionesDeRespuesta;
 
@@ -258,7 +259,15 @@ public class PreguntasBean {
 	public void setPreguntaValor(int preguntaValor) {
 		this.preguntaValor = preguntaValor;
 	}
-
+	
+	public ColPregunta getPreguntaCargada() {
+		return preguntaCargada;
+	}
+	
+	public void setPreguntaCargada(ColPregunta preguntaCargada) {
+		this.preguntaCargada = preguntaCargada;
+	}
+	
 	/**
 	 * Metodo para listar todos los Datos de la Entidad
 	 * 
@@ -289,6 +298,7 @@ public class PreguntasBean {
 	}
 	
 	public void cargarPregunta(ColPregunta pregunta){
+		preguntaCargada = pregunta;
 		cargarOpcionesPorPregunta(pregunta);
 		preguntaValor = manager.findIdRespuestaByPreguntaEstudiante(pregunta, login.getEstudiante().getEstId());
 		RequestContext.getCurrentInstance().execute("PF('dlgCP').show();");
@@ -299,6 +309,20 @@ public class PreguntasBean {
 		for (ColOpcionesRespuesta opcion : pregunta.getColOpcionesRespuestas()) {
 			opcionesDeRespuesta.add(new SelectItem(opcion.getOprId(), opcion.getOprOpcion()));
 		}
+	}
+	
+	public void editarPreguntaCargada(){
+		try {
+			manager.editarRespuestaEstudiante(preguntaCargada,login.getEstudiante().getEstId(),preguntaValor);
+			RequestContext.getCurrentInstance().execute("PF('dlgCP').hide();");
+			Mensaje.crearMensajeINFO("Datos almacenados correctamente");
+		} catch (Exception e) {
+			Mensaje.crearMensajeERROR("Error! "+e.getMessage());
+		}
+	}
+	
+	public boolean estaDesabilitadoBoton(ColPregunta pregunta){
+		return !manager.respuestaEditable(pregunta, login.getEstudiante().getEstId());
 	}
 
 	/**
