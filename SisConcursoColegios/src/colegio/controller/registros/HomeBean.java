@@ -25,7 +25,9 @@ public class HomeBean implements Serializable{
 	}
 	
 	public String resolverEvaluacion(){
-		return dao.redireccionarEvaluacion(idEstudiante);
+		if(!dao.redireccionarEvaluacion(idEstudiante))
+			return "evaluacion";
+		else
+			return "evaluacionEd";
 	}
-
 }

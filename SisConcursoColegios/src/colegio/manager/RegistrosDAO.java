@@ -371,13 +371,13 @@ public class RegistrosDAO {
 	/**
 	 * Retorna el string para direccionar a la evaluación por estudiante
 	 * @param idEstudiante
-	 * @return String
+	 * @return boolean
 	 */
-	public String redireccionarEvaluacion(int idEstudiante){
+	public boolean redireccionarEvaluacion(int idEstudiante){
 		if(findPreguntasContestadasByEstudiante(idEstudiante).size()>0)
-			return "evaluacion";
+			return true;
 		else
-			return "evaluacionEd";
+			return false;
 	}
 	
 	/**
