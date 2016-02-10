@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import colegio.manager.RegistrosDAO;
 
@@ -21,7 +23,9 @@ public class HomeBean implements Serializable{
 	
 	public HomeBean() {
 		dao = new RegistrosDAO();
-		idEstudiante = 6;
+		idEstudiante = ((LogginBean) ((HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false)).getAttribute("logginBean"))
+				.getEstudiante().getEstId();
 	}
 	
 	public String resolverEvaluacion(){
