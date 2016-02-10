@@ -320,4 +320,18 @@ public class Funciones {
 		return sb.toString();
 	}
 
+	
+	/**
+	 * Metodo para cambiar tildes antes del envio de sms
+	 * 
+	 * @param cadena
+	 * @return
+	 */
+	public static String cambiarFormato(String cadena) {
+		String res = cadena.replace('á', 'a').replace('é', 'e')
+				.replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
+				.replace('Á', 'A').replace('É', 'E').replace('Í', 'I')
+				.replace('Ó', 'O').replace('Ú', 'U');
+		return res;
+	}
 }
