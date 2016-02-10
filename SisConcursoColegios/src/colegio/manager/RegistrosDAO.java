@@ -358,6 +358,38 @@ public class RegistrosDAO {
 		return (ColPregunta) manager.findById(ColPregunta.class, id_pre);
 	}// Cierre del metodo
 
+	/**
+	 * Busca las preguntas ya realizadas
+	 * @param idEstudiante
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColPregunta> findPreguntasContestadasByEstudiante(int idEstudiante){
+		return manager.findWhere(ColPregunta.class, 
+				"o.colOpcionesRespuestas IN (SELECT r.colOpcionesRespuesta FROM ColRespuesta r WHERE r.estId="+idEstudiante+")", null);
+	}
+	
+	/**
+	 * Busca las preguntas no contestadas
+	 * @param idEstudiante
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColPregunta> findPreguntasNoContestadasByEstudiante(int idEstudiante){
+		return manager.findWhere(ColPregunta.class, 
+				"o.colEvaluacion.evaId="+findAreaEvaluacionIDByEstudiante(idEstudiante)+
+				" AND o.preId NOT IN (SELECT r.colPregunta.preId FROM ColRespuesta r WHERE r.estId="+idEstudiante+")", null);
+	}
+	
+	/**
+	 * Busca el id de la evaluación segun el estudiante
+	 * @param idEstudiante
+	 * @return
+	 */
+	public int findAreaEvaluacionIDByEstudiante(int idEstudiante){
+		return ((ColEvaluacion) manager.findWhere(ColEvaluacion.class, 
+				"UPPER(o.evaArea) IN (SELECT UPPER(e.estArea) FROM ColEstudiante e WHERE e.estId="+idEstudiante+")", null).get(0)).getEvaId();
+	}
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Creación de metodos para el manejo de la tabla ColOpcionesRespuestas
