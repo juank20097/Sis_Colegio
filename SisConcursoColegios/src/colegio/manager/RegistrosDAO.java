@@ -550,6 +550,17 @@ public class RegistrosDAO {
 
 	}
 	
+	/**
+	 * Busca el ID de la Opción de respuesta seleccionada por el estudiante en una pregunta
+	 * @param pregunta
+	 * @param idEstudiante
+	 * @return
+	 */
+	public int findIdRespuestaByPreguntaEstudiante(ColPregunta pregunta, int idEstudiante){
+		return ((ColRespuesta) manager.findWhere(ColRespuesta.class, 
+				"o.colPregunta.preId="+pregunta.getPreId()+" AND o.estId="+idEstudiante, null).get(0)).getColOpcionesRespuesta().getOprId();
+	}
+	
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Creación de metodos para el manejo de la tabla ColEvaluacionEstudiantil
