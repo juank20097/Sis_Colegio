@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +27,7 @@ import colegio.model.entidades.ColRespuesta;
  * @author jestevez
  * 
  */
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class PreguntasBean {
 
@@ -409,6 +410,20 @@ public class PreguntasBean {
 		context.execute("PF('poll').stop();");
 		this.calculoEvaEstudiantil();
 		context.execute("PF('close').show();");
+	}
+	
+	/**
+	 * Metodo para mostrar un resultado
+	 * 
+	 * @param pregunta
+	 * @return
+	 */
+	public String mostrarRespuesta(ColPregunta pregunta){
+		StringBuilder s= new StringBuilder();
+		for (ColRespuesta resp: manager.findRespuestasxEstudiantePregunta(pregunta.getPreId(), login.getEstudiante().getEstId())){
+			s.append(resp.getColOpcionesRespuesta().getOprOpcion());
+		}
+		return s.toString();
 	}
 
 }
