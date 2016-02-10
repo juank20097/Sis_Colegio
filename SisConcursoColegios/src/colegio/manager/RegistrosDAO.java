@@ -357,7 +357,19 @@ public class RegistrosDAO {
 	public ColPregunta PreguntaByID(Integer id_pre) throws Exception {
 		return (ColPregunta) manager.findById(ColPregunta.class, id_pre);
 	}// Cierre del metodo
-
+	
+	/**
+	 * Retorna el string para direccionar a la evaluación por estudiante
+	 * @param idEstudiante
+	 * @return String
+	 */
+	public String redireccionarEvaluacion(int idEstudiante){
+		if(findPreguntasContestadasByEstudiante(idEstudiante).size()>0)
+			return "evaluacion";
+		else
+			return "evaluacionEd";
+	}
+	
 	/**
 	 * Busca las preguntas ya realizadas
 	 * @param idEstudiante
