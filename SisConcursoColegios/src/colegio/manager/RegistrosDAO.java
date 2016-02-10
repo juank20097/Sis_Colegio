@@ -335,6 +335,17 @@ public class RegistrosDAO {
 		return manager.findAllAleatorioP(ColPregunta.class);
 		// return manager.findAllAleatorioP(ColPregunta.class);
 	}// Cierre del metodo
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColPregunta> findPreguntasEstudiante(String area) {
+		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"'");
+		// return manager.findAllAleatorioP(ColPregunta.class);
+	}// Cierre del metodo
 
 	/**
 	 * Metodo para obtener un Dato mediante un ID
@@ -362,6 +373,16 @@ public class RegistrosDAO {
 	public List<ColOpcionesRespuesta> findAllOpciones() {
 		return manager.findAll(ColOpcionesRespuesta.class);
 	}// Cierre del metodo
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColOpcionesRespuesta> findOpcionesxPregunta(Integer pre_id) {
+		return manager.findAllWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = "+pre_id);
+	}// Cierre del metodo
 
 	/**
 	 * Metodo para obtener un Dato mediante un ID
@@ -380,6 +401,16 @@ public class RegistrosDAO {
 	 * Creación de metodos para el manejo de la tabla ColRespuestas
 	 * 
 	 */
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ColRespuesta> findWhereRespuestas(Integer id_pregunta, Integer id_estudiante) {
+		return manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+	}// Cierre del metodo
 	
 	/**
 	 * Metodo para listar todas los existentes
@@ -413,7 +444,7 @@ public class RegistrosDAO {
 	 * @param telefono
 	 * @param correo
 	 */
-	public void insertarRespuesta(Timestamp fecha, Integer ores, Integer pre, Integer est) throws Exception {
+	public void insertarRespuesta(Timestamp fecha, Integer ores, Integer pre, Integer est, Boolean estado) throws Exception {
 		try {
 			ColOpcionesRespuesta opciones_res = new ColOpcionesRespuesta();
 			ColPregunta pregunta = new ColPregunta();
@@ -424,6 +455,7 @@ public class RegistrosDAO {
 			pregunta = this.PreguntaByID(pre);
 			res.setColPregunta(pregunta);
 			res.setEstId(est);
+			res.setResEditable(estado);
 			manager.insertar(res);
 			System.out.println("Bien_guardado_Respuesta");
 		} catch (Exception e) {
@@ -457,6 +489,31 @@ public class RegistrosDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Mal_guardado_Respuesta");
+		}
+
+	}
+	
+	
+	/**
+	 * Metodo para ingresar un Dato a la base de datos
+	 * 
+	 * @param nombres
+	 * @param apellidos
+	 * @param cedula
+	 * @param area
+	 * @param telefono
+	 * @param correo
+	 */
+	public void editarRespuestaEstado(Integer id_res,Boolean estado) throws Exception {
+		try {
+			ColRespuesta res = RespuestasByID(id_res);
+			res.setResEditable(estado);
+			manager.actualizar(res);
+			System.out.println("Bien_actualizado_Respuesta_Estado");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_guardado_Respuesta_Estado");
 		}
 
 	}

@@ -1,6 +1,5 @@
 package colegio.controller.registros;
 
-
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -32,8 +31,8 @@ public class RespuestaBean {
 	private Timestamp resFecha;
 	private Integer colOpcionesRespuesta;
 	private Integer colPregunta;
-	
-	//variable de almacenamiento de datos
+
+	// variable de almacenamiento de datos
 	private Integer idguardar;
 
 	public RespuestaBean() {
@@ -52,7 +51,8 @@ public class RespuestaBean {
 	}
 
 	/**
-	 * @param idguardar the idguardar to set
+	 * @param idguardar
+	 *            the idguardar to set
 	 */
 	public void setIdguardar(Integer idguardar) {
 		this.idguardar = idguardar;
@@ -132,33 +132,32 @@ public class RespuestaBean {
 	public void setColPregunta(Integer colPregunta) {
 		this.colPregunta = colPregunta;
 	}
-	
+
 	/**
 	 * Metodo para guardar la respuesta de una pregunta
 	 * 
 	 * @return
 	 */
-	public void insertarRespuesta(){
+	public void insertarRespuesta() {
 		try {
 			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
 			or = manager.OpcionesByID(idguardar);
-			List<ColRespuesta> lr =  manager.findAllRespuestas();
-			Integer t=0;
-			for (ColRespuesta res :lr) {
-				if (res.getColPregunta().getPreId()==or.getColPregunta().getPreId() && res.getEstId()==login.getEstudiante().getEstId()){
-					manager.editarRespuesta(res.getResId(),new Timestamp(new Date().getTime()),or.getOprId());
-					break;
-				}else{
-					t++;
-				}
-			}
-			if (t==lr.size()){
-				manager.insertarRespuesta(new Timestamp(new Date().getTime()), or.getOprId(), or.getColPregunta().getPreId(), login.getEstudiante().getEstId());
+			List<ColRespuesta> lr = manager.findWhereRespuestas(or
+					.getColPregunta().getPreId(), login.getEstudiante()
+					.getEstId());
+			if (lr.size() == 0) {
+				manager.insertarRespuesta(new Timestamp(new Date().getTime()),
+						or.getOprId(), or.getColPregunta().getPreId(), login
+								.getEstudiante().getEstId(), true);
+			} else {
+				for (ColRespuesta res : lr)
+					manager.editarRespuesta(res.getResId(), new Timestamp(
+							new Date().getTime()), or.getOprId());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 }

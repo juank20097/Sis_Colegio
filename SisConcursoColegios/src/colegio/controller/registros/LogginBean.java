@@ -73,6 +73,8 @@ public class LogginBean {
 	// atributo de calificacion
 	private Integer calificacion = 0;
 	private String tiempo_eva;
+	
+	private Integer idguardar=0;
 
 	public LogginBean() {
 		institucion = new ColInstitucion();
@@ -115,6 +117,20 @@ public class LogginBean {
 
 	public void setEstudiante(ColEstudiante estudiante) {
 		this.estudiante = estudiante;
+	}
+
+	/**
+	 * @return the idguardar
+	 */
+	public Integer getIdguardar() {
+		return idguardar;
+	}
+
+	/**
+	 * @param idguardar the idguardar to set
+	 */
+	public void setIdguardar(Integer idguardar) {
+		this.idguardar = idguardar;
 	}
 
 	/**

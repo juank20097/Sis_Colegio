@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import colegio.acceso.entidades.Lista;
-import colegio.controller.generic.Funciones;
 import colegio.manager.RegistrosDAO;
 import colegio.model.entidades.ColEvaluacion;
 import colegio.model.entidades.ColEvaluacionEstudiantil;
@@ -239,22 +238,17 @@ public class PreguntasBean {
 	public void cargarPreguntas() {
 		lpre = new ArrayList<ColPregunta>();
 		lres = new ArrayList<Lista>();
-		for (ColPregunta pre : manager.findAllPreguntas()) {
-			if (pre.getColEvaluacion().getEvaArea().trim()
-					.equals(login.getEstudiante().getEstArea().trim())) {
+		for (ColPregunta pre : manager.findPreguntasEstudiante(login.getEstudiante().getEstArea().trim())) {
 				lpre.add(pre);
-				for (ColOpcionesRespuesta op : manager.findAllOpciones()) {
-					if (op.getColPregunta().getPreId() == pre.getPreId()) {
+				for (ColOpcionesRespuesta op : manager.findOpcionesxPregunta(pre.getPreId())) {
 						Lista l = new Lista();
 						l.setOpcionesRespuesta(op);
 						l.setEnable(false);
 						lres.add(l);
-					}
-				}
 			}
 		}
-		manager.insertarMac(login.getEstudiante().getEstId(),
-				Funciones.conseguirMAC());
+//		manager.insertarMac(login.getEstudiante().getEstId(),
+//				Funciones.conseguirMAC());
 		this.insertarEva();
 		Collections.shuffle(lpre);
 		Collections.shuffle(lres);
@@ -347,7 +341,7 @@ public class PreguntasBean {
 		for (Lista or : lres) {
 			if (or.getOpcionesRespuesta().getColPregunta().getPreId() == pregunta
 					.getPreId()) {
-				or.setEnable(true);
+//				manager.editarRespuestaEstado(id_res, estado);
 			}
 		}
 	}

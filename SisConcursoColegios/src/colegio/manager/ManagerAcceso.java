@@ -50,7 +50,7 @@ public class ManagerAcceso {
 		List<Menu> lmenu = new ArrayList<Menu>();
 		JSONObject salida = new JSONObject();
 		salida.put("usr", usr);salida.put("pwd", pass);salida.put("apl", aplicacion);
-		JSONObject respuesta = ConsumeREST.postClient("http://10.1.0.157:8080/sgupy/WSLogin/postPermisos",salida);
+		JSONObject respuesta = ConsumeREST.postClient("http://10.1.0.158:8080/sgupy/WSLogin/postPermisos",salida);
 		if(!respuesta.get("status").equals("OK"))
 			throw new Exception("ERROR al consultar sus permisos: "+respuesta.get("mensaje").toString());
 		else
@@ -73,7 +73,7 @@ public class ManagerAcceso {
 		salida.put("para", m.getPara());
 		salida.put("asunto", m.getAsunto());
 		salida.put("body", m.getBody());
-		JSONObject respuesta = ConsumeREST.postClient("http://10.1.0.157:8080/serviceMails/WSMailYachay",salida);
+		JSONObject respuesta = ConsumeREST.postClient("http://10.1.0.158:8080/serviceMails/WSMailYachay",salida);
 		if(!respuesta.get("status").equals("OK"))
 			throw new Exception("ERROR al enviar sus correos: "+respuesta.get("mensaje").toString());
 		else

@@ -632,8 +632,7 @@ public class AlumnosBean {
 			} else {
 				for (ColEstudiante es : lest) {
 					try {
-						manager.editarEstudiante(es.getEstId(), "N",
-								fecha_ini, fecha_fin);
+						
 						String t = crearsmsAlumno(es.getEstNombres(),
 								es.getEstApellidos(), es.getEstCedula(),
 								es.getEstClave());
@@ -648,6 +647,10 @@ public class AlumnosBean {
 //						Funciones.sendMail("olimpiadasdeciencia@yachay.gob.ec",
 //								es.getEstCorreo(),
 //								"Notificación de Olimpiadas de Ciencias", t);
+						
+						manager.editarEstudiante(es.getEstId(), "N",
+								fecha_ini, fecha_fin);
+						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -719,16 +722,16 @@ public class AlumnosBean {
 		String a1 = fi.format(fecha_ini);
 		String b1 = ff.format(fecha_fin);
 		sms = "Sr./Sra. "
-				+ nombre
+				+ Funciones.cambiarFormato(nombre)
 				+ " "
-				+ apellido
+				+ Funciones.cambiarFormato(apellido)
 				+ "<br/>"
-				+ "<br/> Felicitaciones querido estudiante has sido seleccionado para la primera fase del concurso Olimpiada de Ciencias – INNOPOLIS – 2016.  La prueba será vía online, en el siguiente link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>http://olimpiadasdeciencias.yachay.gob.ec</a> , donde deberá ingresar los siguientes datos."
-				+ "<br/>" + "<br/> Usuario: " + cedula + "" + "<br/> Contraseña: "
+				+ "<br/> Felicitaciones querido estudiante has sido seleccionado para la primera fase del concurso Olimpiada de Ciencias – INNOPOLIS – 2016.  La prueba ser&aacute; v&iacute;a online, en el siguiente link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>http://olimpiadasdeciencias.yachay.gob.ec</a> , donde deber&aacute; ingresar los siguientes datos."
+				+ "<br/>" + "<br/> Usuario: " + cedula + "" + "<br/> Pass: "
 				+ clave + "" + "<br/>"
-				+ "<br/> Recuerde que usted dará la prueba desde " + a1
+				+ "<br/> Recuerde que usted dar&aacute; la prueba desde " + a1
 				+ ".hasta " + b1 + "  " + "<br/>" + "<br/> Exitos...!!!" + "<br/>"
-				+ "<br/>" + "Saludos Coordiales" + "<br/> Empresa Pública Yachay EP";
+				+ "<br/>" + "Saludos Coordiales" + "<br/> Empresa P&uacute;blica Yachay EP";
 		return sms;
 	}
 

@@ -614,7 +614,7 @@ public class InstitucionBean {
 					+ "</head>"
 					+ "<body>"
 					+ "<p>Estimado Coordinador,</p>"
-					+ "<p>Le informamos que su instituci&oacute;n &quot;"+this.cambiarFormato(i.getInsNombre())+"&quot; se registr&oacute; con &eacute;xito a las Olimpiadas de Ciencias.<br/>"
+					+ "<p>Le informamos que su instituci&oacute;n &quot;"+Funciones.cambiarFormato(i.getInsNombre())+"&quot; se registr&oacute; con &eacute;xito a las Olimpiadas de Ciencias.<br/>"
 					+ "Usted puede revisar o modificar el registro de los estudiantes con las siguientes credenciales:</p>"
 					+ "<p>Link: <a href=&quot;http://olimpiadasdeciencias.yachay.gob.ec/&quot;>olimpiadasdeciencias.yachay.gob.ec</a><br/>"
 					+ "Usuario: "+i.getInsCooCedula()+"<br/>"
@@ -684,20 +684,14 @@ public class InstitucionBean {
 			}
 
 			sb.append("<tr><td>" + col.getEstCedula() + "</td><td>"
-					+ this.cambiarFormato(col.getEstApellidos()) + " "
-					+ this.cambiarFormato(col.getEstNombres()) + "</td><td>"
+					+ Funciones.cambiarFormato(col.getEstApellidos()) + " "
+					+ Funciones.cambiarFormato(col.getEstNombres()) + "</td><td>"
 					+ c + "</td></tr>");
 		}
 		return sb.toString();
 	}
 
-	public String cambiarFormato(String cadena) {
-		String res = cadena.replace('á', 'a').replace('é', 'e')
-				.replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
-				.replace('Á', 'A').replace('É', 'E').replace('Í', 'I')
-				.replace('Ó', 'O').replace('Ú', 'U');
-		return res;
-	}
+	
 
 	/**
 	 * Metodo para filtrar a estudiantes segun una institución

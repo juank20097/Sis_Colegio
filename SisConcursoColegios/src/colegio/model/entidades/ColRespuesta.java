@@ -24,6 +24,9 @@ public class ColRespuesta implements Serializable {
 	@Column(name="res_fecha")
 	private Timestamp resFecha;
 	
+	@Column(name="res_editable")
+	private Boolean resEditable;
+	
 	@Column(name="est_id")
 	private Integer estId;
 
@@ -38,6 +41,14 @@ public class ColRespuesta implements Serializable {
 	private ColPregunta colPregunta;
 
 	public ColRespuesta() {
+	}
+
+	public Boolean getResEditable() {
+		return resEditable;
+	}
+
+	public void setResEditable(Boolean resEditable) {
+		this.resEditable = resEditable;
 	}
 
 	public Integer getEstId() {

@@ -3,6 +3,12 @@
  */
 package colegio.manager;
 
+import java.util.List;
+
+import colegio.model.entidades.ColOpcionesRespuesta;
+import colegio.model.entidades.ColPregunta;
+
+
 
 
 
@@ -71,12 +77,18 @@ public class Test {
 //	System.out.println(p.isPar_valor());
 //	System.out.println(p.isPar_entidad());
 		
+		
+		
+		
 		ManagerDAO m = new ManagerDAO();
-		try {
-			m.JPQLQuery("SELECT o FROM ColInstitucion o where o.insId=102");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		List<ColOpcionesRespuesta> p =m.findAllWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = 1");
+		System.out.println(p.size());
+//		try {
+//			m.JPQLQuery("SELECT o FROM ColInstitucion o where o.insId=102");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }
