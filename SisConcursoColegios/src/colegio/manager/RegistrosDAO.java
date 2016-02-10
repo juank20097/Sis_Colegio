@@ -353,7 +353,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findPreguntasEstudiante(String area) {
-		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"'");
+		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"' order by o.preId ASC");
 		// return manager.findAllAleatorioP(ColPregunta.class);
 	}// Cierre del metodo
 

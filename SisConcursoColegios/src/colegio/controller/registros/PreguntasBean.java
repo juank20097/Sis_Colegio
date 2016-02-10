@@ -250,8 +250,8 @@ public class PreguntasBean {
 //		manager.insertarMac(login.getEstudiante().getEstId(),
 //				Funciones.conseguirMAC());
 		this.insertarEva();
-		Collections.shuffle(lpre);
-		Collections.shuffle(lres);
+//		Collections.shuffle(lpre);
+//		Collections.shuffle(lres);
 	}
 
 	/**
