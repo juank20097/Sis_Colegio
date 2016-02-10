@@ -3,14 +3,13 @@ package colegio.controller.registros;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
@@ -51,6 +50,13 @@ public class PreguntasBean {
 	// Atributo para carga de preguntas
 	private List<ColPregunta> lpre = new ArrayList<ColPregunta>();
 	private List<Lista> lres = new ArrayList<Lista>();
+	
+	//Edición
+	private List<ColPregunta> preguntasResueltas;
+	private List<ColPregunta> preguntasNoResueltas;
+	
+	private int preguntaValor;
+	private List<SelectItem> opcionesDeRespuesta;
 
 	// Atributo para carga de Area
 	private String p_area;
@@ -69,7 +75,12 @@ public class PreguntasBean {
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
 		manager = new RegistrosDAO();
-		this.cargarPreguntas();
+		lpre = new ArrayList<ColPregunta>();
+		lres = new ArrayList<Lista>();
+		preguntasResueltas = new ArrayList<ColPregunta>();
+		preguntasNoResueltas = new ArrayList<ColPregunta>();
+		opcionesDeRespuesta = new ArrayList<SelectItem>();
+		llenarPreguntas();
 	}
 
 	public String getTiempo_eva() {
@@ -215,6 +226,38 @@ public class PreguntasBean {
 	public void setPre_img_pregunta(String pre_img_pregunta) {
 		this.pre_img_pregunta = pre_img_pregunta;
 	}
+	
+	public List<ColPregunta> getPreguntasNoResueltas() {
+		return preguntasNoResueltas;
+	}
+	
+	public List<ColPregunta> getPreguntasResueltas() {
+		return preguntasResueltas;
+	}
+	
+	public void setPreguntasNoResueltas(List<ColPregunta> preguntasNoResueltas) {
+		this.preguntasNoResueltas = preguntasNoResueltas;
+	}
+	
+	public void setPreguntasResueltas(List<ColPregunta> preguntasResueltas) {
+		this.preguntasResueltas = preguntasResueltas;
+	}
+	
+	public List<SelectItem> getOpcionesDeRespuesta() {
+		return opcionesDeRespuesta;
+	}
+	
+	public void setOpcionesDeRespuesta(List<SelectItem> opcionesDeRespuesta) {
+		this.opcionesDeRespuesta = opcionesDeRespuesta;
+	}
+	
+	public int getPreguntaValor() {
+		return preguntaValor;
+	}
+	
+	public void setPreguntaValor(int preguntaValor) {
+		this.preguntaValor = preguntaValor;
+	}
 
 	/**
 	 * Metodo para listar todos los Datos de la Entidad
@@ -232,16 +275,40 @@ public class PreguntasBean {
 		return p;
 	}
 
+	
+	public void llenarPreguntas(){
+		if(manager.redireccionarEvaluacion(login.getEstudiante().getEstId()))
+			cargarPreguntasEdicion();
+		else
+			cargarPreguntas();
+	}
+	
+	private void cargarPreguntasEdicion() {
+		preguntasResueltas = manager.findPreguntasContestadasByEstudiante(login.getEstudiante().getEstId());
+		preguntasNoResueltas = manager.findPreguntasNoContestadasByEstudiante(login.getEstudiante().getEstId());
+	}
+	
+	public void cargarPregunta(ColPregunta pregunta){
+		cargarOpcionesPorPregunta(pregunta);
+		preguntaValor = manager.findIdRespuestaByPreguntaEstudiante(pregunta, login.getEstudiante().getEstId());
+		RequestContext.getCurrentInstance().execute("PF('dlgCP').show();");
+	}
+	
+	private void cargarOpcionesPorPregunta(ColPregunta pregunta) {
+		opcionesDeRespuesta.clear();
+		for (ColOpcionesRespuesta opcion : pregunta.getColOpcionesRespuestas()) {
+			opcionesDeRespuesta.add(new SelectItem(opcion.getOprId(), opcion.getOprOpcion()));
+		}
+	}
+
 	/**
 	 * Metodo para cargar las preguntas y opciones de respuesta de cada
 	 * Evaluación
 	 */
 	public void cargarPreguntas() {
-		lpre = new ArrayList<ColPregunta>();
-		lres = new ArrayList<Lista>();
 		for (ColPregunta pre : manager.findPreguntasEstudiante(login.getEstudiante().getEstArea().trim())) {
 				lpre.add(pre);
-				for (ColOpcionesRespuesta op : manager.findOpcionesxPregunta(pre.getPreId())) {
+			for (ColOpcionesRespuesta op : manager.findOpcionesxPregunta(pre.getPreId())) {
 						Lista l = new Lista();
 						l.setOpcionesRespuesta(op);
 						l.setEnable(false);
@@ -254,7 +321,7 @@ public class PreguntasBean {
 //		Collections.shuffle(lpre);
 //		Collections.shuffle(lres);
 	}
-
+	
 	/**
 	 * Metodo para insertar evaluaciones_estudiantil no repetidas
 	 */
