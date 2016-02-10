@@ -341,7 +341,11 @@ public class PreguntasBean {
 		for (Lista or : lres) {
 			if (or.getOpcionesRespuesta().getColPregunta().getPreId() == pregunta
 					.getPreId()) {
-//				manager.editarRespuestaEstado(id_res, estado);
+				or.setEnable(true);
+				for (ColRespuesta res: manager.findRespuestasxEstudiantePregunta(pregunta.getPreId(), login.getEstudiante().getEstId())){
+						manager.editarRespuestaEstado(res.getResId(), false);
+				}
+				
 			}
 		}
 	}

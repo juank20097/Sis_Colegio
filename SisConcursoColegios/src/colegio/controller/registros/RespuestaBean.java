@@ -142,7 +142,7 @@ public class RespuestaBean {
 		try {
 			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
 			or = manager.OpcionesByID(idguardar);
-			List<ColRespuesta> lr = manager.findWhereRespuestas(or
+			List<ColRespuesta> lr = manager.findRespuestasxEstudiantePregunta(or
 					.getColPregunta().getPreId(), login.getEstudiante()
 					.getEstId());
 			if (lr.size() == 0) {

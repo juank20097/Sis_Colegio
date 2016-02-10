@@ -342,6 +342,16 @@ public class RegistrosDAO {
 	 * @return La lista de todas encontradas
 	 */
 	@SuppressWarnings("unchecked")
+	public List<ColRespuesta> findRespuestasxEstudiantePregunta(Integer id_pregunta, Integer id_estudiante) {
+		return manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+	}// Cierre del metodo
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findPreguntasEstudiante(String area) {
 		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"'");
 		// return manager.findAllAleatorioP(ColPregunta.class);
@@ -548,7 +558,7 @@ public class RegistrosDAO {
 	 * @param telefono
 	 * @param correo
 	 */
-	public void editarRespuestaEstado(Integer id_res,Boolean estado) throws Exception {
+	public void editarRespuestaEstado(Integer id_res,Boolean estado) {
 		try {
 			ColRespuesta res = RespuestasByID(id_res);
 			res.setResEditable(estado);
