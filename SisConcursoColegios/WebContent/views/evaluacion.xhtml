@@ -16,6 +16,7 @@
 		<center>
 			<h1>EVALUACIÓN</h1>
 		</center>
+		<h:outputText value="#{preguntasBean.valor}"/>
 		<h:form id="frmE">
 			<b:row>
 				<b:column span="9">
@@ -51,8 +52,8 @@
 							</b:row>
 							
 							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
-								value="#{respuestaBean.idguardar}">
-								<p:ajax listener="#{respuestaBean.insertarRespuesta()}" />
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" />
 								<c:forEach items="#{preguntasBean.lres}" var="res">
 									<c:if test="#{res.opcionesRespuesta.colPregunta.preId == pre.preId}">
 										<f:selectItem itemDisabled="#{res.enable}"
@@ -98,8 +99,6 @@
 							<h1>
 								<p:outputLabel id="time" value="#{preguntasBean.time}" />
 							</h1>
-							<p:poll interval="1" widgetVar="poll"
-								listener="#{preguntasBean.calculoTiempo()}" update="time" />
 						</center>
 					</b:panel>
 				</b:column>

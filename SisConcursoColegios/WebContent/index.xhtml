@@ -103,7 +103,7 @@
 										<h:outputLabel value="Usuario:"></h:outputLabel>
 									</b:column>
 									<b:column>
-										<b:inputText value="#{logginBean.usuario}">
+										<b:inputText value="#{logginBean.usuario}" required="true" requiredMessage="Debe ingresar un usuario!!">
 										</b:inputText>
 									</b:column>
 								</b:row>
@@ -112,7 +112,7 @@
 										<h:outputLabel value="Contraseña:"></h:outputLabel>
 									</b:column>
 									<b:column>
-										<b:inputSecret value="#{logginBean.contrasena}"></b:inputSecret>
+										<b:inputSecret value="#{logginBean.contrasena}" required="true" requiredMessage="Debe ingresar contraseña!!"></b:inputSecret>
 									</b:column>
 								</b:row>
 								<b:row>
@@ -127,7 +127,7 @@
 							<p:graphicImage value="resources/img/cargando.gif" />
 						</p:dialog>
 
-						<p:growl showDetail="true" sticky="true" />						
+						<p:growl sticky="true" />						
 						
 					</h:form>
 				</center>
@@ -138,7 +138,7 @@
 			modal="true" height="200" width="500" closable="false">
 			<h:form id="d">
 				<center>
-					<h2>Bienvenid@ #{logginBean.est_nombre}</h2>
+					<h1>Bienvenid@ #{logginBean.est_nombre}</h1>
 					<p>Tu prueba esta programada para dentro de:</p>
 					<h4>
 						<p:outputLabel id="time" value="#{logginBean.time}" />
@@ -157,7 +157,7 @@
 			modal="true" height="250" width="500" closable="false">
 			<h:form id="de">
 				<center>
-					<h2>Estimad@ Estudiante #{logginBean.est_nombre}</h2>
+					<h1>Estimad@ Estudiante #{logginBean.est_nombre}</h1>
 					<p>Tu prueba ya ha finalizada. tu puntuación es la siguiente</p>
 					<p:outputLabel value="#{logginBean.calificacion} / 10"></p:outputLabel><br/>
 					<p>Tu tiempo de evaluación es:</p>

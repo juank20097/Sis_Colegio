@@ -732,4 +732,23 @@ public class RegistrosDAO {
 			return (ColEvaluacion) manager.findById(
 					ColEvaluacion.class, id_ees);
 		}// Cierre del metodo
+		
+		/*****************************************************************************************************************************/
+		@SuppressWarnings("unchecked")
+		public ColEstudiante findEstudianteByDNI(String dni) throws Exception{
+			List<ColEstudiante> listado = manager.findWhere(ColEstudiante.class, "o.estCedula='"+dni+"'", null);
+			if(listado.size()!=1)
+				return null;
+			else
+				return listado.get(0);
+		}
+		
+		@SuppressWarnings("unchecked")
+		public ColEvaluacionEstudiantil findCalificacionEvaluacionEstudiante(ColEstudiante estudiante) throws Exception{
+			List<ColEvaluacionEstudiantil> listado = manager.findWhere(ColEvaluacionEstudiantil.class, "o.colEstudiante.estId="+estudiante.getEstId(), null);
+			if(listado.size()!=1)
+				return null;
+			else
+				return listado.get(0);
+		}
 }

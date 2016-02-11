@@ -35,7 +35,8 @@ public class PreguntasBean {
 	private RegistrosDAO manager;
 
 	private LogginBean login;
-
+	// variable de almacenamiento de datos
+		private Integer idguardar;
 	// Atributos de las Preguntas
 	/** @pdOid 982cbb14-137f-42ea-8f91-8772ab8b75ab */
 	private Integer pre_id;
@@ -58,6 +59,7 @@ public class PreguntasBean {
 	private ColPregunta preguntaCargada;
 	private int preguntaValor;
 	private List<SelectItem> opcionesDeRespuesta;
+	private Integer valor; 
 
 	// Atributo para carga de Area
 	private String p_area;
@@ -75,6 +77,7 @@ public class PreguntasBean {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
+		valor = login.getEstudiante().getEstId();
 		manager = new RegistrosDAO();
 		lpre = new ArrayList<ColPregunta>();
 		lres = new ArrayList<Lista>();
@@ -82,6 +85,18 @@ public class PreguntasBean {
 		preguntasNoResueltas = new ArrayList<ColPregunta>();
 		opcionesDeRespuesta = new ArrayList<SelectItem>();
 		llenarPreguntas();
+	}
+	
+	public Integer getIdguardar() {
+		return idguardar;
+	}
+	
+	public void setIdguardar(Integer idguardar) {
+		this.idguardar = idguardar;
+	}
+	
+	public Integer getValor() {
+		return valor;
 	}
 
 	public String getTiempo_eva() {
@@ -286,9 +301,9 @@ public class PreguntasBean {
 
 	
 	public void llenarPreguntas(){
-		if(manager.redireccionarEvaluacion(login.getEstudiante().getEstId()))
-			cargarPreguntasEdicion();
-		else
+//		if(manager.redireccionarEvaluacion(login.getEstudiante().getEstId()))
+//			cargarPreguntasEdicion();
+//		else
 			cargarPreguntas();
 	}
 	
@@ -474,14 +489,13 @@ public class PreguntasBean {
 		calificacion=0;
 		List<ColRespuesta> res = manager.findAllRespuestas();
 		for (ColRespuesta r : res) {
-			if (r.getEstId() == login.getEstudiante().getEstId()) {
+			if (r.getEstId() == valor) {
 				calificacion += r.getColOpcionesRespuesta().getOprValor();
 			}
 		}
 		List<ColEvaluacionEstudiantil> ee = manager.findAllEvaEstudiantil();
 		for (ColEvaluacionEstudiantil eva : ee) {
-			if (eva.getColEstudiante().getEstId() == login.getEstudiante()
-					.getEstId()) {
+			if (eva.getColEstudiante().getEstId() == valor) {
 				tiempoactual= new Timestamp(new Date().getTime());
 				this.totalTiempo(eva);
 				manager.editarEvaEstudiantil(eva.getEesId(), tiempoactual, calificacion, tiempo_eva);
@@ -541,5 +555,24 @@ public class PreguntasBean {
 		}
 		return s.toString();
 	}
-
+	
+	public void insertarRespuesta() {
+		try {
+			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
+			or = manager.OpcionesByID(idguardar);
+			List<ColRespuesta> lr = manager.findRespuestasxEstudiantePregunta(or
+					.getColPregunta().getPreId(), valor);
+			if (lr.size() == 0) {
+				manager.insertarRespuesta(new Timestamp(new Date().getTime()),
+						or.getOprId(), or.getColPregunta().getPreId(), valor, true);
+			} else {
+				for (ColRespuesta res : lr)
+					manager.editarRespuesta(res.getResId(), new Timestamp(
+							new Date().getTime()), or.getOprId());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

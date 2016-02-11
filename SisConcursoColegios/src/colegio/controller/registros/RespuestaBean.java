@@ -31,6 +31,8 @@ public class RespuestaBean {
 	private Timestamp resFecha;
 	private Integer colOpcionesRespuesta;
 	private Integer colPregunta;
+	
+	private Integer valor;
 
 	// variable de almacenamiento de datos
 	private Integer idguardar;
@@ -40,6 +42,7 @@ public class RespuestaBean {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
+		valor = login.getEstudiante().getEstId();
 		manager = new RegistrosDAO();
 	}
 
@@ -143,12 +146,10 @@ public class RespuestaBean {
 			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
 			or = manager.OpcionesByID(idguardar);
 			List<ColRespuesta> lr = manager.findRespuestasxEstudiantePregunta(or
-					.getColPregunta().getPreId(), login.getEstudiante()
-					.getEstId());
+					.getColPregunta().getPreId(), valor);
 			if (lr.size() == 0) {
 				manager.insertarRespuesta(new Timestamp(new Date().getTime()),
-						or.getOprId(), or.getColPregunta().getPreId(), login
-								.getEstudiante().getEstId(), true);
+						or.getOprId(), or.getColPregunta().getPreId(), valor, true);
 			} else {
 				for (ColRespuesta res : lr)
 					manager.editarRespuesta(res.getResId(), new Timestamp(

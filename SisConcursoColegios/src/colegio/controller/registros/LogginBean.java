@@ -283,26 +283,44 @@ public class LogginBean {
 	 */
 	public String resultado() {
 		String r = "";
-		for (ColEstudiante e : manager.findAllEstudiantes()) {
-			if (e.getEstCedula().trim().equals(usuario.trim())) {
-				for (ColEvaluacionEstudiantil ev : manager
-						.findAllEvaEstudiantil()) {
-					if (ev.getColEstudiante().getEstId() == e.getEstId()
-							&& ev.getEesCalificacion() != null) {
-						if (ev.getEesCalificacion()<=0){
+		try {
+			ColEstudiante estudiante = manager.findEstudianteByDNI(usuario.trim());
+			if (estudiante!=null){
+				ColEvaluacionEstudiantil evaluacion = manager.findCalificacionEvaluacionEstudiante(estudiante);
+				if(evaluacion!=null && evaluacion.getEesCalificacion()!=null){
+					if(evaluacion.getEesCalificacion()>0)
+						calificacion = evaluacion.getEesCalificacion();
+					else
 						calificacion = 0;
-						}else{
-						calificacion = ev.getEesCalificacion();
-						}
-						tiempo_eva = ev.getEesTiempo();
-						RequestContext context = RequestContext
-								.getCurrentInstance();
-						context.execute("PF('close').show();");
-						r = "a";
-					}
-				}
+					tiempo_eva = evaluacion.getEesTiempo();
+					RequestContext.getCurrentInstance().execute("PF('close').show();");
+					r = "a";
+				}				
 			}
-		}
+		} catch (Exception e) {
+			Mensaje.crearMensajeERROR("ERROR! "+e.getMessage());
+			e.printStackTrace();
+		}		
+//		for (ColEstudiante e : manager.findAllEstudiantes()) {
+//			if (e.getEstCedula().trim().equals(usuario.trim())) {
+//				for (ColEvaluacionEstudiantil ev : manager
+//						.findAllEvaEstudiantil()) {
+//					if (ev.getColEstudiante().getEstId() == e.getEstId()
+//							&& ev.getEesCalificacion() != null) {
+//						if (ev.getEesCalificacion()<=0){
+//						calificacion = 0;
+//						}else{
+//						calificacion = ev.getEesCalificacion();
+//						}
+//						tiempo_eva = ev.getEesTiempo();
+//						RequestContext context = RequestContext
+//								.getCurrentInstance();
+//						context.execute("PF('close').show();");
+//						r = "a";
+//					}
+//				}
+//			}
+//		}
 		return r;
 	}
 
