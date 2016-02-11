@@ -332,18 +332,43 @@ public class PreguntasBean {
 	public void cargarPreguntas() {
 		for (ColPregunta pre : manager.findPreguntasEstudiante(login.getEstudiante().getEstArea().trim())) {
 				lpre.add(pre);
-			for (ColOpcionesRespuesta op : manager.findOpcionesxPregunta(pre.getPreId())) {
-						Lista l = new Lista();
-						l.setOpcionesRespuesta(op);
-						l.setEnable(false);
-						lres.add(l);
-			}
+				this.cargaOpcRespuesta(pre);
 		}
 //		manager.insertarMac(login.getEstudiante().getEstId(),
 //				Funciones.conseguirMAC());
 		this.insertarEva();
 //		Collections.shuffle(lpre);
 //		Collections.shuffle(lres);
+	}
+	
+	
+	/**
+	 * Metodo para cargar respuesta que ya estan contestas desactivadas
+	 * 
+	 * @param pregunta
+	 */
+	public void cargaOpcRespuesta(ColPregunta pregunta){
+		int i = 0;
+		for (ColRespuesta res : manager.findRespuestasxEstudiantePregunta(
+				pregunta.getPreId(), login.getEstudiante().getEstId())) {
+			for (ColOpcionesRespuesta op : manager
+					.findOpcionesxPregunta(pregunta.getPreId())) {
+				Lista l = new Lista();
+				l.setOpcionesRespuesta(op);
+				l.setEnable(true);
+				lres.add(l);
+				i = 1;
+			}
+		}
+		if (i == 0) {
+			for (ColOpcionesRespuesta op : manager
+					.findOpcionesxPregunta(pregunta.getPreId())) {
+				Lista l = new Lista();
+				l.setOpcionesRespuesta(op);
+				l.setEnable(false);
+				lres.add(l);
+			}
+		}
 	}
 	
 	/**
