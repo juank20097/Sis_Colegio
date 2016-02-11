@@ -10,12 +10,69 @@
 <ui:composition template="template.xhtml">
 	<ui:define name="titulo">
           Evaluación
-        </ui:define>
+    </ui:define>
 	<ui:define name="contenido">
 		<center>
 			<h1>EVALUACIÓN</h1>
 		</center>
-		<h1>EDICION</h1>
+		<h:form id="frmED">
+			<p:messages closable="true"/>
+			<c:forEach items="#{preguntasBean.preguntasResueltas}" var="pre">
+				<b:row>
+					<b:column span="2">
+						<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+					</b:column>
+					<b:column span="7">
+						<p:outputLabel value="#{pre.preGrupoTematica}"></p:outputLabel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="2">
+						<p:outputLabel value="Tópico:"></p:outputLabel>
+					</b:column>
+					<b:column span="7">
+						<p:outputLabel value="#{pre.preTopico}"></p:outputLabel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<p:graphicImage
+						value="/resources/img/img_pre/#{pre.preImgEnunciado}"></p:graphicImage>
+				</b:row>
+				<b:row>
+					<center>
+						<p:graphicImage
+							value="/resources/img/img_cue/#{pre.preImgPregunta}"></p:graphicImage>
+					</center>
+				</b:row>
+				<b:row>
+					<center>
+						<b:commandButton value="Cambiar respuesta" actionListener="#{preguntasBean.cargarPregunta(pre)}"
+							look="primary" update=":frmDLG"/>
+					</center>
+				</b:row>
+			</c:forEach>		
+		</h:form>
+		<p:dialog id="dlgCP" widgetVar="dlgCP" closable="false" closeOnEscape="false" header="Edición" width="500px" position="right">
+			<h:form id="frmDLG">
+				<p:messages closable="true"/>
+				<b:row>
+					<b:column>
+					<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+									value="#{preguntasBean.preguntaValor}">
+						<f:selectItems value="#{preguntasBean.opcionesDeRespuesta}"/>			
+					</p:selectOneRadio>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column col-xs="6">
+						<p:commandButton value="Guardar" actionListener="#{preguntasBean.editarPreguntaCargada()}"/>
+					</b:column>
+					<b:column col-xs="6">
+						<p:button value="Cancelar" onclick="PF('dlgCP').hide();"/>
+					</b:column>
+				</b:row>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 
