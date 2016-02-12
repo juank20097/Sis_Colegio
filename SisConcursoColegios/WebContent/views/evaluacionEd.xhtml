@@ -46,7 +46,7 @@
 				</b:row>
 				<b:row>
 					<center>
-						<b:commandButton value="Cambiar respuesta" actionListener="#{preguntasBean.cargarPregunta(pre)}"
+						<b:commandButton value="Cambiar respuesta" disabled="#{preguntasBean.estaDesabilitadoBoton(pre)}" actionListener="#{preguntasBean.cargarPregunta(pre)}"
 							look="primary" update=":frmDLG"/>
 					</center>
 				</b:row>
@@ -65,7 +65,7 @@
 				</b:row>
 				<b:row>
 					<b:column col-xs="6">
-						<p:commandButton value="Guardar" actionListener="#{preguntasBean.editarPreguntaCargada()}"/>
+						<p:commandButton value="Guardar" actionListener="#{preguntasBean.editarPreguntaCargada()}" update="frmDLG :frmED"/>
 					</b:column>
 					<b:column col-xs="6">
 						<p:button value="Cancelar" onclick="PF('dlgCP').hide();"/>
@@ -73,6 +73,7 @@
 				</b:row>
 			</h:form>
 		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
 

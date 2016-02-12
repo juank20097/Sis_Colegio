@@ -74,7 +74,7 @@
 							<b:row>
 								<b:column offset="1">
 									<b:commandButton ajax="true" update="frmE" look="info"
-										actionListener="#{preguntasBean.bloqueo(pre)}"
+										actionListener="#{preguntasBean.bloqueo(pre)}" disabled="#{preguntasBean.activar(pre)}"
 										value="Guardar Respuesta">
 									</b:commandButton>
 								</b:column>
@@ -98,6 +98,8 @@
 						<center>
 							<h1>
 								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+									<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
 							</h1>
 						</center>
 					</b:panel>

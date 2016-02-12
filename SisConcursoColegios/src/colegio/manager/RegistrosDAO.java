@@ -352,6 +352,20 @@ public class RegistrosDAO {
 	 * @return La lista de todas encontradas
 	 */
 	@SuppressWarnings("unchecked")
+	public ColRespuesta findRespuestasxEstudiantePregunta1(Integer id_pregunta, Integer id_estudiante) {
+		List<ColRespuesta> respuestas = manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+		if (respuestas.size()>0){
+			return respuestas.get(0);
+		}
+		 return null;
+	}// Cierre del metodo
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findPreguntasEstudiante(String area) {
 		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"' order by o.preId ASC");
 		// return manager.findAllAleatorioP(ColPregunta.class);
