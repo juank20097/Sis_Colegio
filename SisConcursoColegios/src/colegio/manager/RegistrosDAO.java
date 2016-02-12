@@ -353,7 +353,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public ColRespuesta findRespuestasxEstudiantePregunta1(Integer id_pregunta, Integer id_estudiante) {
-		List<ColRespuesta> respuestas = manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+		List<ColRespuesta> respuestas = manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante+" and o.resEstado ='F'");
 		if (respuestas.size()>0){
 			return respuestas.get(0);
 		}
@@ -524,6 +524,7 @@ public class RegistrosDAO {
 			res.setColPregunta(pregunta);
 			res.setEstId(est);
 			res.setResEditable(estado);
+			res.setResEstado("P");
 			manager.insertar(res);
 			System.out.println("Bien_guardado_Respuesta");
 		} catch (Exception e) {
@@ -582,6 +583,30 @@ public class RegistrosDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Mal_guardado_Respuesta_Estado");
+		}
+
+	}
+	
+	/**
+	 * Metodo para ingresar un Dato a la base de datos
+	 * 
+	 * @param nombres
+	 * @param apellidos
+	 * @param cedula
+	 * @param area
+	 * @param telefono
+	 * @param correo
+	 */
+	public void editarRespuestaEstadoString(Integer id_res,String estado) {
+		try {
+			ColRespuesta res = RespuestasByID(id_res);
+			res.setResEstado(estado);
+			manager.actualizar(res);
+			System.out.println("Bien_actualizado_Respuesta_Estado1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Mal_guardado_Respuesta_Estado1");
 		}
 
 	}

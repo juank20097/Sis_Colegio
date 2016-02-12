@@ -374,24 +374,23 @@ public class PreguntasBean {
 	 * @param pregunta
 	 */
 	public void cargaOpcRespuesta(ColPregunta pregunta){
-		int i = 0;
-		for (ColRespuesta res : manager.findRespuestasxEstudiantePregunta(
-				pregunta.getPreId(), valor.getEstId())) {
-			for (ColOpcionesRespuesta op : manager
-					.findOpcionesxPregunta(pregunta.getPreId())) {
-				Lista l = new Lista();
-				l.setOpcionesRespuesta(op);
-				l.setEnable(true);
-				lres.add(l);
-				i = 1;
-			}
-		}
-		if (i == 0) {
+		ColRespuesta resp=manager.findRespuestasxEstudiantePregunta1(
+				pregunta.getPreId(), valor.getEstId());
+		if (resp==null){
 			for (ColOpcionesRespuesta op : manager
 					.findOpcionesxPregunta(pregunta.getPreId())) {
 				Lista l = new Lista();
 				l.setOpcionesRespuesta(op);
 				l.setEnable(false);
+				lres.add(l);
+			}
+		}
+		else{
+			for (ColOpcionesRespuesta op : manager
+					.findOpcionesxPregunta(pregunta.getPreId())) {
+				Lista l = new Lista();
+				l.setOpcionesRespuesta(op);
+				l.setEnable(true);
 				lres.add(l);
 			}
 		}
@@ -485,7 +484,8 @@ public class PreguntasBean {
 					.getPreId()) {
 				or.setEnable(true);
 				for (ColRespuesta res: manager.findRespuestasxEstudiantePregunta(pregunta.getPreId(), valor.getEstId())){
-						manager.editarRespuestaEstado(res.getResId(), false);
+					//	manager.editarRespuestaEstado(res.getResId(), false);
+						manager.editarRespuestaEstadoString(res.getResId(), "F");
 				}
 				
 			}
