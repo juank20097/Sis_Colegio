@@ -6,6 +6,7 @@ package colegio.controller.registros;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +37,13 @@ import colegio.model.entidades.ColInstitucion;
  */
 @SessionScoped
 @ManagedBean
-public class LogginBean {
+public class LogginBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1799091747010165818L;
+	
 	private ManagerAcceso mngAcc;
 	private RegistrosDAO manager;
 
@@ -73,8 +79,8 @@ public class LogginBean {
 	// atributo de calificacion
 	private Integer calificacion = 0;
 	private String tiempo_eva;
-	
-	private Integer idguardar=0;
+
+	private Integer idguardar = 0;
 
 	public LogginBean() {
 		institucion = new ColInstitucion();
@@ -127,7 +133,8 @@ public class LogginBean {
 	}
 
 	/**
-	 * @param idguardar the idguardar to set
+	 * @param idguardar
+	 *            the idguardar to set
 	 */
 	public void setIdguardar(Integer idguardar) {
 		this.idguardar = idguardar;
@@ -264,7 +271,11 @@ public class LogginBean {
 				r = this.loginCoo();
 			}
 			if (r.isEmpty() || r == "") {
-				r = this.login();
+//				r = this.login();
+				r= this.loginInterno();
+			}
+			if (r.isEmpty() || r == "") {
+				Mensaje.crearMensajeERROR("Usuario o contraseña Inexistente");
 			}
 		} else {
 			Mensaje.crearMensajeERROR("Usuario o contraseña Inexistente");
@@ -284,43 +295,47 @@ public class LogginBean {
 	public String resultado() {
 		String r = "";
 		try {
-			ColEstudiante estudiante = manager.findEstudianteByDNI(usuario.trim());
-			if (estudiante!=null){
-				ColEvaluacionEstudiantil evaluacion = manager.findCalificacionEvaluacionEstudiante(estudiante);
-				if(evaluacion!=null && evaluacion.getEesCalificacion()!=null){
-					if(evaluacion.getEesCalificacion()>0)
+			ColEstudiante estudiante = manager.findEstudianteByDNI(usuario
+					.trim());
+			if (estudiante != null) {
+				ColEvaluacionEstudiantil evaluacion = manager
+						.findCalificacionEvaluacionEstudiante(estudiante);
+				if (evaluacion != null
+						&& evaluacion.getEesCalificacion() != null) {
+					if (evaluacion.getEesCalificacion() > 0)
 						calificacion = evaluacion.getEesCalificacion();
 					else
 						calificacion = 0;
 					tiempo_eva = evaluacion.getEesTiempo();
-					RequestContext.getCurrentInstance().execute("PF('close').show();");
+					RequestContext.getCurrentInstance().execute(
+							"PF('close').show();");
 					r = "a";
-				}				
+				}
 			}
 		} catch (Exception e) {
-			Mensaje.crearMensajeERROR("ERROR! "+e.getMessage());
+			Mensaje.crearMensajeERROR("ERROR! " + e.getMessage());
 			e.printStackTrace();
-		}		
-//		for (ColEstudiante e : manager.findAllEstudiantes()) {
-//			if (e.getEstCedula().trim().equals(usuario.trim())) {
-//				for (ColEvaluacionEstudiantil ev : manager
-//						.findAllEvaEstudiantil()) {
-//					if (ev.getColEstudiante().getEstId() == e.getEstId()
-//							&& ev.getEesCalificacion() != null) {
-//						if (ev.getEesCalificacion()<=0){
-//						calificacion = 0;
-//						}else{
-//						calificacion = ev.getEesCalificacion();
-//						}
-//						tiempo_eva = ev.getEesTiempo();
-//						RequestContext context = RequestContext
-//								.getCurrentInstance();
-//						context.execute("PF('close').show();");
-//						r = "a";
-//					}
-//				}
-//			}
-//		}
+		}
+		// for (ColEstudiante e : manager.findAllEstudiantes()) {
+		// if (e.getEstCedula().trim().equals(usuario.trim())) {
+		// for (ColEvaluacionEstudiantil ev : manager
+		// .findAllEvaEstudiantil()) {
+		// if (ev.getColEstudiante().getEstId() == e.getEstId()
+		// && ev.getEesCalificacion() != null) {
+		// if (ev.getEesCalificacion()<=0){
+		// calificacion = 0;
+		// }else{
+		// calificacion = ev.getEesCalificacion();
+		// }
+		// tiempo_eva = ev.getEesTiempo();
+		// RequestContext context = RequestContext
+		// .getCurrentInstance();
+		// context.execute("PF('close').show();");
+		// r = "a";
+		// }
+		// }
+		// }
+		// }
 		return r;
 	}
 
@@ -333,16 +348,12 @@ public class LogginBean {
 	 */
 	public String loginCoo() {
 		String r = "";
-		List<ColInstitucion> i = manager.findAllInstituciones();
-		for (ColInstitucion ins : i) {
-			if (ins.getInsCooCedula().trim().equals(usuario.trim())
-					&& ins.getInsCooClave().trim().equals(contrasena.trim())
-					&& ins.getInsEstado().trim().equals("Aprobado".trim())) {
-				setInstitucion(ins);
-				// session.setAttribute("sessionBean", usuario);
-				r = "views/alumnos?faces-redirect=true";
-				break;
-			}
+		ColInstitucion insti = manager.findInsXUsuarioPass(usuario.trim(),
+				contrasena.trim());
+		if (insti != null) {
+			setInstitucion(insti);
+			// session.setAttribute("sessionBean", usuario);
+			r = "views/alumnos?faces-redirect=true";
 		}
 		return r;
 	}
@@ -356,38 +367,42 @@ public class LogginBean {
 	 */
 	public String loginEst() {
 		String r = "";
-		List<ColEstudiante> e;
-		e = manager.findAllEstudiantes();
-		for (ColEstudiante est : e) {
-			if (est.getEstCedula().trim().equals(usuario.trim())
-					&& est.getEstClave().trim().equals(contrasena.trim())
-					&& est.getEstEstado().equals("N")) {
-				if ((new Date().after(est.getEstFechaIni()))
-						&& (new Date().before(est.getEstFechaFin()))) {
-					setEstudiante(est);
-					r = "views/evaluacion.xhtml";
-					break;
-				}
-				if ((new Date().after(est.getEstFechaIni()))
-						&& (new Date().after(est.getEstFechaFin()))) {
-					RequestContext context = RequestContext
-							.getCurrentInstance();
-					context.execute("PF('close').show();");
-					r = "a";
-				} else {
-					est_nombre = est.getEstNombres() + " "
-							+ est.getEstApellidos();
-					t_par = est.getEstFechaIni().getTime();
-					RequestContext context = RequestContext
-							.getCurrentInstance();
-					context.execute("PF('info').show();");
-					context.execute("PF('poll').start();");
-					r = "a";
-				}
+		ColEstudiante est = manager.findEstXUsuarioPass(usuario.trim(),
+				contrasena.trim());
+		if (est != null) {
+			if ((new Date().after(est.getEstFechaIni()))
+					&& (new Date().before(est.getEstFechaFin()))) {
+				setEstudiante(est);
+				if (est.getEstArea().trim().equals("Matemáticas"))
+					r = "views/home_mate.xhtml";
+				if (est.getEstArea().trim().equals("Química"))
+					r = "views/home_quim.xhtml";
+				if (est.getEstArea().trim().equals("Física"))
+					r = "views/home_fisi.xhtml";
+				if (est.getEstArea().trim().equals("Biología"))
+					r = "views/home_biol.xhtml";
+				
+			}
+			if ((new Date().after(est.getEstFechaIni()))
+					&& (new Date().after(est.getEstFechaFin()))) {
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('close').show();");
+				r = "a";
+			}
+			if ((new Date().before(est.getEstFechaIni()))
+					&& (new Date().before(est.getEstFechaFin()))) {
+				est_nombre = est.getEstNombres() + " " + est.getEstApellidos();
+				t_par = est.getEstFechaIni().getTime();
+				RequestContext context = RequestContext.getCurrentInstance();
+				context.execute("PF('info').show();");
+				context.execute("PF('poll').start();");
+				r = "a";
 			}
 		}
 		return r;
 	}
+	
+	
 
 	/**
 	 * Metodo que cierra el dialog y finaliza el poll
@@ -400,6 +415,25 @@ public class LogginBean {
 		return "";
 	}
 
+	/**
+	 * Permite logearse al sistema
+	 * 
+	 * @return
+	 */
+	public String loginInterno() {
+		String r="";
+		try {
+			if(usuario.trim().equals("aquina") && contrasena.trim().equals("123"))
+			r="views/index?faces-redirect=true";
+			if(usuario.trim().equals("krivadeneira") && contrasena.trim().equals("Yachay2015"))
+			r="views/index?faces-redirect=true";
+		} catch (Exception e) {
+			Mensaje.crearMensajeWARN(e.getMessage());
+			return "";
+		}
+		return r;
+	}
+	
 	/**
 	 * Permite logearse al sistema
 	 * 
@@ -446,7 +480,7 @@ public class LogginBean {
 	 *            de usuario
 	 * @return Clase Usuario
 	 */
-	public static String verificarSession() {
+	public String verificarSession() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		LogginBean log = (LogginBean) session.getAttribute("logginBean");

@@ -2,6 +2,7 @@ package colegio.controller.registros;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,11 @@ import colegio.model.entidades.ColInstitucionesSenescyt;
  */
 @SessionScoped
 @ManagedBean
-public class FinstitucionBean {
+public class FinstitucionBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6989219012786471390L;
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;

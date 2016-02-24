@@ -12,11 +12,11 @@
           Evaluación
         </ui:define>
 	<ui:define name="contenido">
-
 		<center>
 			<h1>EVALUACIÓN</h1>
 		</center>
 		<h:form id="frmE">
+		<p:growl id="growl" sticky="true" />	
 			<b:row>
 				<b:column span="9">
 					<b:panel>
@@ -52,7 +52,7 @@
 							
 							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
 								value="#{preguntasBean.idguardar}">
-								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" />
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
 								<c:forEach items="#{preguntasBean.lres}" var="res">
 									<c:if test="#{res.opcionesRespuesta.colPregunta.preId == pre.preId}">
 										<f:selectItem itemDisabled="#{res.enable}"
@@ -73,7 +73,7 @@
 							<b:row>
 								<b:column offset="1">
 									<b:commandButton ajax="true" update="frmE" look="info"
-										actionListener="#{preguntasBean.bloqueo(pre)}" disabled="#{preguntasBean.activar(pre)}"
+										actionListener="#{preguntasBean.bloqueo(pre)}"
 										value="Guardar Respuesta">
 									</b:commandButton>
 								</b:column>

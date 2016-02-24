@@ -75,6 +75,22 @@ public class RegistrosDAO {
 	}// Cierre del metodo
 
 	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public ColInstitucion findInsXUsuarioPass(String cedula, String pass) {
+		List<ColInstitucion> ins=manager.findWhere(ColInstitucion.class, "o.insCooCedula='" + cedula+ "' and o.insCooClave ='"+pass+"' and o.insEstado='Aprobado'", null);
+		if (ins.size()>0){
+			return ins.get(0);
+		}else{
+			return null;
+		}
+	}// Cierre del metodo
+	
+	
+	/**
 	 * Metodo para ingresar un Dato a la base de datos
 	 * 
 	 * @param zona
@@ -227,6 +243,21 @@ public class RegistrosDAO {
 		return manager.findWhere(ColEstudiante.class, "est_estado='" + estado
 				+ "'", null);
 	}// Cierre del metodo
+	
+	/**
+	 * Metodo para listar todas los existentes
+	 * 
+	 * @return La lista de todas encontradas
+	 */
+	@SuppressWarnings("unchecked")
+	public ColEstudiante findEstXUsuarioPass(String cedula, String pass) {
+		List<ColEstudiante> est=manager.findWhere(ColEstudiante.class, "o.estCedula='" + cedula+ "' and o.estClave ='"+pass+"' and o.estEstado='N'", null);
+		if (est.size()>0){
+			return est.get(0);
+		}else{
+			return null;
+		}
+	}// Cierre del metodo
 
 	/**
 	 * Metodo para obtener un Dato mediante un ID
@@ -343,7 +374,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColRespuesta> findRespuestasxEstudiantePregunta(Integer id_pregunta, Integer id_estudiante) {
-		return manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+		return manager.findWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante, null);
 	}// Cierre del metodo
 	
 	/**
@@ -353,7 +384,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public ColRespuesta findRespuestasxEstudiantePregunta1(Integer id_pregunta, Integer id_estudiante) {
-		List<ColRespuesta> respuestas = manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante+" and o.resEstado ='F'");
+		List<ColRespuesta> respuestas = manager.findWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante+" and o.resEstado ='F'", null);
 		if (respuestas.size()>0){
 			return respuestas.get(0);
 		}
@@ -367,7 +398,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColPregunta> findPreguntasEstudiante(String area) {
-		return manager.findAllWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"' order by o.preId ASC");
+		return manager.findWhere(ColPregunta.class, "o.colEvaluacion.evaArea = '"+area+"' order by o.preId ASC ",null);
 		// return manager.findAllAleatorioP(ColPregunta.class);
 	}// Cierre del metodo
 
@@ -449,7 +480,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColOpcionesRespuesta> findOpcionesxPregunta(Integer pre_id) {
-		return manager.findAllWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = "+pre_id);
+		return manager.findWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = "+pre_id, null);
 	}// Cierre del metodo
 
 	/**
@@ -477,7 +508,7 @@ public class RegistrosDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ColRespuesta> findWhereRespuestas(Integer id_pregunta, Integer id_estudiante) {
-		return manager.findAllWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante);
+		return manager.findWhere(ColRespuesta.class, "o.colPregunta.preId ="+id_pregunta+" and o.estId ="+id_estudiante, null);
 	}// Cierre del metodo
 	
 	/**
@@ -674,7 +705,8 @@ public class RegistrosDAO {
 	public List<ColEvaluacionEstudiantil> findAllEvaEstudiantil() {
 		return manager.findAll(ColEvaluacionEstudiantil.class);
 	}// Cierre del metodo
-
+	
+	
 	/**
 	 * Metodo para obtener un Dato mediante un ID
 	 * 
@@ -682,9 +714,15 @@ public class RegistrosDAO {
 	 *            Tipo integer de busqueda
 	 * @return El objeto encontrado mediante el ID
 	 */
-	public ColEvaluacionEstudiantil EvaEstudiantilByID(Integer id_ees) throws Exception {
-		return (ColEvaluacionEstudiantil) manager.findById(
-				ColEvaluacionEstudiantil.class, id_ees);
+	public ColEvaluacionEstudiantil EvaEstudiantilByID(Integer id_ees) {
+		try {
+			return (ColEvaluacionEstudiantil) manager.findById(
+					ColEvaluacionEstudiantil.class, id_ees);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}// Cierre del metodo
 	
 	/**
@@ -761,6 +799,20 @@ public class RegistrosDAO {
 		}// Cierre del metodo
 
 		/**
+		 * Metodo para listar todas los existentes
+		 * 
+		 * @return La lista de todas encontradas
+		 */
+		@SuppressWarnings("unchecked")
+		public ColEvaluacion  findEvaluacionxArea(String area) {
+			List<ColEvaluacion> lista = manager.findWhere(ColEvaluacion.class, "o.evaArea ='"+area+"'", null);
+			if (lista.size()>0){
+				return lista.get(0);
+			}
+			 return null;
+		}// Cierre del metodo
+		
+		/**
 		 * Metodo para obtener un Dato mediante un ID
 		 * 
 		 * @param id_per
@@ -790,4 +842,6 @@ public class RegistrosDAO {
 			else
 				return listado.get(0);
 		}
+		
+		
 }

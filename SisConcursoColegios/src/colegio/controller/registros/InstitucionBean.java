@@ -1,5 +1,6 @@
 package colegio.controller.registros;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,13 @@ import colegio.model.entidades.ColInstitucion;
  */
 @SessionScoped
 @ManagedBean
-public class InstitucionBean {
+public class InstitucionBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8114580697622390291L;
+	
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
 	private ManagerAcceso ma;
@@ -83,7 +89,7 @@ public class InstitucionBean {
 	private String usuario;
 
 	public InstitucionBean() {
-		LogginBean.verificarSession();
+//		LogginBean.verificarSession();
 		manager = new RegistrosDAO();
 		ma = new ManagerAcceso();
 		ins_zona = null;
@@ -526,6 +532,14 @@ public class InstitucionBean {
 		ins_coo_correo = ins.getInsCooCorreo();
 		return "vregistro?faces-redirect=true";
 	}
+	
+	
+	public String editarInstitucion2(){
+		this.smsEnviarEstudiantes(ins_id);
+		manager.editarInstitucion(ins_id, "Notificado - Evaluacion");
+		Mensaje.crearMensajeINFO("Estado Modificado Correctamente");
+		return "validacion?faces-redirect=true";
+	}
 
 	/**
 	 * Metodo para cambiao de estado
@@ -534,7 +548,8 @@ public class InstitucionBean {
 	 */
 	public String editarInstitucion() {
 		// this.crearSMS(ins_id);
-		this.htmlEnviar(ins_id);
+		//this.htmlEnviar(ins_id);
+		this.smsEnviarCoordinador(ins_id);
 		manager.editarInstitucion(ins_id, ins_estado);
 		Mensaje.crearMensajeINFO("Estado Modificado Correctamente");
 		return "validacion?faces-redirect=true";
@@ -544,7 +559,14 @@ public class InstitucionBean {
 	 * Metodo para notificar a todas las Intituciones
 	 */
 	public void notificarAll() {
-		this.htmlEnviar(ins_id);
+		try{
+		for (int i =0;i<=20;i++){
+		this.htmlEnviar(9);
+		}
+		} catch (Exception e){
+			e.printStackTrace();
+			System.out.println("mensaje no enviado");
+		}
 	}
 
 	/**
@@ -592,12 +614,13 @@ public class InstitucionBean {
 		return lista;
 	}
 
+	
 	/**
 	 * Metodo para llenar el mensaje de los correos y llamar al metodo de envio
 	 * 
 	 * @param ins_id
 	 */
-	public void htmlEnviar(Integer ins_id) {
+	public void smsEnviarCoordinador(Integer ins_id) {
 		try {
 			ColInstitucion i = manager.InstitucionByID(ins_id);
 			String para = this.validarCorreo(i);
@@ -606,6 +629,117 @@ public class InstitucionBean {
 			mail.setId("olimpiada");
 			mail.setAsunto("Información de Registros");
 			mail.setPara(para);
+			String SMS_general = "<!DOCTYPE html>"
+					+ "<html>"
+					+ "<head>"
+					+ "<meta charset=&quot;UTF-8&quot;>"
+					+ "<title>Olimpiadas de Ciencias</title>"
+					+ "</head>"
+					+ "<body>"
+					+ "<p>Estimadas Instituciones Educativas: </p>"
+					+ "<p>Reciba un cordial saludo,  por medio de la presente les recordamos que para el buen desarrollo de la aplicaci&oacute;n de la evaluaci&oacute;n el docente  coordinador ser&aacute; el encargado de:</p>"
+					+ "<br/>"
+					+ "<p>a)	Ubicar a los estudiantes en el aula seleccionada para el desarrollo de la actividad, la cual cuente con una computadora por estudiante participante.</p>"
+					+ "<p>b)	Verificar que las computadoras cuenten con acceso al internet para realizaci&oacute;n de la prueba.</p>"
+					+ "<p>c)	Leer y garantizar el cumplimiento de las siguientes normas:</p>"
+					+ "<br/>"
+					+ "<p>1.	El estudiante deber&aacute; conectarse al internet e ingresar el c&oacute;digo que le ha sido asignado en el momento de la inscripci&oacute;n.</p>"
+					+ "<p>2.	Tienen 25 minutos m&aacute;ximos para resolver la prueba. Entre m&aacute;s r&aacute;pido respondan asertivamente las preguntas tendr&aacute; m&aacute;s opciones de participar en la segunda fase.</p>"
+					+ "<p>3.	Se proh&iacute;be pedir ayuda al docente o los companeros. </p>"
+					+ "<p>4.	Una vez seleccionada la respuesta no se podr&aacute; rectificar.</p>"
+					+ "<p>5.	La f&oacute;rmula para calificaci&oacute;n ser&aacute; = ACIERTOS – ERRORES, Por tal raz&oacute;n es importante no adivinar.</p>"
+					+ "<br/>"
+					+ "<p>ADVERTENCIA: Es importante que se respeten los horarios de las pruebas, que  los estudiantes no accedan fuera de la hora indicada ya que esto puede ocasionar colapso en el centro de datos debido a la alta demanda de participantes y conlleve a la ca&iacute;da del sistema con la p&eacute;rdida de informaci&oacute;n, en caso de ocurrir este evento se tendr&aacute; que  re-planificar una nueva fecha para la ejecuci&oacute;n de las evaluaciones.</p>"
+					+ "<p>El listado de sus estudiantes son:</p>"
+					+ "<br/>"
+					+ "<table border=2>"
+					+ "<tr>"
+					+ "<td>C&eacute;dula</td><td>Nombres Completos</td><td>&Aacute;rea a Participar</td><td>Fecha Hora Inicio</td><td>Fecha Hora Fin</td>"
+					+ this.tabla2(est) 
+					+ "</table>"
+					+ "<br/>"
+					+ "<p>Saludos Cordiales<br/>"
+					+ "Empresa P&uacute;blica Yachay EP.</p>"
+					+ "</body>" 
+					+ "</html>";
+			mail.setBody(SMS_general);
+			ma.MailWS(mail);
+			// Thread.sleep(10000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Metodo para llenar el mensaje de los correos y llamar al metodo de envio
+	 * 
+	 * @param ins_id
+	 */
+	//metodo que espera cuerpo para ser enviado------------------------------------------------------------------------------------------------
+	public void smsEnviarEstudiantes(Integer ins_id) {
+		try {
+			ColInstitucion i = manager.InstitucionByID(ins_id);
+			String para = this.validarCorreo(i);
+			List<ColEstudiante> est = this.filtrarEstudiante(i);
+			Mail mail = new Mail();
+			mail.setId("olimpiada");
+			mail.setAsunto("Información de Registros");
+			mail.setPara(para);
+			String SMS_general = "<!DOCTYPE html>"
+					+ "<html>"
+					+ "<head>"
+					+ "<meta charset=&quot;UTF-8&quot;>"
+					+ "<title>Olimpiadas de Ciencias</title>"
+					+ "</head>"
+					+ "<body>"
+					+ "<p>Estimadas Instituciones Educativas: </p>"
+					+ "<p>Reciba un cordial saludo,  por medio de la presente les recordamos que para el buen desarrollo de la aplicaci&oacute;n de la evaluaci&oacute;n el docente  coordinador ser&aacute; el encargado de:</p>"
+					+ "<br/>"
+					+ "<p>a)	Ubicar a los estudiantes en el aula seleccionada para el desarrollo de la actividad, la cual cuente con una computadora por estudiante participante.</p>"
+					+ "<p>b)	Verificar que las computadoras cuenten con acceso al internet para realizaci&oacute;n de la prueba.</p>"
+					+ "<p>c)	Leer y garantizar el cumplimiento de las siguientes normas:</p>"
+					+ "<br/>"
+					+ "<p>1.	El estudiante deber&aacute; conectarse al internet e ingresar el c&oacute;digo que le ha sido asignado en el momento de la inscripci&oacute;n.</p>"
+					+ "<p>2.	Tienen 25 minutos m&aacute;ximos para resolver la prueba. Entre m&aacute;s r&aacute;pido respondan asertivamente las preguntas tendr&aacute; m&aacute;s opciones de participar en la segunda fase.</p>"
+					+ "<p>3.	Se proh&iacute;be pedir ayuda al docente o los companeros. </p>"
+					+ "<p>4.	Una vez seleccionada la respuesta no se podr&aacute; rectificar.</p>"
+					+ "<p>5.	La f&oacute;rmula para calificaci&oacute;n ser&aacute; = ACIERTOS – ERRORES, Por tal raz&oacute;n es importante no adivinar.</p>"
+					+ "<br/>"
+					+ "<p>ADVERTENCIA: Es importante que se respeten los horarios de las pruebas, que  los estudiantes no accedan fuera de la hora indicada ya que esto puede ocasionar colapso en el centro de datos debido a la alta demanda de participantes y conlleve a la ca&iacute;da del sistema con la p&eacute;rdida de informaci&oacute;n, en caso de ocurrir este evento se tendr&aacute; que  re-planificar una nueva fecha para la ejecuci&oacute;n de las evaluaciones.</p>"
+					+ "<p>El listado de sus estudiantes son:</p>"
+					+ "<br/>"
+					+ "<table border=2>"
+					+ "<tr>"
+					+ "<td>C&eacute;dula</td><td>Nombres Completos</td><td>&Aacute;rea a Participar</td><td>Fecha Hora Inicio</td><td>Fecha Hora Fin</td>"
+					+ this.tabla2(est) 
+					+ "</table>"
+					+ "<br/>"
+					+ "<p>Saludos Cordiales<br/>"
+					+ "Empresa P&uacute;blica Yachay EP.</p>"
+					+ "</body>" 
+					+ "</html>";
+			mail.setBody(SMS_general);
+			ma.MailWS(mail);
+			// Thread.sleep(10000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Metodo para llenar el mensaje de los correos y llamar al metodo de envio
+	 * 
+	 * @param ins_id
+	 */
+	public void htmlEnviar(Integer ins_id) {
+		try {
+			ColInstitucion i = manager.InstitucionByID(ins_id);
+//			String para = this.validarCorreo(i);
+			List<ColEstudiante> est = this.filtrarEstudiante(i);
+			Mail mail = new Mail();
+			mail.setId("olimpiada");
+			mail.setAsunto("Información de Registros");
+			mail.setPara("juank20097@yopmail.com");
 			String SMS_general = "<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head>"
@@ -687,6 +821,40 @@ public class InstitucionBean {
 					+ Funciones.cambiarFormato(col.getEstApellidos()) + " "
 					+ Funciones.cambiarFormato(col.getEstNombres()) + "</td><td>"
 					+ c + "</td></tr>");
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * Metodo para construir la tabla de estudiantes de una institución
+	 * 
+	 * @param est
+	 * @return
+	 */
+	public String tabla2(List<ColEstudiante> est) {
+		StringBuilder sb = new StringBuilder();
+
+		for (ColEstudiante col : est) {
+			String c = "";
+			if (col.getEstArea().equals("Matemáticas")) {
+				c = "Matem&aacute;ticas";
+			}
+			if (col.getEstArea().equals("Física")) {
+				c = "F&iacute;sica";
+			}
+			if (col.getEstArea().equals("Química")) {
+				c = "Qu&iacute;mica";
+			}
+			if (col.getEstArea().equals("Biología")) {
+				c = "Biolog&iacute;a";
+			}
+
+			sb.append("<tr><td>" + col.getEstCedula() + "</td><td>"
+					+ Funciones.cambiarFormato(col.getEstApellidos()) + " "
+					+ Funciones.cambiarFormato(col.getEstNombres()) + "</td><td>"
+					+ c + "</td>" + "<td>"
+							+ col.getEstFechaIni() + "</td>"+ "</td><td>"
+									+ col.getEstFechaFin() + "</td></tr>");
 		}
 		return sb.toString();
 	}

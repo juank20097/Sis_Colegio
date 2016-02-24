@@ -11,7 +11,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>/faces/*</url-pattern>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
   <context-param>
@@ -23,13 +22,17 @@
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>resources.application</param-value>
   </context-param>
-   <context-param>
-    <param-name>BootsFaces_USETHEME</param-name>
-    <param-value>true</param-value>
-  </context-param>
   <context-param>
     <param-name>primefaces.THEME</param-name>
     <param-value>bootstrap</param-value>
+  </context-param>
+  <context-param>
+    <param-name>BootsFaces_USETHEME</param-name>
+    <param-value>default</param-value>
+  </context-param>
+  <context-param>
+    <param-name>BootsFaces_THEME</param-name>
+    <param-value>cerulean</param-value>
   </context-param>
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>

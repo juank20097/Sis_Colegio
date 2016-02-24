@@ -28,13 +28,15 @@ and open the template in the editor.
 	<b:navBar brand="OLIMPIADAS DE CIENCIAS" inverse="true"
 		brandHref="index.xhtml">
 		<b:navbarLinks>
-			<c:forEach var="t" items="#{logginBean.menu}">
-				<b:dropMenu value="#{t.nombre}">
-					<c:forEach var="i" items="#{t.lstLinks}">
-						<b:navLink value="#{i.nombre}" href="#{i.link}" />
-					</c:forEach>
+				<b:dropMenu value="Gestión">
+						<b:navLink value="Validar Instituciones" href="validacion.xhtml" />
+						<b:navLink value="Notificar Estudiantes" href="valumnos.xhtml" />
 				</b:dropMenu>
-			</c:forEach>
+				<b:dropMenu value="Reportes">
+						<b:navLink value="Resultado Evaluaciones" href="resTotal.xhtml" />
+						<b:navLink value="Mejores Estudiantes" href="resGanadores.xhtml" />
+						<b:navLink value="Resultados Instituciones" href="resInstitucion.xhtml" />
+				</b:dropMenu>
 <!-- 			<b:navLink value="Ayuda*" href="#"></b:navLink> -->
 			<ui:insert name="menu"></ui:insert>
 		</b:navbarLinks>

@@ -61,7 +61,7 @@ public class ColEstudiante implements Serializable {
 	private ColInstitucion colInstitucion;
 
 	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEstudiante")
+	@OneToMany(mappedBy="colEstudiante", cascade= CascadeType.ALL)
 	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils;
 
 	public ColEstudiante() {

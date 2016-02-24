@@ -34,11 +34,11 @@ public class ColEvaluacion implements Serializable {
 	private String evaPeriodo;
 
 	//bi-directional many-to-one association to ColEvaluacionEstudiantil
-	@OneToMany(mappedBy="colEvaluacion")
+	@OneToMany(mappedBy="colEvaluacion", cascade= CascadeType.ALL)
 	private List<ColEvaluacionEstudiantil> colEvaluacionEstudiantils;
 
 	//bi-directional many-to-one association to ColPregunta
-	@OneToMany(mappedBy="colEvaluacion")
+	@OneToMany(mappedBy="colEvaluacion", cascade = CascadeType.ALL)
 	private List<ColPregunta> colPreguntas;
 
 	public ColEvaluacion() {

@@ -1,7 +1,9 @@
 package colegio.model.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -34,7 +36,7 @@ public class ColPregunta implements Serializable {
 	private String preTopico;
 
 	//bi-directional many-to-one association to ColOpcionesRespuesta
-	@OneToMany(mappedBy="colPregunta")
+	@OneToMany(mappedBy="colPregunta",cascade = CascadeType.ALL)
 	private List<ColOpcionesRespuesta> colOpcionesRespuestas;
 
 	//bi-directional many-to-one association to ColEvaluacion
@@ -43,7 +45,7 @@ public class ColPregunta implements Serializable {
 	private ColEvaluacion colEvaluacion;
 
 	//bi-directional many-to-one association to ColRespuesta
-	@OneToMany(mappedBy="colPregunta")
+	@OneToMany(mappedBy="colPregunta",cascade = CascadeType.ALL)
 	private List<ColRespuesta> colRespuestas;
 
 	public ColPregunta() {

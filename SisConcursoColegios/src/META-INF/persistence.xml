@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="SisConcursoColegios" transaction-type="RESOURCE_LOCAL">
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="SisConcursoColegios"
+		transaction-type="RESOURCE_LOCAL">
 		<class>colegio.model.entidades.ColEstudiante</class>
 		<class>colegio.model.entidades.ColEvaluacion</class>
 		<class>colegio.model.entidades.ColEvaluacionEstudiantil</class>
@@ -10,13 +13,14 @@
 		<class>colegio.model.entidades.ColPregunta</class>
 		<class>colegio.model.entidades.ColRespuesta</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.1.0.157:5432/sis_colegio"/>
-<!-- 			<property name="javax.persistence.jdbc.user" value="adm_viviendas"/> -->
-			<property name="javax.persistence.jdbc.user" value="postgres"/>
-			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-<!-- 			<property name="javax.persistence.jdbc.password" value="Ea6pOwWZ$*w_"/> -->
-			<property name="javax.persistence.jdbc.password" value="Adm_157/!@"/>
-<!-- 			<property name="javax.persistence.jdbc.password" value="root"/> -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://10.1.0.158:5432/sis_colegio" />
+			<property name="javax.persistence.jdbc.user" value="adm_viviendas" />
+			<!-- <property name="javax.persistence.jdbc.user" value="postgres"/> -->
+			<property name="javax.persistence.jdbc.password" value="Ea6pOwWZ$*w_" />
+			<!-- <property name="javax.persistence.jdbc.password" value="Adm_157/!@"/> -->
+			<!-- <property name="javax.persistence.jdbc.password" value="root"/> -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 		</properties>
 	</persistence-unit>
 </persistence>

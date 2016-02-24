@@ -1,5 +1,6 @@
 package colegio.controller.registros;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +29,12 @@ import java.text.DateFormat;
  */
 @SessionScoped
 @ManagedBean
-public class AlumnosBean {
+public class AlumnosBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8696143846800838169L;
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
@@ -102,7 +108,7 @@ public class AlumnosBean {
 	List<ColEstudiante> l_est;
 
 	public AlumnosBean() {
-		LogginBean.verificarSession();
+//		LogginBean.verificarSession();
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);

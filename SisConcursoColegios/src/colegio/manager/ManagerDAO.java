@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
-
 
 /**
  * Objeto que encapsula la logica basica de acceso a datos mediante JPA. Maneja el patron de diseño
@@ -20,11 +20,13 @@ import javax.persistence.TemporalType;
 public class ManagerDAO {
 	private static EntityManagerFactory factory;
 	private static EntityManager em;
+	private static EntityTransaction tr;
 
 	/**
 	 * Constructor de la clase ManagerDAO. Se encarga de crear los objetos 
 	 * factory y entity manager utilizando el patron de diseño singleton.
 	 */
+	
 	public ManagerDAO() {
 		mostrarLog("constructor","ManagerDAO Creado");
 		if (factory == null) {
@@ -34,6 +36,8 @@ public class ManagerDAO {
 		if (em == null) {
 			em = factory.createEntityManager();
 			mostrarLog("constructor","EntityManager creado");
+			tr=em.getTransaction();
+			mostrarLog("constructor","Asignar la Transaccion");
 		}
 	}
 	
@@ -45,7 +49,6 @@ public class ManagerDAO {
 	public void mostrarLog(String nombreMetodo,String mensaje) {
 		System.out.println("["+this.getClass().getSimpleName()+"/"+nombreMetodo+"]: " + mensaje);
 	}
-
 	/**
 	 * finder Generico que devuelve todos las entidades de una tabla.
 	 * 
@@ -69,7 +72,6 @@ public class ManagerDAO {
 		else
 			q = em.createQuery("SELECT o FROM " + clase.getSimpleName()
 					+ " o ORDER BY " + orderBy);
-		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
 		if(em.getTransaction().isActive()){
 			em.getTransaction().commit();
@@ -93,8 +95,8 @@ public class ManagerDAO {
 		mostrarLog("findAllT",clase.getSimpleName() + " orderBy " + orderBy);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
 			mostrarLog("findAllT","transaccion begin");
 		}
 		if (orderBy == null || orderBy.length() == 0)
@@ -104,8 +106,8 @@ public class ManagerDAO {
 					+ " o ORDER BY " + orderBy);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		/*if(!em.getTransaction().isActive())
-			em.getTransaction().commit();*/
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 
@@ -121,13 +123,14 @@ public class ManagerDAO {
 		mostrarLog("findAll", clase.getSimpleName());
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
 		}
 		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o");
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -143,37 +146,14 @@ public class ManagerDAO {
 		mostrarLog("findAll", clase.getSimpleName());
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
 		}
-		
 		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o where o." + p_nombre_campo + "=" + p_id.toString() );
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		em.getTransaction().commit();
-		return listado;
-	}
-	
-	/**
-	 * finder Generico que devuelve todos las entidades de una tabla.
-	 * 
-	 * @param clase
-	 *            La clase que se desea consultar.
-	 * @return Listado resultante.
-	 */
-	@SuppressWarnings("rawtypes")
-	public List findAllWhere(Class clase, String p_where) {
-		mostrarLog("findAll", clase.getSimpleName());
-		Query q;
-		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
-		}
-		
-		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o where " +  p_where );
-		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
-		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -181,12 +161,14 @@ public class ManagerDAO {
 	@SuppressWarnings("rawtypes")
 	public List JPQLQuery(String query){
 		System.out.println(query);
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
+		}
 		List listado;
 		Query q = em.createQuery(query);
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -202,13 +184,14 @@ public class ManagerDAO {
 		mostrarLog("findAllAleatorioP", clase.getSimpleName());
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
 		}
 //		q = em.createNativeQuery("select * from col_pregunta order by random()");
 		q = em.createQuery("SELECT o FROM " + clase.getSimpleName() + " o");
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 
@@ -229,8 +212,8 @@ public class ManagerDAO {
 		mostrarLog("findWhere", clase.getSimpleName()+" where "+pClausulaWhere+"order by "+pOrderBy);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		if (pOrderBy == null || pOrderBy.length() == 0)
 			q = em.createQuery("SELECT o FROM " + clase.getSimpleName()
 					+ " o WHERE " + pClausulaWhere);
@@ -239,7 +222,8 @@ public class ManagerDAO {
 					+ " o WHERE " + pClausulaWhere + " ORDER BY " + pOrderBy);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -261,8 +245,8 @@ public class ManagerDAO {
 		mostrarLog("findWhereT", clase.getSimpleName()+" where "+pClausulaWhere+"order by "+pOrderBy);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
+		if (!tr.isActive()){
+			tr.begin();
 			mostrarLog("findWhereT","transaccion begin");
 		}
 		if (pOrderBy == null || pOrderBy.length() == 0)
@@ -273,7 +257,8 @@ public class ManagerDAO {
 					+ " o WHERE " + pClausulaWhere + " ORDER BY " + pOrderBy);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		//em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -289,12 +274,13 @@ public class ManagerDAO {
 		mostrarLog("findSQLT", pClausulaJPQL);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		q = em.createQuery(pClausulaJPQL);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		//em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -303,12 +289,13 @@ public class ManagerDAO {
 		mostrarLog("findSQL", pClausulaSQL);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		q = em.createNativeQuery(pClausulaSQL);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -317,12 +304,13 @@ public class ManagerDAO {
 		mostrarLog("findSQL", pClausulaJPQL);
 		Query q;
 		List listado;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		q = em.createQuery(pClausulaJPQL);
 		q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
 		listado = q.getResultList();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return listado;
 	}
 	
@@ -333,22 +321,13 @@ public class ManagerDAO {
 	public void ejectJPQL(String pClausulaJPQL){
 		mostrarLog("ejectJPQL", pClausulaJPQL);
 		Query q;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		q = em.createQuery(pClausulaJPQL);
 		q.executeUpdate();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 	}
-	
-	//	function ejecutarvarias (list<sql>)
-	//	try
-	//		begin
-	//		for i to list
-	//			ejectJPQL list<i>
-	//		end for
-	//		commit
-	//	cath
-	//		rollback
 	
 	/**
 	 * Ejecuta una sentencia sql nativa UPDATE DELETE ALTER_SEQUENCE
@@ -357,11 +336,12 @@ public class ManagerDAO {
 	public void ejectNativeSQL(String nativeSQL){
 		mostrarLog("ejectNativeSQL", nativeSQL);
 		Query q;
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		q = em.createNativeQuery(nativeSQL);
 		q.executeUpdate();
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 	}
 	
 	/**
@@ -377,8 +357,8 @@ public class ManagerDAO {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Object findById(Class clase, Object pID) throws Exception {
 		mostrarLog("findById", clase.getSimpleName()+" : "+pID);
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		if (pID == null)
 			throw new Exception(
 					"Debe especificar el codigo para buscar el dato.");
@@ -386,11 +366,12 @@ public class ManagerDAO {
 		try {
 			o = em.find(clase, pID);
 		} catch (Exception e) {
-			em.getTransaction().rollback();
+			tr.rollback();
 			throw new Exception("No se encontro la informacion especificada: "
 					+ e.getMessage());
 		}
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		return o;
 	}
 
@@ -402,9 +383,8 @@ public class ManagerDAO {
 	 */
 	public void insertar(Object pObjeto) throws Exception {
 		mostrarLog("insertar", pObjeto.getClass().getSimpleName() +" : "+pObjeto);
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
-		}
+		if (!tr.isActive())
+			tr.begin();
 		try {
 			em.persist(pObjeto);
 			mostrarLog("insertar","Objeto insertado: "
@@ -417,7 +397,8 @@ public class ManagerDAO {
 			throw new Exception("No se pudo insertar el objeto especificado: "
 					+ e.getMessage());
 		}
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		mostrarLog("insertar","transaccion commit");
 	}
 
@@ -439,9 +420,8 @@ public class ManagerDAO {
 					"Debe especificar un identificador para eliminar el dato solicitado.");
 		}
 		Object o = findById(clase, pID);
-		if (!em.getTransaction().isActive()){
-			em.getTransaction().begin();
-		}
+		if (!tr.isActive())
+			tr.begin();
 		try {
 			em.refresh(o);//CACHE
 			em.remove(o);
@@ -452,7 +432,8 @@ public class ManagerDAO {
 			mostrarLog("eliminar","No se pudo eliminar el dato: " + clase.getSimpleName()+" : "+pID);
 			throw new Exception("No se pudo eliminar el dato: " + e.getMessage());
 		}
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		mostrarLog("eliminar","transaccion commit");
 	}
 
@@ -465,8 +446,8 @@ public class ManagerDAO {
 	public void actualizar(Object pObjeto) throws Exception {
 		if (pObjeto == null)
 			throw new Exception("No se puede actualizar un dato null");
-		if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+		if (!tr.isActive())
+			tr.begin();
 		try {
 			em.merge(pObjeto);
 			mostrarLog("actualizar","Dato actualizado: "
@@ -476,7 +457,8 @@ public class ManagerDAO {
 			throw new Exception("No se pudo actualizar el dato: "
 					+ e.getMessage());
 		}
-		em.getTransaction().commit();
+		if(tr.isActive())
+			tr.commit();
 		mostrarLog("actualizar","transaccion commit");
 	}
 
@@ -503,8 +485,8 @@ public class ManagerDAO {
         Query q;
         List listado;
         String sentenciaSQL;
-        if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+        if (!tr.isActive())
+			tr.begin();
         if (orderBy == null || orderBy.length() == 0) {
             sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE " + param + "=:value1";
         } else {
@@ -514,7 +496,8 @@ public class ManagerDAO {
         q = em.createQuery(sentenciaSQL).setParameter("value1", value);
         q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
         listado = q.getResultList();
-        em.getTransaction().commit();
+        if(tr.isActive())
+			tr.commit();
         return listado;
     }
     
@@ -523,8 +506,8 @@ public class ManagerDAO {
         Query q;
         List listado;
         String sentenciaSQL;
-        if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+        if (!tr.isActive())
+			tr.begin();
         if (orderBy == null || orderBy.length() == 0) {
             sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE " + param + "=:value1";
         } else {
@@ -534,7 +517,8 @@ public class ManagerDAO {
         q = em.createQuery(sentenciaSQL).setParameter("value1", value);
         q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
         listado = q.getResultList();
-        em.getTransaction().commit();
+        if(tr.isActive())
+			tr.commit();
         return listado;
     }
     
@@ -551,8 +535,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE "+param+" >= :date";
     	}else{
@@ -561,7 +545,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("date", date, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDate",q.toString());
     	return listado;
     }
@@ -571,8 +556,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE :fecha BETWEEN "+datei+" AND "+datef;
     	}else{
@@ -581,7 +566,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fecha", fecha, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDate",q.toString());
     	return listado;
     }
@@ -591,8 +577,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE "+date+" BETWEEN :fechaUno AND :fechaDos";
     	}else{
@@ -601,7 +587,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fechaUno", fechaUno, TemporalType.DATE).setParameter("fechaDos", fechaDos, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDates",q.toString());
     	return listado;
     }
@@ -611,8 +598,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE ( :fechaUno BETWEEN "+dateOne+" AND "+dateTwo+" )"
     				+" OR ( :fechaDos BETWEEN "+dateOne+" AND "+dateTwo+" )";
@@ -624,7 +611,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fechaUno", fechaUno, TemporalType.DATE).setParameter("fechaDos", fechaDos, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDates",q.toString());
     	return listado;
     }
@@ -634,8 +622,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE "+param+" >= :date";
     	}else{
@@ -644,7 +632,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("date", date, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDate",q.toString());
     	return listado;
     }
@@ -654,8 +643,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE :fecha BETWEEN "+datei+" AND "+datef;
     	}else{
@@ -664,7 +653,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fecha", fecha, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDate",q.toString());
     	return listado;
     }
@@ -674,8 +664,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE "+date+" BETWEEN :fechaUno AND :fechaDos";
     	}else{
@@ -684,7 +674,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fechaUno", fechaUno, TemporalType.DATE).setParameter("fechaDos", fechaDos, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDates",q.toString());
     	return listado;
     }
@@ -694,8 +685,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		if (orderBy == null || orderBy.length() == 0)
     			sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE "+date+" BETWEEN :fechaUno AND :fechaDos";
@@ -710,7 +701,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fechaUno", fechaUno, TemporalType.DATE).setParameter("fechaDos", fechaDos, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDates",q.toString());
     	return listado;
     }
@@ -720,8 +712,8 @@ public class ManagerDAO {
     	Query q;
     	List listado;
     	String sentenciaSQL;
-    	if (!em.getTransaction().isActive())
-			em.getTransaction().begin();
+    	if (!tr.isActive())
+			tr.begin();
     	if(where == null || where.length() == 0){
     		sentenciaSQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE ( :fechaUno BETWEEN "+dateOne+" AND "+dateTwo
     				+" OR :fechaDos BETWEEN "+dateOne+" AND "+dateTwo+" )";
@@ -733,7 +725,8 @@ public class ManagerDAO {
     	q = em.createQuery(sentenciaSQL).setParameter("fechaUno", fechaUno, TemporalType.DATE).setParameter("fechaDos", fechaDos, TemporalType.DATE);
     	q.setHint("javax.persistence.cache.storeMode", "REFRESH"); //CACHE
     	listado = q.getResultList();
-    	em.getTransaction().commit();
+    	if(tr.isActive())
+			tr.commit();
     	mostrarLog("findWhereDates",q.toString());
     	return listado;
     }

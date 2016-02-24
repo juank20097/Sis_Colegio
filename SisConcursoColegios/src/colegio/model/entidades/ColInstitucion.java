@@ -1,7 +1,9 @@
 package colegio.model.entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -89,7 +91,7 @@ public class ColInstitucion implements Serializable {
 	private String insZona;
 
 	//bi-directional many-to-one association to ColEstudiante
-	@OneToMany(mappedBy="colInstitucion")
+	@OneToMany(mappedBy="colInstitucion",cascade = CascadeType.ALL)
 	private List<ColEstudiante> colEstudiantes;
 
 	public ColInstitucion() {

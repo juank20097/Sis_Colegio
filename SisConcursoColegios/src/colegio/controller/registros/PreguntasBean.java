@@ -1,6 +1,7 @@
 package colegio.controller.registros;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,13 @@ import colegio.model.entidades.ColRespuesta;
  */
 @ViewScoped
 @ManagedBean
-public class PreguntasBean {
+public class PreguntasBean implements Serializable {
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2703554307740171932L;
 
 	// Llamada de los Dao y clases genericas
 	private RegistrosDAO manager;
@@ -64,6 +71,7 @@ public class PreguntasBean {
 
 	// Atributo para carga de Area
 	private String p_area;
+	private boolean dato;
 
 	// Atributo para tomar el tiempo
 	private String time;
@@ -79,13 +87,15 @@ public class PreguntasBean {
 				.getExternalContext().getSession(false);
 		login = (LogginBean) session.getAttribute("logginBean");
 		valor = login.getEstudiante();
+		dato=false;
 		manager = new RegistrosDAO();
 		lpre = new ArrayList<ColPregunta>();
 		lres = new ArrayList<Lista>();
 		preguntasResueltas = new ArrayList<ColPregunta>();
 		preguntasNoResueltas = new ArrayList<ColPregunta>();
 		opcionesDeRespuesta = new ArrayList<SelectItem>();
-		llenarPreguntas();
+//		llenarPreguntas();
+//		insertarEva();
 	}
 	
 	public Integer getIdguardar() {
@@ -158,7 +168,7 @@ public class PreguntasBean {
 	 *            the p_area to set
 	 */
 	public void setP_area(String p_area) {
-		p_area = login.getEstudiante().getEstArea();
+		p_area = valor.getEstArea();
 		this.p_area = p_area;
 	}
 
@@ -308,10 +318,10 @@ public class PreguntasBean {
 			cargarPreguntas();
 	}
 	
-	private void cargarPreguntasEdicion() {
-		preguntasResueltas = manager.findPreguntasContestadasByEstudiante(valor.getEstId());
-		preguntasNoResueltas = manager.findPreguntasNoContestadasByEstudiante(valor.getEstId());
-	}
+//	private void cargarPreguntasEdicion() {
+//		preguntasResueltas = manager.findPreguntasContestadasByEstudiante(valor.getEstId());
+//		preguntasNoResueltas = manager.findPreguntasNoContestadasByEstudiante(valor.getEstId());
+//	}
 	
 	public void cargarPregunta(ColPregunta pregunta){
 		preguntaCargada = pregunta;
@@ -356,10 +366,10 @@ public class PreguntasBean {
 	 * Evaluación
 	 */
 	public void cargarPreguntas() {
-		for (ColPregunta pre : manager.findPreguntasEstudiante(valor.getEstArea().trim())) {
-				lpre.add(pre);
-				this.cargaOpcRespuesta(pre);
-		}
+//		for (ColPregunta pre : manager.findPreguntasEstudiante(valor.getEstArea().trim())) {
+//				lpre.add(pre);
+//				this.cargaOpcRespuesta(pre);
+//		}
 //		manager.insertarMac(login.getEstudiante().getEstId(),
 //				Funciones.conseguirMAC());
 		this.insertarEva();
@@ -396,29 +406,7 @@ public class PreguntasBean {
 		}
 	}
 	
-	/**
-	 * Metodo para insertar evaluaciones_estudiantil no repetidas
-	 */
-	public void insertarEva() {
-		Integer eval = 0;
-		Integer cont = 0;
-		List<ColEvaluacion> eva = manager.findAllEvaluacion();
-		for (ColEvaluacion c : eva) {
-			if (c.getEvaArea().equals(valor.getEstArea())) {
-				eval = c.getEvaId();
-			}
-		}
-		List<ColEvaluacionEstudiantil> eev = manager.findAllEvaEstudiantil();
-		for (ColEvaluacionEstudiantil e : eev) {
-			if (e.getColEstudiante().getEstId() != valor.getEstId()) {
-				cont++;
-			}
-		}
-		if (cont == eev.size()) {
-			manager.insertarEvaEstudiantil(valor.getEstId(),
-					eval, new Timestamp(new Date().getTime()), null, null);
-		}
-	}
+	
 
 	/**
 	 * Metodo de generacio de tiempo de la evaluación y control del mismo
@@ -466,10 +454,29 @@ public class PreguntasBean {
 		try {
 			login.logout();
 			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/SisConcursoColegios/faces/index.xhtml");
+					.redirect("/SisConcursoColegios/index.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Metodo para insertar evaluaciones_estudiantil no repetidas
+	 */
+	public void insertarEva() {
+		dato=true;
+		if (dato==true){
+		Integer eval = 0;
+		System.out.println(valor.getEstArea()+"   si entra");
+		ColEvaluacion eva=manager.findEvaluacionxArea(valor.getEstArea());
+		if (eva!=null)
+			eval= eva.getEvaId();
+		ColEvaluacionEstudiantil eest= manager.EvaEstudiantilByID(valor.getEstId());
+		if (eest==null){
+			manager.insertarEvaEstudiantil(valor.getEstId(),
+					eval, new Timestamp(new Date().getTime()), null, null);
+		}
 		}
 	}
 
@@ -487,7 +494,6 @@ public class PreguntasBean {
 					//	manager.editarRespuestaEstado(res.getResId(), false);
 						manager.editarRespuestaEstadoString(res.getResId(), "F");
 				}
-				
 			}
 		}
 	}
@@ -569,8 +575,10 @@ public class PreguntasBean {
 	
 	public void insertarRespuesta() {
 		try {
-			ColOpcionesRespuesta or = new ColOpcionesRespuesta();
-			or = manager.OpcionesByID(idguardar);
+			ColOpcionesRespuesta or = manager.OpcionesByID(getIdguardar());
+			if (or==null){
+				Mensaje.crearMensajeINFO("La pregunta que usted selecciono, no pudo ser leida vuelva a seleccionarla");
+			}else{
 			List<ColRespuesta> lr = manager.findRespuestasxEstudiantePregunta(or
 					.getColPregunta().getPreId(), valor.getEstId());
 			if (lr.size() == 0) {
@@ -581,9 +589,34 @@ public class PreguntasBean {
 					manager.editarRespuesta(res.getResId(), new Timestamp(
 							new Date().getTime()), or.getOprId());
 			}
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	//Metodos de traslado
+	public String iniciarMate(){
+		this.insertarEva();
+		return "eval_mate.xhtml";
+	}
+	
+	public String iniciarBiol(){
+		System.out.println(valor.getEstId());
+		this.insertarEva();
+		return "eval_biologia.xhtml";
+	}
+	
+	public String iniciarQuim(){
+		System.out.println(valor.getEstId());
+		this.insertarEva();
+		return "eval_quimica.xhtml";
+	}
+	
+	public String iniciarFisi(){
+		System.out.println(valor.getEstId());
+		this.insertarEva();
+		return "eval_fisica.xhtml";
 	}
 }

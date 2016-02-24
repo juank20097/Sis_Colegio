@@ -3,15 +3,15 @@
  */
 package colegio.manager;
 
+import java.sql.Timestamp;
 import java.util.List;
 
+import colegio.controller.generic.Funciones;
+import colegio.controller.registros.AlumnosBean;
+import colegio.controller.registros.InstitucionBean;
+import colegio.controller.registros.ReportesTotalBean;
 import colegio.model.entidades.ColOpcionesRespuesta;
 import colegio.model.entidades.ColPregunta;
-
-
-
-
-
 
 
 /**
@@ -31,11 +31,16 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		
+	
+		
+	
 //		try {
+//			for (int i=0;i<=20;i++){
 //			Funciones.sendMail("jestevez@yachay.gob.ec",
 //					"juank20097@yopmail.com",
 //					"Notificación de Olimpiadas de Ciencias", "hola");
-//			System.out.println("Envio de forma correcta");
+//			System.out.println("Envio de forma correcta: "+i);
+//			}
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -77,18 +82,30 @@ public class Test {
 //	System.out.println(p.isPar_valor());
 //	System.out.println(p.isPar_entidad());
 		
+	ManagerConexion c = new ManagerConexion();
+	try {
+		c.resultadoTotalGanadores();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
 		
 		
-		
-		ManagerDAO m = new ManagerDAO();
-		
-		List<ColOpcionesRespuesta> p =m.findAllWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = 1");
-		System.out.println(p.size());
+//		ManagerDAO m = new ManagerDAO();
+//		
+//		List<ColOpcionesRespuesta> p =m.findAllWhere(ColOpcionesRespuesta.class, "o.colPregunta.preId = 1");
+//		System.out.println(p.size());
 //		try {
 //			m.JPQLQuery("SELECT o FROM ColInstitucion o where o.insId=102");
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
+		
+//		ReportesTotalBean r = new ReportesTotalBean();
+//		Timestamp t=r.StringToTimestamp("0001-01-01 00:20:00.0");
+//		System.out.println(t);
+		
+		
 	}
 
 }
