@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:composition template="template.xhtml">
+		<ui:define name="titulo">Reporte Evaluaciones</ui:define>
+	    <ui:define name="contenido">
+	    	<h:form id="frmg">
+				<center>
+					<h3>RESULTADO EVALUACIONES</h3>
+				</center>
+			</h:form>
+			<br />
+			<h:form id="frmC">
+				<b:row style="margin-top:10px">
+					<b:column col-xs="2"><h:outputText value="INSTITUCI&Oacute;N " /> </b:column>
+					<b:column col-xs="10">
+						<b:selectOneMenu id="ins" value="#{reportesBean.institucion}">
+							<f:selectItems value="#{reportesBean.instituciones}"/>
+						</b:selectOneMenu>
+					</b:column>
+				</b:row>
+				<b:row style="margin-top:10px;">
+					<b:column col-xs="2"><h:outputText value="&Aacute;REA" /></b:column>
+					<b:column col-xs="10">
+						<b:selectOneMenu value="#{reportesBean.materia}">
+							<f:selectItems value="#{reportesBean.materias}"/>
+						</b:selectOneMenu>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<center>
+							<b:commandButton value="Ver Resultados"
+								actionListener="#{reportesBean.cargarResultados()}"
+								update=":frmp" look="info">
+							</b:commandButton>
+						</center>
+					</b:column>
+				</b:row>
+			</h:form>
+			<h:form id="frmp">
+				<p:messages closable="true" id="msj"/>
+				<h5>Exportar Información</h5>
+			    <h:commandLink style="margin-right:5px">
+			        <h:graphicImage value="/resources/img/excel.png" width="35"/>
+			        <p:dataExporter type="xls" target="dtr" fileName="rptEvaluaciones" pageOnly="false"/>
+			    </h:commandLink>
+				<p:dataTable style="font-size: 0.8em;"  id="dtr" value="#{reportesBean.listResultados}" var="r" rows="20" emptyMessage="Sin Datos"
+						scrollable="true" scrollRows="20" liveScroll="true" paginator="true" 
+		   				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+		 			<p:column headerText="AMIE" width="120">
+						<h:outputText value="#{r.insAmie}"/>
+					</p:column>
+					<p:column headerText="INSTITUCI&Oacute;N" width="150">
+						<h:outputText value="#{r.insNombre}"/>
+					</p:column>
+					<p:column headerText="PROVINCIA" >
+						<h:outputText value="#{r.insProvincia}"/>
+					</p:column>
+					<p:column headerText="C&Eacute;DULA" >
+						<h:outputText value="#{r.estCedula}"/>
+					</p:column>
+					<p:column headerText="NOMBRE" >
+						<h:outputText value="#{r.estNombre}"/>
+					</p:column>
+					<p:column headerText="APELLIDO" >
+						<h:outputText value="#{r.estApellido}"/>
+					</p:column>
+					<p:column headerText="&Aacute;REA" width="120">
+						<h:outputText value="#{r.estArea}"/>
+					</p:column>
+					<p:column headerText="FECHA INICIO" >
+						<h:outputText value="#{r.fechaInicio}"/>
+					</p:column>
+		 					<p:column headerText="FECHA FIN" width="90">
+						<h:outputText value="#{r.fechaFin}" />
+					</p:column>
+					<p:column headerText="TIEMPO" >
+						<h:outputText value="#{r.tiempo}" />
+					</p:column>
+					<p:column headerText="CALIFICACI&Oacute;N" width="100">
+						<h:outputText value="#{r.calificacion}" />
+					</p:column>
+		 		</p:dataTable>
+			</h:form>
+	    </ui:define>
+	</ui:composition>
+</html>

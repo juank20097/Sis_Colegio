@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+          Evaluación
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>EVALUACIÓN MATEMÁTICAS</h1>
+		</center>
+		<h:form id="frmE">
+		<p:growl id="growl" sticky="true" />	
+			<b:row>
+				<b:column span="9">
+					<b:panel>
+					
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Matemáticas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Función Lineal"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat1.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat1.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="a paralela a f;  c paralela a d; b paralela a e " itemValue="1" />
+										<f:selectItem 
+											itemLabel="a paralela a b;  c paralela a f;  d paralela a e " itemValue="2" />
+										<f:selectItem 
+											itemLabel="a paralela a c;  b paralela a e;  d paralela a f " itemValue="3" />
+										<f:selectItem 
+											itemLabel="a paralela a f; a paralela a d;  b paralela a c;  e paralela a f " itemValue="4" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Matemáticas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Análisis de Funciones"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat2.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat2.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="1d, 2c, 3e, 4b" itemValue="5" />
+										<f:selectItem 
+											itemLabel="1e, 2d, 3b, 4a" itemValue="6" />
+										<f:selectItem 
+											itemLabel="1a, 2b, 3c, 4d " itemValue="7" />
+										<f:selectItem 
+											itemLabel="1c, 2a, 3d, 4e" itemValue="8" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Funciones"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gráfico de Funciones"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat3.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat3.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="1d, 2c, 3e, 4a" itemValue="9" />
+										<f:selectItem 
+											itemLabel="1b, 2e, 3a, 4c" itemValue="10" />
+										<f:selectItem 
+											itemLabel="1c, 2a, 3d, 4b " itemValue="11" />
+										<f:selectItem 
+											itemLabel="1a, 2b, 3c, 4e" itemValue="12" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Cónicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Características de las cónicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat4.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat4.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="1a, 2b, 3c" itemValue="13" />
+										<f:selectItem 
+											itemLabel="1b, 2a, 3c" itemValue="14" />
+										<f:selectItem 
+											itemLabel="1c, 2a, 3b" itemValue="15" />
+										<f:selectItem 
+											itemLabel="1b, 2c, 3a" itemValue="16" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Vectores"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Ecuación Paramétricas"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat5.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat5.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Opción 1" itemValue="17" />
+										<f:selectItem 
+											itemLabel="Opción 2" itemValue="18" />
+										<f:selectItem 
+											itemLabel="Opción 3" itemValue="19" />
+										<f:selectItem 
+											itemLabel="Opción 4" itemValue="20" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Matrices"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Operaciones con Matrices"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat6.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat6.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Opción 1" itemValue="21" />
+										<f:selectItem 
+											itemLabel="Opción 2" itemValue="22" />
+										<f:selectItem 
+											itemLabel="Opción 3" itemValue="23" />
+										<f:selectItem 
+											itemLabel="Opción 4" itemValue="24" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Determinantes"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Propiedades de los determinantes"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat7.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat7.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="cero – igual – no cambia de signo" itemValue="25" />
+										<f:selectItem 
+											itemLabel="igual – cero – cambia de signo" itemValue="26" />
+										<f:selectItem 
+											itemLabel="mayor – negativo – es menor" itemValue="27" />
+										<f:selectItem 
+											itemLabel="menor – uno – es mayor" itemValue="28" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Sistema de Ecuaciones"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Aplicación de lo0s Determinantes"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat8.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat8.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="x = 12; y = -3; z = 5" itemValue="29" />
+										<f:selectItem 
+											itemLabel="x = 6; y = 2; z = 1" itemValue="30" />
+										<f:selectItem 
+											itemLabel="x = -2; y = 11; z = -3 " itemValue="31" />
+										<f:selectItem 
+											itemLabel="x = 7; y = 2; z = - 5" itemValue="32" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Estadísticas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Cálculo de Probabilidades"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat9.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat9.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="1d, 2b" itemValue="33" />
+										<f:selectItem 
+											itemLabel="1a, 2c" itemValue="34" />
+										<f:selectItem 
+											itemLabel="1c, 2a" itemValue="35" />
+										<f:selectItem 
+											itemLabel="1b, 2d" itemValue="36" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Estadísticas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Combinaciones"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_mat10.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_mat10.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Opción 1" itemValue="37" />
+										<f:selectItem 
+											itemLabel="Opción 2" itemValue="38" />
+										<f:selectItem 
+											itemLabel="Opción 3" itemValue="39" />
+										<f:selectItem 
+											itemLabel="Opción 4" itemValue="40" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							
+						<b:row>
+						<b:column>
+					<center>
+						<b:commandButton look="success" size="lg" style="width:30%;"
+							value="Finalizar Evaluación" 
+							action="#{preguntasBean.verResultado}"></b:commandButton>
+					</center>
+				</b:column>
+						</b:row>
+					</b:panel>
+				</b:column>
+				<b:column span="3">
+					<b:panel>
+						<center>
+							<h1>
+								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+									<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
+							</h1>
+						</center>
+					</b:panel>
+				</b:column>
+			</b:row>
+				
+
+			<p:dialog header="Información" resizable="false" widgetVar="close"
+				modal="true" height="200" width="500" closable="false">
+				<center>
+					<h2>Estimad@ Estudiante #{logginBean.est_nombre}</h2>
+					<p>Tu prueba ya ha finalizado. Para poder ver tu resultado debes volver a ingresar con tus credenciales (Usuario y Contraseña)</p>
+					<b:commandButton look="info"
+						action="#{preguntasBean.salir()}" value="Salir"></b:commandButton>
+				</center>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

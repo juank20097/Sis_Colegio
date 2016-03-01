@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+          Evaluación
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>EVALUACIÓN FÍSICA</h1>
+		</center>
+		<h:form id="frmE">
+			
+		<p:growl id="growl" sticky="true" />	
+			<b:row>
+				<b:column span="9">
+					<b:panel>
+					
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Movimiento Rectilíneo Uniforme"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis1.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="1 m/s" itemValue="81" />
+										<f:selectItem 
+											itemLabel="2 m/s" itemValue="82" />
+										<f:selectItem 
+											itemLabel="3 m/s" itemValue="83" />
+										<f:selectItem 
+											itemLabel="4 m/s" itemValue="84" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Movimiento Rectilíneo Uniforme"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis2.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis2.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="3 km, oeste" itemValue="85" />
+										<f:selectItem 
+											itemLabel="3 km, este" itemValue="86" />
+										<f:selectItem 
+											itemLabel="7 km, oeste" itemValue="87" />
+										<f:selectItem 
+											itemLabel="7 km, este" itemValue="88" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Movimiento Rectilíneo Uniforme"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis3.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis3.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="13 km " itemValue="89" />
+										<f:selectItem 
+											itemLabel="3 km " itemValue="90" />
+										<f:selectItem 
+											itemLabel="5 km" itemValue="91" />
+										<f:selectItem 
+											itemLabel="9 km " itemValue="92" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gráficas de movimiento"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis4.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis4.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="0,5 m/s" itemValue="93" />
+										<f:selectItem 
+											itemLabel="8 m/s" itemValue="94" />
+										<f:selectItem 
+											itemLabel="2 m/s" itemValue="95" />
+										<f:selectItem 
+											itemLabel="4 m/s" itemValue="96" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gráficas de movimiento"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis5.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis5.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="0.5 m/s  " itemValue="97" />
+										<f:selectItem 
+											itemLabel="2 m/s" itemValue="98" />
+										<f:selectItem 
+											itemLabel="3 m/s" itemValue="99" />
+										<f:selectItem 
+											itemLabel="4 m/s" itemValue="100" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gráficas de movimiento"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis6.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis6.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="2 m" itemValue="101" />
+										<f:selectItem 
+											itemLabel="3 m" itemValue="102" />
+										<f:selectItem 
+											itemLabel="7 m" itemValue="103" />
+										<f:selectItem 
+											itemLabel="9 m" itemValue="104" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gráficas de movimiento"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis7.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis7.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="0 m/s2" itemValue="105" />
+										<f:selectItem 
+											itemLabel="1 m/s2" itemValue="106" />
+										<f:selectItem 
+											itemLabel="2 m/s2" itemValue="107" />
+										<f:selectItem 
+											itemLabel="4 m/s2" itemValue="108" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Caída libre (Movimiento Rectilíneo Uniformemente Variado)"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis8.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis8.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Opción A" itemValue="109" />
+										<f:selectItem 
+											itemLabel="Opción B" itemValue="110" />
+										<f:selectItem 
+											itemLabel="Opción C" itemValue="111" />
+										<f:selectItem 
+											itemLabel="Opción D" itemValue="112" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Movimiento Rectilíneo Uniformemente Variado"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis9.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis9.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="La aceleración de la pelota es mayor que los otros dos" itemValue="113" />
+										<f:selectItem 
+											itemLabel="La aceleración del disco de hockey es mayor que los otros dos" itemValue="114" />
+										<f:selectItem 
+											itemLabel="Todos caen con la misma aceleración constante" itemValue="115" />
+										<f:selectItem 
+											itemLabel="Se necesita más información" itemValue="116" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="El movimiento de los cuerpos en una dimensión"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Función Lineal"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_fis10.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/cue_fis10.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="2 m/s2" itemValue="117" />
+										<f:selectItem 
+											itemLabel="4 m/s2" itemValue="118" />
+										<f:selectItem 
+											itemLabel="6 m/s2" itemValue="119" />
+										<f:selectItem 
+											itemLabel="8 m/s2" itemValue="120" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							
+						<b:row>
+						<b:column>
+					<center>
+						<b:commandButton look="success" size="lg" style="width:30%;"
+							value="Finalizar Evaluación" 
+							action="#{preguntasBean.verResultado}"></b:commandButton>
+					</center>
+				</b:column>
+						</b:row>
+					</b:panel>
+				</b:column>
+				<b:column span="3">
+					<b:panel>
+						<center>
+							<h1>
+								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+									<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
+							</h1>
+						</center>
+					</b:panel>
+				</b:column>
+			</b:row>
+				
+
+			<p:dialog header="Información" resizable="false" widgetVar="close"
+				modal="true" height="200" width="500" closable="false">
+				<center>
+					<h2>Estimad@ Estudiante #{logginBean.est_nombre}</h2>
+					<p>Tu prueba ya ha finalizado. Para poder ver tu resultado debes volver a ingresar con tus credenciales (Usuario y Contraseña)</p>
+					<b:commandButton look="info"
+						action="#{preguntasBean.salir()}" value="Salir"></b:commandButton>
+				</center>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+          Evaluación
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>EVALUACIÓN QUIMICA</h1>
+		</center>
+		<h:form id="frmE">
+		<p:growl id="growl" sticky="true" />	
+			<b:row>
+				<b:column span="9">
+					<b:panel>
+					
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Relaciones de la Química con otras ciencias"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Cuerpos y materia "></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui1.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Su volumen es insignificante en comparación con el de todo el átomo." itemValue="121" />
+										<f:selectItem 
+											itemLabel="Tiene carga neta debido a la presencia de neutrones." itemValue="122" />
+										<f:selectItem 
+											itemLabel="Contiene las cargas positivas del átomo." itemValue="123" />
+										<f:selectItem 
+											itemLabel="Tiene los protones que dan el número atómico al átomo." itemValue="124" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Relaciones de la Química con otras ciencias"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Cuerpos y materia "></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui2.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Un sistema material formado por varios componentes que entran en proporciones variables y que conservan sus propiedades características. " itemValue="125" />
+										<f:selectItem 
+											itemLabel="Todo sistema material formado por varios componentes que entran en proporciones fijas y que conservan sus propiedades características." itemValue="126" />
+										<f:selectItem 
+											itemLabel="Un sistema material formado por la unión química de varios elementos, que entran en proporciones fijas, y cuyas propiedades son diferentes a las de sus componentes." itemValue="127" />
+										<f:selectItem 
+											itemLabel="Un sistema homogéneo formado por varios componentes, que entran en proporciones variables y que conservan sus propiedades." itemValue="128" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Estructura de la materia "></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Modelos atómicos"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui3.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Principio de Aufbau" itemValue="129" />
+										<f:selectItem 
+											itemLabel="Exclusión de Pauli" itemValue="130" />
+										<f:selectItem 
+											itemLabel="Principio de incertidumbre" itemValue="131" />
+										<f:selectItem 
+											itemLabel="Regla del Octeto" itemValue="132" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Transformación de la materia y energía"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Propiedades atómicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui4.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Los gramos a los que equivalen 6,023.1023 átomos o moléculas de un elemento o compuesto cualesquiera, respectivamente." itemValue="133" />
+										<f:selectItem 
+											itemLabel="La cantidad de átomos de oxígeno existentes en 32 gramos del mismo." itemValue="134" />
+										<f:selectItem 
+											itemLabel="El cociente que se obtiene al dividir los gramos de una sustancia por la masa molecular de la misma." itemValue="135" />
+										<f:selectItem 
+											itemLabel="La cantidad de moléculas de cualquier gas existente en 22,4 litros del mismo." itemValue="136" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Reacciones químicas inorgánicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Reacciones químicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui5.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Una reacción de descomposición, ya que la cera se descompone dando CO2 y H2O." itemValue="137" />
+										<f:selectItem 
+											itemLabel="Una reacción de combinación, en la que se combina el oxígeno del aire con los componentes de la cera, que son el carbono y el hidrógeno" itemValue="138" />
+										<f:selectItem 
+											itemLabel="Una reacción de doble sustitución en la que el oxígeno sustituye por un lado al carbono, combinándose con el hidrógeno para formar H2O, y por otro lado sustituye al hidrogeno al combinarse con el carbono para formar CO2" itemValue="139" />
+										<f:selectItem 
+											itemLabel="Una reacción de doble síntesis, pues se forman H2O y CO2" itemValue="140" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Química nuclear"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Radiactividad"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui6.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Mayor electronegatividad." itemValue="141" />
+										<f:selectItem 
+											itemLabel="Mayor energía de ionización" itemValue="142" />
+										<f:selectItem 
+											itemLabel="Mayor afinidad electrónica" itemValue="143" />
+										<f:selectItem 
+											itemLabel="Mayor radio atómico" itemValue="144" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Estados de la materia"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Gases"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui7.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Avogadro" itemValue="145" />
+										<f:selectItem 
+											itemLabel="Gay-Lussac" itemValue="146" />
+										<f:selectItem 
+											itemLabel="Boyle" itemValue="147" />
+										<f:selectItem 
+											itemLabel="Charles" itemValue="148" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Ácidos, bases y sales "></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Propiedades atómicas"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui8.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Una base débil" itemValue="149" />
+										<f:selectItem 
+											itemLabel="Una base fuerte" itemValue="150" />
+										<f:selectItem 
+											itemLabel="Un ácido débil" itemValue="151" />
+										<f:selectItem 
+											itemLabel="Un ácido fuerte" itemValue="152" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Equilibrio químico y velocidad de la reacción"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Equilibrio químico"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui9.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Estado de equilibrio" itemValue="153" />
+										<f:selectItem 
+											itemLabel="Poca cantidad de calor" itemValue="154" />
+										<f:selectItem 
+											itemLabel="Liberación de energía" itemValue="155" />
+										<f:selectItem 
+											itemLabel="Energía de activación" itemValue="156" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Equilibrio químico y velocidad de la reacción"></p:outputLabel>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column span="2">
+									<p:outputLabel value="Tópico:"></p:outputLabel>
+								</b:column>
+								<b:column span="7">
+									<p:outputLabel value="Equilibrio químico"></p:outputLabel>
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<p:graphicImage
+									value="/resources/img/img_pre/pre_qui10.png"></p:graphicImage>
+							</b:row>
+
+							<b:row>
+								<center>
+									<p:graphicImage
+										value="/resources/img/img_cue/nada.png"></p:graphicImage>
+								</center>
+							</b:row>
+							
+							<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+								value="#{preguntasBean.idguardar}">
+								<p:ajax listener="#{preguntasBean.insertarRespuesta()}" update="frmE:growl" />
+										<f:selectItem 
+											itemLabel="Brönsted" itemValue="157" />
+										<f:selectItem 
+											itemLabel="Arrhenius" itemValue="158" />
+										<f:selectItem 
+											itemLabel="Brönsted y Lowry" itemValue="159" />
+										<f:selectItem 
+											itemLabel="Lewis" itemValue="160" />
+							</p:selectOneRadio>
+							<br />
+							<br/>
+							
+							
+						<b:row>
+						<b:column>
+					<center>
+						<b:commandButton look="success" size="lg" style="width:30%;"
+							value="Finalizar Evaluación" 
+							action="#{preguntasBean.verResultado}"></b:commandButton>
+					</center>
+				</b:column>
+						</b:row>
+					</b:panel>
+				</b:column>
+				<b:column span="3">
+					<b:panel>
+						<center>
+							<h1>
+								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+									<p:poll interval="1" widgetVar="poll"
+								listener="#{preguntasBean.calculoTiempo()}" update="time" />
+							</h1>
+						</center>
+					</b:panel>
+				</b:column>
+			</b:row>
+				
+
+			<p:dialog header="Información" resizable="false" widgetVar="close"
+				modal="true" height="200" width="500" closable="false">
+				<center>
+					<h2>Estimad@ Estudiante #{logginBean.est_nombre}</h2>
+					<p>Tu prueba ya ha finalizado. Para poder ver tu resultado debes volver a ingresar con tus credenciales (Usuario y Contraseña)</p>
+					<b:commandButton look="info"
+						action="#{preguntasBean.salir()}" value="Salir"></b:commandButton>
+				</center>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

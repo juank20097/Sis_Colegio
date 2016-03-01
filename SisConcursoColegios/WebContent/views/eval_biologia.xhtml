@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="titulo">
+          Evaluación
+        </ui:define>
+	<ui:define name="contenido">
+		<center>
+			<h1>EVALUACIÓN BIOLOGÍA</h1>
+		</center>
+		<h:form id="frmE">
+			<p:growl id="growl" sticky="true" />
+			<b:row>
+				<b:column span="9">
+					<b:panel>
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Bases biológicas y químicas de la vida"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel
+									value="Propiedades del agua y su relación con la vida"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio1.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/nada.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem
+								itemLabel="La termorregulación de todos los seres vivos"
+								itemValue="41" />
+							<f:selectItem
+								itemLabel="La disociación de sales en forma de cationes "
+								itemValue="42" />
+							<f:selectItem itemLabel="El transporte de sustancias nutritivas "
+								itemValue="43" />
+							<f:selectItem
+								itemLabel="La supervivencia de muchas especies acuáticas "
+								itemValue="44" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Bases biológicas y químicas de la vida"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="ADN"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio2.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/cue_bio2.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="bacterias – bases – humano - 46"
+								itemValue="45" />
+							<f:selectItem itemLabel="algas - adeninas – animal - 23"
+								itemValue="46" />
+							<f:selectItem itemLabel="plantas – tiaminas – vegetal - 13"
+								itemValue="47" />
+							<f:selectItem itemLabel="aves – guaninas – vegetal - 23"
+								itemValue="48" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Bases biológicas y químicas de la vida"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Polisacáridos"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio3.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/nada.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem
+								itemLabel="La clasificación de esta clase de animales"
+								itemValue="49" />
+							<f:selectItem
+								itemLabel="La resistencia estructural del exoesqueleto "
+								itemValue="50" />
+							<f:selectItem
+								itemLabel="La segmentación en su desarrollo embrionario"
+								itemValue="51" />
+							<f:selectItem
+								itemLabel="El sistema sensorial altamente especializado"
+								itemValue="52" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Biosíntesis"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Fotosíntesis"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio4.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/nada.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="Pulmones del planeta" itemValue="53" />
+							<f:selectItem itemLabel="Almacenes de carbono" itemValue="54" />
+							<f:selectItem itemLabel="Bombas de CO2" itemValue="55" />
+							<f:selectItem itemLabel="Bombas de carbono" itemValue="56" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Biosíntesis"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Respiración celular"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio5.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/nada.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="El aparato de golgi " itemValue="57" />
+							<f:selectItem itemLabel="La membrana celular" itemValue="58" />
+							<f:selectItem itemLabel="Los lisosomas" itemValue="59" />
+							<f:selectItem itemLabel="La mitocondria" itemValue="60" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Biosíntesis"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Catabolismo"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio6.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/cue_bio6.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="1, 3, 6, 5, 4, 2" itemValue="61" />
+							<f:selectItem itemLabel="3, 1, 6, 4, 2, 5" itemValue="62" />
+							<f:selectItem itemLabel="1, 5, 6, 3, 2, 4" itemValue="63" />
+							<f:selectItem itemLabel="3, 5, 6, 4, 1, 2" itemValue="64" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Relación entre estructuras y funciones"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Respiración de los seres vivos"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio7.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/cue_bio7.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="1, 3, 6" itemValue="65" />
+							<f:selectItem itemLabel="4, 5, 6" itemValue="66" />
+							<f:selectItem itemLabel="2, 4, 5" itemValue="67" />
+							<f:selectItem itemLabel="3, 4, 5" itemValue="68" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Relación entre estructuras y funciones"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Componentes de la sangre"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio8.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/cue_bio8.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="1, 4" itemValue="69" />
+							<f:selectItem itemLabel="2, 3" itemValue="70" />
+							<f:selectItem itemLabel="1, 2" itemValue="71" />
+							<f:selectItem itemLabel="3, 4" itemValue="72" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Relación entre estructuras y funciones"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Velocidad del impulso nervioso"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio9.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/nada.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="El crecimiento de los huesos"
+								itemValue="73" />
+							<f:selectItem itemLabel="La huida ante un peligro" itemValue="74" />
+							<f:selectItem itemLabel="La producción de la hormona FSH "
+								itemValue="75" />
+							<f:selectItem itemLabel="La secreción de leche" itemValue="76" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Grupo Temático:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Relación entre estructuras y funciones"></p:outputLabel>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column span="2">
+								<p:outputLabel value="Tópico:"></p:outputLabel>
+							</b:column>
+							<b:column span="7">
+								<p:outputLabel value="Balance hídrico"></p:outputLabel>
+							</b:column>
+						</b:row>
+
+						<b:row>
+							<p:graphicImage value="/resources/img/img_pre/pre_bio10.png"></p:graphicImage>
+						</b:row>
+
+						<b:row>
+							<center>
+								<p:graphicImage value="/resources/img/img_cue/cue_bio10.png"></p:graphicImage>
+							</center>
+						</b:row>
+
+						<p:selectOneRadio style="width:50%;" columns="1" layout="grid"
+							value="#{preguntasBean.idguardar}">
+							<p:ajax listener="#{preguntasBean.insertarRespuesta()}"
+								update="frmE:growl" />
+							<f:selectItem itemLabel="2 900 ml" itemValue="77" />
+							<f:selectItem itemLabel="2 400 ml" itemValue="78" />
+							<f:selectItem itemLabel="1 400 ml" itemValue="79" />
+							<f:selectItem itemLabel="3 000 ml" itemValue="80" />
+						</p:selectOneRadio>
+						<br />
+						<br />
+
+
+						<b:row>
+							<b:column>
+								<center>
+									<b:commandButton look="success" size="lg" style="width:30%;"
+										value="Finalizar Evaluación"
+										action="#{preguntasBean.verResultado}"></b:commandButton>
+								</center>
+							</b:column>
+						</b:row>
+					</b:panel>
+				</b:column>
+				<b:column span="3">
+					<b:panel>
+						<center>
+							<h1>
+								<p:outputLabel id="time" value="#{preguntasBean.time}" />
+								<p:poll interval="1" widgetVar="poll"
+									listener="#{preguntasBean.calculoTiempo()}" update="time" />
+							</h1>
+						</center>
+					</b:panel>
+				</b:column>
+			</b:row>
+
+
+			<p:dialog header="Información" resizable="false" widgetVar="close"
+				modal="true" height="200" width="500" closable="false">
+				<center>
+					<h2>Estimad@ Estudiante #{logginBean.est_nombre}</h2>
+					<p>Tu prueba ya ha finalizado. Para poder ver tu resultado
+						debes volver a ingresar con tus credenciales (Usuario y
+						Contraseña)</p>
+					<b:commandButton look="info" action="#{preguntasBean.salir()}"
+						value="Salir"></b:commandButton>
+				</center>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
