@@ -3,15 +3,6 @@
  */
 package colegio.manager;
 
-import java.sql.Timestamp;
-import java.util.List;
-
-import colegio.controller.generic.Funciones;
-import colegio.controller.registros.AlumnosBean;
-import colegio.controller.registros.InstitucionBean;
-import colegio.controller.registros.ReportesTotalBean;
-import colegio.model.entidades.ColOpcionesRespuesta;
-import colegio.model.entidades.ColPregunta;
 
 
 /**

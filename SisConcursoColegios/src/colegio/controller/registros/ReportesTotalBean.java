@@ -1,10 +1,7 @@
 package colegio.controller.registros;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -13,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import colegio.controller.generic.Mensaje;
 import colegio.model.conection.Resultado;
 import colegio.model.conection.insti;
-import colegio.model.entidades.ColEvaluacionEstudiantil;
 import colegio.model.entidades.ColInstitucion;
 import colegio.manager.ManagerConexion;
 
