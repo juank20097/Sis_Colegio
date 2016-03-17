@@ -56,10 +56,10 @@
 		 					<p:column headerText="FECHA FIN" width="90">
 						<h:outputText value="#{r.fechaFin}" />
 					</p:column>
-					<p:column headerText="TIEMPO" >
+					<p:column sortBy="#{r.tiempo}" headerText="TIEMPO" >
 						<h:outputText value="#{r.tiempo}" />
 					</p:column>
-					<p:column headerText="CALIFICACI&Oacute;N" width="100">
+					<p:column sortBy="#{r.calificacion}" headerText="CALIFICACI&Oacute;N" width="100">
 						<h:outputText value="#{r.calificacion}" />
 					</p:column>
 		 		</p:dataTable>
